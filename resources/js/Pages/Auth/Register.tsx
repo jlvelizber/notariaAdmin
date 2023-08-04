@@ -9,8 +9,11 @@ import { Head, Link, useForm } from '@inertiajs/react';
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
+        midle_name: '',
         email: '',
         password: '',
+        first_last_name:'',
+        second_last_name:'',
         password_confirmation: '',
     });
 
@@ -46,6 +49,54 @@ export default function Register() {
                     />
 
                     <InputError message={errors.name} className="mt-2" />
+                </div>
+                <div className="mt-4">
+                    <InputLabel htmlFor="midle_name" value="Middlename" />
+
+                    <TextInput
+                        id="midle_name"
+                        name="midle_name"
+                        value={data.midle_name}
+                        className="mt-1 block w-full"
+                        autoComplete="midle_name"
+                       
+                        onChange={(e) => setData('midle_name', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.midle_name} className="mt-2" />
+                </div>
+                <div className="mt-4">
+                    <InputLabel htmlFor="first_last_name" value="First Lastname" />
+
+                    <TextInput
+                        id="first_last_name"
+                        name="first_last_name"
+                        value={data.first_last_name}
+                        className="mt-1 block w-full"
+                        autoComplete="first_last_name"
+                       
+                        onChange={(e) => setData('first_last_name', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.first_last_name} className="mt-2" />
+                </div>
+                <div className="mt-4">
+                    <InputLabel htmlFor="second_last_name" value="First Lastname" />
+
+                    <TextInput
+                        id="second_last_name"
+                        name="second_last_name"
+                        value={data.second_last_name}
+                        className="mt-1 block w-full"
+                        autoComplete="second_last_name"
+                       
+                        onChange={(e) => setData('second_last_name', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.second_last_name} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
