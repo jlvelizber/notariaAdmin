@@ -18,16 +18,19 @@ class RoleSeeder extends Seeder
                 'name' => 'administrator',
                 'display_name' => 'Administrador',
                 'description' => 'Administracion',
+                'is_deletetable'=> false
             ],
             [
                 'name' => 'secreatary',
                 'display_name' => 'Secretari@',
                 'description' => 'Ayudante de la nataria',
+                'is_deletetable'=> false
             ],
             [
                 'name' => 'notary',
                 'display_name' => 'Notari@',
                 'description' => 'Jefe de negocio',
+                'is_deletetable'=> false
             ],
         ];
 

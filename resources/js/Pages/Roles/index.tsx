@@ -1,6 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { RolePageProps } from "@/types";
+import RolesTableData from "./RolesTableData";
 
 export default function Index({
     roles,
@@ -15,19 +16,9 @@ export default function Index({
                 </h2>
             }
         >
-            <Head title="Roles" />
+            <Head title="Roles del sistema" />
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <ul>
-                            {roles.map((role) => (
-                                <li className="p-5">{role.name}</li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <RolesTableData roles={roles} />
         </AuthenticatedLayout>
     );
 }
