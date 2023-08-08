@@ -1,7 +1,8 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import Button from "@mui/material/Button";
 import { Head } from "@inertiajs/react";
 import { RolePageProps } from "@/types";
-import RolesTableData from "./RolesTableData";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import RolesDataTable from "./Partials/RolesDataTable";
 
 export default function Index({
     roles,
@@ -18,7 +19,15 @@ export default function Index({
         >
             <Head title="Roles del sistema" />
 
-            <RolesTableData roles={roles} />
+            <div className="p-3">
+                <div className="w-full">
+                    <Button className="w-full text-center h-10 !my-5 !p-6" variant="contained">
+                        Nuevo Rol
+                    </Button>
+                </div>
+
+                <RolesDataTable roles={roles} />
+            </div>
         </AuthenticatedLayout>
     );
 }
