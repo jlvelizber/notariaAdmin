@@ -2,25 +2,22 @@ import React, { FC } from "react";
 import { Role } from "@/types";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import ActionDataTableButtons from "@/Components/ActionDataTableButtons";
+import { Link, router } from "@inertiajs/react";
+import { get } from "http";
 
 const RolesDataTable: FC<{ roles: Role[] }> = ({ roles }) => {
+    const onShowRole = (idRole: number) => {};
 
-
-    const onShowRole = (idRole: number) => {
-        console.log(idRole);
-    }
-
-    const onEditRole = (idRole: number) => {
-        route("roles.edit", idRole)
-    }
-
-
+    const onEditRole = (role: Role) => {
+        router.get(`roles/edit/${role}`);
+        //    get( route('roles.edit', [ role ]));
+    };
 
     const columns: GridColDef[] = [
         {
             field: "name",
             headerName: "Nombre",
-            width: 130,
+            width: 280,
         },
         {
             field: "display_name",
@@ -42,21 +39,27 @@ const RolesDataTable: FC<{ roles: Role[] }> = ({ roles }) => {
         {
             field: "actions",
             headerName: "Acciones",
-            width:300,
+            width: 300,
             renderCell: (params) => (
                 <ActionDataTableButtons
                     id={params.row.id}
-                    isDelete={params.row.id.is_deletetable}
+                    isDelete={params.row.is_deletetable}
                     isEdit={true}
-                    isShow={true}
                     onShowHandler={() => onShowRole(params.row.id)}
-                    onDeleteHandler={() => onEditRole(params.row.id)}
+                    onEditHandler={() => onEditRole(params.row.id)}
                 />
             ),
         },
     ];
 
-    return <DataGrid checkboxSelection columns={columns} rows={roles} />;
+    return (
+        <DataGrid
+            checkboxSelection
+            disableRowSelectionOnClick
+            columns={columns}
+            rows={roles}
+        />
+    );
 };
 
 export default RolesDataTable;

@@ -1,8 +1,9 @@
-import { ButtonHTMLAttributes } from 'react';
+import Button, { ButtonProps} from "@mui/material/Button";
 
-export default function SecondaryButton({ type = 'button', className = '', disabled, children, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {
+
+export default function SecondaryButton({ type = 'button', className = '', disabled, children, ...props }: ButtonProps) {
     return (
-        <button
+        <Button
             {...props}
             type={type}
             className={
@@ -13,6 +14,6 @@ export default function SecondaryButton({ type = 'button', className = '', disab
             disabled={disabled}
         >
             {children}
-        </button>
+        </Button>
     );
 }

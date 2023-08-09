@@ -1,27 +1,36 @@
-import React, { FC } from "react";
-import { InertiaFormProps } from "@inertiajs/react/types/useForm";
+import React, { FC, FormEventHandler } from "react";
 import { Role } from "@/types";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
 
-export default function FormAdminRole( {role} :{ role: Role | null} ) {  
+export default function FormAdminRole({ role }: { role: Role | null }) {
     const {
         data,
         setData,
         post,
+        put,
         errors,
         processing,
         recentlySuccessful,
-    }: InertiaFormProps<Role> = useForm({
-        name: role?.name || '',
-        display_name: role?.display_name || '',
-        description: role?.description || '',
+    } = useForm({
+        name: role?.name || "",
+        display_name: role?.display_name || "",
+        description: role?.description || "",
     });
 
-    const submit = () => {};
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        if (!role) {
+            post(route("roles.store"));
+        } else {
+            put(route("roles.update", { id: role!?.id }));
+        }
+    };
 
     return (
         <form onSubmit={submit} className="mt-6 space-y-6">
@@ -35,8 +44,10 @@ export default function FormAdminRole( {role} :{ role: Role | null} ) {
                     value={data.name}
                     onChange={(e) => setData("name", e.target.value)}
                     required
-                    isFocused
+                    isFocused={!role?.id}
                     autoComplete="name"
+                    disabled={role?.id && !role?.is_deletetable ? true : false}
+                    readOnly={role?.id && !role?.is_deletetable ? true : false}
                 />
 
                 <InputError className="mt-2" message={errors.name} />
@@ -51,6 +62,7 @@ export default function FormAdminRole( {role} :{ role: Role | null} ) {
                     value={data.display_name}
                     onChange={(e) => setData("display_name", e.target.value)}
                     required
+                    isFocused={!role?.id}
                     autoComplete="display_name"
                 />
 
@@ -72,6 +84,9 @@ export default function FormAdminRole( {role} :{ role: Role | null} ) {
                 <InputError className="mt-2" message={errors.description} />
             </div>
             <PrimaryButton onClick={submit}>Guardar</PrimaryButton>
+            <SecondaryButton href={route("roles.index")}>
+                Regresar
+            </SecondaryButton>
         </form>
     );
-};
+}

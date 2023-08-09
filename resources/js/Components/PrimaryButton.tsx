@@ -1,4 +1,3 @@
-import { ButtonHTMLAttributes } from 'react';
 import Button, { ButtonProps} from "@mui/material/Button";
 
 export default function PrimaryButton({ className = '', disabled, children, ...props }: ButtonProps) {

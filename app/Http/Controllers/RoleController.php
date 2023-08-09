@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class RoleController extends Controller
@@ -31,7 +32,20 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255| unique:' . Role::class,
+            'display_name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+
+        $role = new Role();
+        $role->fill($request->all());
+        $role->is_deletetable = true;
+        $role->save();
+
+        return redirect()->route('roles.index');
+
     }
 
     /**
@@ -47,8 +61,6 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $role = Role::getByID($role);
-
         return Inertia::render('Roles/create', ['role' => $role]);
     }
 
@@ -57,7 +69,18 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => ['required','string','max:255', Rule::unique('roles')->ignore($id)],
+            'display_name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+
+        $role = Role::find($id);
+        $role->fill($request->all());
+        $role->save();
+
+        return redirect()->route('roles.index');
     }
 
     /**

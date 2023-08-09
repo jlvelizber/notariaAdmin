@@ -9,7 +9,7 @@ const ActionDataTableButtons: FC<{
     onEditHandler?: () => void;
     isDelete: boolean;
     onDeleteHandler?: () => void;
-    isShow: Boolean;
+    isShow?: Boolean | false;
     onShowHandler?: () => void;
 }> = ({
     id,
@@ -22,21 +22,21 @@ const ActionDataTableButtons: FC<{
 }): JSX.Element => {
     return (
         <ButtonGroup variant="contained" size="small">
-            {isShow && (
+            {isShow ? (
                 <Button onClick={onShowHandler}>
                     <VisibilityIcon fontSize="small" /> Ver
                 </Button>
-            )}
-            {isEdit && (
+            ): null}
+            {isEdit ? (
                 <Button onClick={onEditHandler}>
                     <EditIcon fontSize="small" /> Editar
                 </Button>
-            )}
-            {isDelete && (
+            ): null}
+            {isDelete ? (
                 <Button onClick={onDeleteHandler}>
                     <DeleteIcon fontSize="small" /> Eliminar
                 </Button>
-            )}
+            ) : null}
         </ButtonGroup>
     );
 };
