@@ -21,7 +21,7 @@ export default function AuthenticatedNavigation() {
                 </NavLink>
                 <NavLink
                     href={route("roles.index")}
-                    active={route().current("roles.index")}
+                    active={route().current("roles.*")}
                 >
                     Roles
                 </NavLink>

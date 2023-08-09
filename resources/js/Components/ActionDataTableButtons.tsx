@@ -6,23 +6,34 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const ActionDataTableButtons: FC<{
     id: number;
     isEdit: boolean;
+    onEditHandler?: () => void;
     isDelete: boolean;
+    onDeleteHandler?: () => void;
     isShow: Boolean;
-}> = ({ id, isShow, isEdit, isDelete }): JSX.Element => {
+    onShowHandler?: () => void;
+}> = ({
+    id,
+    isShow,
+    onShowHandler,
+    isEdit,
+    onEditHandler,
+    isDelete,
+    onDeleteHandler,
+}): JSX.Element => {
     return (
         <ButtonGroup variant="contained" size="small">
             {isShow && (
-                <Button>
+                <Button onClick={onShowHandler}>
                     <VisibilityIcon fontSize="small" /> Ver
                 </Button>
             )}
             {isEdit && (
-                <Button>
+                <Button onClick={onEditHandler}>
                     <EditIcon fontSize="small" /> Editar
                 </Button>
             )}
             {isDelete && (
-                <Button>
+                <Button onClick={onDeleteHandler}>
                     <DeleteIcon fontSize="small" /> Eliminar
                 </Button>
             )}

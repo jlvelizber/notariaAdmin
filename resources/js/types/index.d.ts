@@ -33,3 +33,12 @@ export type RolePageProps<
     };
     roles: Role[];
 };
+
+export type NewRolePageProps<
+    T extends Record<string, unknown> = Record<string, unknown>
+> = T & {
+    auth: {
+        user: User;
+    };
+    role?: Role;
+};

@@ -3,11 +3,9 @@ import { Head } from "@inertiajs/react";
 import { RolePageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import RolesDataTable from "./Partials/RolesDataTable";
+import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function Index({
-    roles,
-    auth,
-}: RolePageProps<{ mustVerifyEmail: boolean; status?: string }>) {
+export default function Index({ roles, auth }: RolePageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -21,9 +19,13 @@ export default function Index({
 
             <div className="p-3">
                 <div className="w-full">
-                    <Button className="w-full text-center h-10 !my-5 !p-6" variant="contained">
+                    <PrimaryButton
+                        className="w-full text-center h-10 !my-5 !p-6"
+                        variant="contained"
+                        href={route("roles.new")}
+                    >
                         Nuevo Rol
-                    </Button>
+                    </PrimaryButton>
                 </div>
 
                 <RolesDataTable roles={roles} />

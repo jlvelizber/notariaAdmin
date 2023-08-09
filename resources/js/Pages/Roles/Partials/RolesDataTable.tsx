@@ -4,6 +4,18 @@ import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import ActionDataTableButtons from "@/Components/ActionDataTableButtons";
 
 const RolesDataTable: FC<{ roles: Role[] }> = ({ roles }) => {
+
+
+    const onShowRole = (idRole: number) => {
+        console.log(idRole);
+    }
+
+    const onEditRole = (idRole: number) => {
+        route("roles.edit", idRole)
+    }
+
+
+
     const columns: GridColDef[] = [
         {
             field: "name",
@@ -34,9 +46,11 @@ const RolesDataTable: FC<{ roles: Role[] }> = ({ roles }) => {
             renderCell: (params) => (
                 <ActionDataTableButtons
                     id={params.row.id}
-                    isDelete={true}
+                    isDelete={params.row.id.is_deletetable}
                     isEdit={true}
                     isShow={true}
+                    onShowHandler={() => onShowRole(params.row.id)}
+                    onDeleteHandler={() => onEditRole(params.row.id)}
                 />
             ),
         },

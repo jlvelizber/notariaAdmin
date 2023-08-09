@@ -23,7 +23,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        
+        return Inertia::render('Roles/create');
     }
 
     /**
@@ -45,9 +45,11 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role)
     {
-        //
+        $role = Role::getByID($role);
+
+        return Inertia::render('Roles/create', ['role' => $role]);
     }
 
     /**
