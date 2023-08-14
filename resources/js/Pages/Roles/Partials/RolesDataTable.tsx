@@ -10,7 +10,10 @@ const RolesDataTable: FC<{ roles: Role[] }> = ({ roles }) => {
 
     const onEditRole = (role: Role) => {
         router.get(`roles/edit/${role}`);
-        //    get( route('roles.edit', [ role ]));
+    };
+
+    const onDeleteRole = (role: Role) => {
+        return <></>
     };
 
     const columns: GridColDef[] = [
@@ -47,6 +50,7 @@ const RolesDataTable: FC<{ roles: Role[] }> = ({ roles }) => {
                     isEdit={true}
                     onShowHandler={() => onShowRole(params.row.id)}
                     onEditHandler={() => onEditRole(params.row.id)}
+                    onDeleteHandler={()=> onDeleteRole(params.row.id)}
                 />
             ),
         },

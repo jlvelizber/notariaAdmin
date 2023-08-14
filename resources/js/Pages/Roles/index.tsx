@@ -4,6 +4,7 @@ import { RolePageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import RolesDataTable from "./Partials/RolesDataTable";
 import PrimaryButton from "@/Components/PrimaryButton";
+import Modal from "@/Components/Modal";
 
 export default function Index({ roles, auth }: RolePageProps) {
     return (
@@ -16,6 +17,8 @@ export default function Index({ roles, auth }: RolePageProps) {
             }
         >
             <Head title="Roles del sistema" />
+
+            
 
             <div className="p-3">
                 <div className="w-full">
