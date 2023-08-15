@@ -1,34 +1,33 @@
 import Button from "@mui/material/Button";
 import { Head, router } from "@inertiajs/react";
-import { Role, RolePageProps } from "@/types";
+import { IndexUserPageProps, User } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import RolesDataTable from "./Partials/RolesDataTable";
+import RolesDataTable from "./Partials/UsersDataTable";
 import PrimaryButton from "@/Components/PrimaryButton";
-import Modal from "@/Components/Modal";
 import { useState } from "react";
 import DeleteModal from "@/Components/DeleteModal";
 import { useDispatch } from "react-redux";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 
-export default function Index({ roles, auth }: RolePageProps) {
+export default function Index({ users, auth }: IndexUserPageProps) {
     const [showModal, setshowModal] = useState<boolean>(false);
-    const [roleName, setRoleName] = useState<String>("");
-    const [roleId, setRoleId] = useState<number | null>(null);
+    const [userName, setUserName] = useState<String>("");
+    const [userId, setUserId] = useState<number | null>(null);
     const dispatch = useDispatch();
 
-    const handleDeleteRole = (role: Role) => {
+    const handleDeleteUser = (user: User) => {
         setshowModal(true);
-        setRoleName(role.name);
-        setRoleId(role.id);
+        setUserName(user.name);
+        setUserId(user.id);
     };
 
     const handleAcceptDeleteRole = () => {
         setshowModal(false);
-        router.delete(route("roles.destroy", { id: roleId! }), {
+        router.delete(route("users.destroy", { id: userId! }), {
             onSuccess: () =>
                 dispatch(
                     onOpenSnack({
-                        message: `Rol ${roleName} eliminado correctamente`,
+                        message: `Usuario ${userName} eliminado correctamente`,
                         severity: "success",
                     })
                 ),
@@ -40,17 +39,17 @@ export default function Index({ roles, auth }: RolePageProps) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Roles
+                    Usuarios
                 </h2>
             }
         >
-            <Head title="Roles del sistema" />
+            <Head title="Usuarios del sistema" />
 
             <DeleteModal
                 isOpen={showModal}
                 onClose={() => setshowModal(() => false)}
                 onDelete={handleAcceptDeleteRole}
-                resourceName={`Role ${roleName}`}
+                resourceName={`Usuario ${userName}`}
                 key={1}
             />
 
@@ -59,15 +58,15 @@ export default function Index({ roles, auth }: RolePageProps) {
                     <PrimaryButton
                         className="w-full text-center h-10 !my-5 !p-6"
                         variant="contained"
-                        href={route("roles.create")}
+                        href={route("users.create")}
                     >
-                        Nuevo Rol
+                        Nuevo Usuario
                     </PrimaryButton>
                 </div>
 
                 <RolesDataTable
-                    roles={roles}
-                    onDelete={(role: Role) => handleDeleteRole(role)}
+                    users={users}
+                    onDelete={(user: User) => handleDeleteUser(user)}
                 />
             </div>
         </AuthenticatedLayout>

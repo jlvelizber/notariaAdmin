@@ -1,17 +1,19 @@
 import React, { FC } from "react";
-import { Role } from "@/types";
+import { User } from "@/types";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import ActionDataTableButtons from "@/Components/ActionDataTableButtons";
-import { Link, router } from "@inertiajs/react";
-import { get } from "http";
+import { router } from "@inertiajs/react";
 
-const RolesDataTable: FC<{ roles: Role[], onDelete: (role:Role) => void }> = ({ roles, onDelete }) => {
-    const onEditRole = (role: Role) => {
-        router.get(`roles/${role}/edit`);
+const UsersDataTable: FC<{ users: User[]; onDelete: (role: User) => void }> = ({
+    users,
+    onDelete,
+}) => {
+    const onEditRole = (user: User) => {
+        router.get(`users/${user}/edit`);
     };
 
-    const onDeleteRole = (role: Role) => {
-        onDelete(role)
+    const onDeleteUser = (user: User) => {
+        onDelete(user);
     };
 
     const columns: GridColDef[] = [
@@ -47,7 +49,7 @@ const RolesDataTable: FC<{ roles: Role[], onDelete: (role:Role) => void }> = ({ 
                     isDelete={params.row.is_deletetable}
                     isEdit={true}
                     onEditHandler={() => onEditRole(params.row.id)}
-                    onDeleteHandler={()=> onDeleteRole(params.row)}
+                    onDeleteHandler={() => onDeleteUser(params.row)}
                 />
             ),
         },
@@ -58,9 +60,9 @@ const RolesDataTable: FC<{ roles: Role[], onDelete: (role:Role) => void }> = ({ 
             checkboxSelection
             disableRowSelectionOnClick
             columns={columns}
-            rows={roles}
+            rows={users}
         />
     );
 };
 
-export default RolesDataTable;
+export default UsersDataTable;
