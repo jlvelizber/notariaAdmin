@@ -5,15 +5,13 @@ import ActionDataTableButtons from "@/Components/ActionDataTableButtons";
 import { Link, router } from "@inertiajs/react";
 import { get } from "http";
 
-const RolesDataTable: FC<{ roles: Role[] }> = ({ roles }) => {
-    const onShowRole = (idRole: number) => {};
-
+const RolesDataTable: FC<{ roles: Role[], onDelete: (role:Role) => void }> = ({ roles, onDelete }) => {
     const onEditRole = (role: Role) => {
         router.get(`roles/edit/${role}`);
     };
 
     const onDeleteRole = (role: Role) => {
-        return <></>
+        onDelete(role)
     };
 
     const columns: GridColDef[] = [
@@ -48,9 +46,8 @@ const RolesDataTable: FC<{ roles: Role[] }> = ({ roles }) => {
                     id={params.row.id}
                     isDelete={params.row.is_deletetable}
                     isEdit={true}
-                    onShowHandler={() => onShowRole(params.row.id)}
                     onEditHandler={() => onEditRole(params.row.id)}
-                    onDeleteHandler={()=> onDeleteRole(params.row.id)}
+                    onDeleteHandler={()=> onDeleteRole(params.row)}
                 />
             ),
         },

@@ -6,29 +6,42 @@ import { useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
+import { useDispatch } from "react-redux";
+import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 
 export default function FormAdminRole({ role }: { role: Role | null }) {
-    const {
-        data,
-        setData,
-        post,
-        put,
-        errors,
-        processing,
-        recentlySuccessful,
-    } = useForm({
-        name: role?.name || "",
-        display_name: role?.display_name || "",
-        description: role?.description || "",
-    });
+    const { data, setData, post, put, errors, processing, recentlySuccessful } =
+        useForm({
+            name: role?.name || "",
+            display_name: role?.display_name || "",
+            description: role?.description || "",
+        });
+
+    const dispatch = useDispatch();
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
         if (!role) {
-            post(route("roles.store"));
+            post(route("roles.store"), {
+                onSuccess: () =>
+                    dispatch(
+                        onOpenSnack({
+                            message: "Rol Guardado",
+                            severity: "success",
+                        })
+                    ),
+            });
         } else {
-            put(route("roles.update", { id: role!?.id }));
+            put(route("roles.update", { id: role!?.id }), {
+                onSuccess: () =>
+                    dispatch(
+                        onOpenSnack({
+                            message: "Rol Actualizado Correctamente",
+                            severity: "success",
+                        })
+                    ),
+            });
         }
     };
 
