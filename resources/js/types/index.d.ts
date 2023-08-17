@@ -53,3 +53,12 @@ export type IndexUserPageProps<
     users: User[];
 };
 
+
+export type NewEditUserPageProps<
+    T extends Record<string, unknown> = Record<string, unknown>
+> = T & {
+    auth: {
+        user: User;
+    };
+    user?: User;
+};

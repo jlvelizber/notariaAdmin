@@ -8,6 +8,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { useDispatch } from "react-redux";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
+import { FormBarActions } from "@/Components/FormBarActions";
 
 export default function FormAdminRole({ role }: { role: Role | null }) {
     const { data, setData, post, put, errors, processing, recentlySuccessful } =
@@ -96,10 +97,8 @@ export default function FormAdminRole({ role }: { role: Role | null }) {
 
                 <InputError className="mt-2" message={errors.description} />
             </div>
-            <PrimaryButton onClick={submit}>Guardar</PrimaryButton>
-            <SecondaryButton href={route("roles.index")}>
-                Regresar
-            </SecondaryButton>
+            {/* Actions save or back */}
+            <FormBarActions routeBack="roles.index" saveAction={() => submit}/>
         </form>
     );
 }

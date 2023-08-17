@@ -1,13 +1,17 @@
 import React, { FC } from "react";
-import { User } from "@/types";
+import { PageProps, User } from "@/types";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import ActionDataTableButtons from "@/Components/ActionDataTableButtons";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
+import { humanizeDate } from "@/Helpers/dates";
 
-const UsersDataTable: FC<{ users: User[]; onDelete: (role: User) => void }> = ({
+const UsersDataTable: FC<{ users: User[]; onDelete: (user: User) => void }> = ({
     users,
     onDelete,
 }) => {
+    // Con esto optienes el usuario en linea
+    const { auth }  = usePage<PageProps>().props
+
     const onEditRole = (user: User) => {
         router.get(`users/${user}/edit`);
     };
@@ -20,24 +24,21 @@ const UsersDataTable: FC<{ users: User[]; onDelete: (role: User) => void }> = ({
         {
             field: "name",
             headerName: "Nombre",
-            width: 280,
+            width: 380,
+            valueGetter: ({ row }: GridValueGetterParams) =>
+                `${row.name} ${row.midle_name} ${row.first_last_name} ${row.second_last_name}`,
         },
         {
-            field: "display_name",
-            headerName: "Nombre a mostrar",
-            width: 150,
-        },
-        {
-            field: "description",
-            headerName: "Descripción",
+            field: "email",
+            headerName: "Correo electrónico",
             width: 300,
         },
         {
-            field: "is_deletetable",
-            headerName: "Es Eliminable",
-            valueGetter: (params: GridValueGetterParams) =>
-                params.row.is_deletetable ? "Si" : "No",
-            width: 150,
+            field: "created_at",
+            headerName: "Fecha de registro",
+            width: 300,
+            valueGetter: ({ row }: GridValueGetterParams) =>
+                humanizeDate(row.created_at),
         },
         {
             field: "actions",
@@ -46,8 +47,9 @@ const UsersDataTable: FC<{ users: User[]; onDelete: (role: User) => void }> = ({
             renderCell: (params) => (
                 <ActionDataTableButtons
                     id={params.row.id}
-                    isDelete={params.row.is_deletetable}
+                    isDelete={auth.user.id !== params.row.id}
                     isEdit={true}
+                    isShow={true}
                     onEditHandler={() => onEditRole(params.row.id)}
                     onDeleteHandler={() => onDeleteUser(params.row)}
                 />

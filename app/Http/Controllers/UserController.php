@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -36,10 +39,25 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $user = new User();
-        $user->fill($request->all());
-        $user->is_deletetable = true;
-        $user->save();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:'.User::class,
+            'midle_name' => 'string|max:255',
+            'first_last_name' => 'required|string|max:255',
+            'second_last_name' => 'required|string|max:255',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'midle_name' => $request->midle_name,
+            'first_last_name' => $request->first_last_name,
+            'second_last_name' => $request->second_last_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        event(new Registered($user));
 
         return redirect()->route('users.index');
     }

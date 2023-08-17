@@ -1,8 +1,7 @@
-import Button from "@mui/material/Button";
 import { Head, router } from "@inertiajs/react";
 import { IndexUserPageProps, User } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import RolesDataTable from "./Partials/UsersDataTable";
+import UsersDataTable from "./Partials/UsersDataTable";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useState } from "react";
 import DeleteModal from "@/Components/DeleteModal";
@@ -64,7 +63,7 @@ export default function Index({ users, auth }: IndexUserPageProps) {
                     </PrimaryButton>
                 </div>
 
-                <RolesDataTable
+                <UsersDataTable
                     users={users}
                     onDelete={(user: User) => handleDeleteUser(user)}
                 />

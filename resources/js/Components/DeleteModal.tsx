@@ -21,7 +21,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
             <DialogContent>
                 <div className="flex items-center space-x-2">
                     <DeleteIcon className="w-6 h-6 text-red-500" />
-                    <p>Are you sure you want to delete <strong>{resourceName}?</strong> </p>
+                    <p>Estás seguro de eliminar <strong>{resourceName}?</strong> </p>
                 </div>
             </DialogContent>
             <DialogActions>
