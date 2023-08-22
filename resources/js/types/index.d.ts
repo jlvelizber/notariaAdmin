@@ -7,6 +7,7 @@ export interface User {
     first_last_name: string;
     second_last_name: string;
     password: string;
+    role?: Role
 }
 
 export interface Role {
@@ -61,4 +62,5 @@ export type NewEditUserPageProps<
         user: User;
     };
     user?: User;
+    roles: Role[];
 };

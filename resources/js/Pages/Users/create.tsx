@@ -4,7 +4,7 @@ import { Head } from "@inertiajs/react";
 
 import FormAdminUser from "./Partials/FormAdminUser";
 
-export default function Create({ auth, user }: NewEditUserPageProps) {
+export default function Create({ auth, user, roles }: NewEditUserPageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -20,7 +20,7 @@ export default function Create({ auth, user }: NewEditUserPageProps) {
 
             <div className="p-3">
                 <div className="w-full">
-                    <FormAdminUser user={user || null} />
+                    <FormAdminUser user={user || null} roles={roles}/>
                 </div>
             </div>
         </AuthenticatedLayout>

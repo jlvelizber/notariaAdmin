@@ -1,26 +1,32 @@
-import React, { FC, FormEventHandler } from "react";
-import { User } from "@/types";
+import { FormBarActions } from "@/Components/FormBarActions";
+import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import { useForm } from "@inertiajs/react";
-import InputError from "@/Components/InputError";
-import PrimaryButton from "@/Components/PrimaryButton";
-import SecondaryButton from "@/Components/SecondaryButton";
-import { useDispatch } from "react-redux";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
-import { Grid } from "@mui/material";
-import { FormBarActions } from "@/Components/FormBarActions";
+import { Role, User } from "@/types";
+import { useForm } from "@inertiajs/react";
+import { Grid, MenuItem, Select } from "@mui/material";
+import React, { FormEventHandler } from "react";
+import { useDispatch } from "react-redux";
 
-export default function FormAdminUser({ user }: { user: User | null }) {
+export default function FormAdminUser({
+    user,
+    roles,
+}: {
+    user: User | null;
+    roles: Role[];
+}) {
     const { data, setData, post, put, errors, processing, recentlySuccessful } =
         useForm({
-            name: user?.name,
-            email: user?.email,
-            midle_name: user?.midle_name,
-            first_last_name: user?.first_last_name,
-            second_last_name: user?.second_last_name,
-            password: user?.password,
-            password_confirmation: ''
+            id: user?.id,
+            name: user?.name || "",
+            email: user?.email || "",
+            midle_name: user?.midle_name || "",
+            first_last_name: user?.first_last_name || "",
+            second_last_name: user?.second_last_name || "",
+            password: user?.password || undefined,
+            password_confirmation: user?.password || undefined,
+            role: user?.role?.id || "",
         });
 
     const dispatch = useDispatch();
@@ -110,7 +116,10 @@ export default function FormAdminUser({ user }: { user: User | null }) {
                         autoComplete="first_last_name"
                     />
 
-                    <InputError className="mt-2" message={errors.first_last_name} />
+                    <InputError
+                        className="mt-2"
+                        message={errors.first_last_name}
+                    />
                 </Grid>
 
                 {/* Segundo Apellido */}
@@ -131,7 +140,10 @@ export default function FormAdminUser({ user }: { user: User | null }) {
                         autoComplete="second_last_name"
                     />
 
-                    <InputError className="mt-2" message={errors.second_last_name} />
+                    <InputError
+                        className="mt-2"
+                        message={errors.second_last_name}
+                    />
                 </Grid>
             </Grid>
 
@@ -140,50 +152,66 @@ export default function FormAdminUser({ user }: { user: User | null }) {
                     <h3 className="font-bold">Configuración de usuario</h3>
                 </Grid>
 
-                 {/* Email */}
-                 <Grid item xs={12}  lg={3}>
-                    <InputLabel
-                        htmlFor="email"
-                        value="Correo electrónico"
-                    />
+                {/* Email */}
+                <Grid item xs={12} lg={3}>
+                    <InputLabel htmlFor="email" value="Correo electrónico" />
 
                     <TextInput
                         id="email"
                         className="mt-1 block w-full"
                         value={data.email}
-                        onChange={(e) =>
-                            setData("email", e.target.value)
-                        }
+                        onChange={(e) => setData("email", e.target.value)}
                         required
                         autoComplete="email"
                     />
 
                     <InputError className="mt-2" message={errors.email} />
                 </Grid>
-                 
-                 {/* Contrasea */}
-                 <Grid item xs={12}  lg={3}>
+
+                {/* Roles */}
+                <Grid item xs={12} lg={3}>
                     <InputLabel
-                        htmlFor="password"
-                        value="Contraseña"
+                        htmlFor="rol"
+                        value="Rol"
+                        className="mb-[2px]"
                     />
+
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        // @ts-ignore
+                        defaultValue={parseInt(data?.role)}
+                        value={data?.role}
+                        onChange={(e) => setData("role", e.target.value)}
+                        fullWidth
+                    >
+                        {roles.map((role: Role, idx: React.Key) => (
+                            <MenuItem key={idx} value={role.id}>
+                                {role.name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+
+                    <InputError className="mt-2" message={errors.role} />
+                </Grid>
+                {/* Contrasea */}
+                <Grid item xs={12} lg={3}>
+                    <InputLabel htmlFor="password" value="Contraseña" />
 
                     <TextInput
                         type="password"
                         id="password"
                         className="mt-1 block w-full"
                         value={data.password}
-                        onChange={(e) =>
-                            setData("password", e.target.value)
-                        }
-                        required
+                        onChange={(e) => setData("password", e.target.value)}
+                        required={data?.id ? false : true}
                         autoComplete="password"
                     />
 
                     <InputError className="mt-2" message={errors.password} />
                 </Grid>
-                 {/* COnfirmar Contrasea */}
-                 <Grid item xs={12}  lg={3}>
+                {/* COnfirmar Contrasea */}
+                <Grid item xs={12} lg={3}>
                     <InputLabel
                         htmlFor="password_confirmation"
                         value="Confirmar Contraseña"
@@ -197,16 +225,18 @@ export default function FormAdminUser({ user }: { user: User | null }) {
                         onChange={(e) =>
                             setData("password_confirmation", e.target.value)
                         }
-                        required
+                        required={data?.id ? false : true}
                         autoComplete="password_confirmation"
                     />
 
-                    <InputError className="mt-2" message={errors.password_confirmation} />
+                    <InputError
+                        className="mt-2"
+                        message={errors.password_confirmation}
+                    />
                 </Grid>
             </Grid>
 
-            <FormBarActions routeBack="users.index" saveAction={() =>submit}/>
-            
+            <FormBarActions routeBack="users.index" saveAction={() => submit} />
         </form>
     );
 }

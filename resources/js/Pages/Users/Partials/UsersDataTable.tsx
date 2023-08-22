@@ -41,6 +41,13 @@ const UsersDataTable: FC<{ users: User[]; onDelete: (user: User) => void }> = ({
                 humanizeDate(row.created_at),
         },
         {
+            field: "updated_at",
+            headerName: "Fecha de actualizacion",
+            width: 300,
+            valueGetter: ({ row }: GridValueGetterParams) =>
+                humanizeDate(row.updated_at),
+        },
+        {
             field: "actions",
             headerName: "Acciones",
             width: 300,
@@ -49,7 +56,7 @@ const UsersDataTable: FC<{ users: User[]; onDelete: (user: User) => void }> = ({
                     id={params.row.id}
                     isDelete={auth.user.id !== params.row.id}
                     isEdit={true}
-                    isShow={true}
+                    isShow={false}
                     onEditHandler={() => onEditRole(params.row.id)}
                     onDeleteHandler={() => onDeleteUser(params.row)}
                 />
