@@ -104,14 +104,17 @@ class UserController extends Controller
             'role'=>['required','integer',Rule::exists('roles','id')],
         ]);
 
+       
 
-        $user = User::find($id);
-        $user->fill($request->all());
-        $user->save();
+            $user = User::find($id);
+            $user->fill($request->all());
+            $user->save();
+    
+            $user->roles()->sync([$request->role]);
+    
+            return redirect()->route('users.index');
+       
 
-        $user->roles()->sync([$request->role]);
-
-        return redirect()->route('users.index');
     }
 
     /**

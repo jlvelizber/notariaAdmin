@@ -24,6 +24,7 @@ export type PageProps<
     auth: {
         user: User;
     };
+    errorHandlerMessage: string
 };
 
 export type RolePageProps<

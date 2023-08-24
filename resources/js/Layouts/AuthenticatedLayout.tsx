@@ -1,5 +1,4 @@
-import { useState, PropsWithChildren, ReactNode } from "react";
-import Dropdown from "@/Components/Dropdown";
+import { useState, PropsWithChildren, ReactNode, useEffect } from "react";
 import { User } from "@/types";
 import AuthenticatedNavigation from "./Partials/AuthenticatedNavigation";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
