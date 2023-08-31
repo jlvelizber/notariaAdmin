@@ -15,4 +15,7 @@ class Role extends Model
         'description',
         'is_deletetable'
     ];
+
+
+
 }

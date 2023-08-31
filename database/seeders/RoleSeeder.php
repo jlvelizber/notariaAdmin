@@ -32,6 +32,12 @@ class RoleSeeder extends Seeder
                 'description' => 'Jefe de negocio',
                 'is_deletetable'=> false
             ],
+            [
+                'name' => 'customer',
+                'display_name' => 'Cliente/Usuario Final',
+                'description' => 'El usuario final de la notaría',
+                'is_deletetable'=> false
+            ],
         ];
 
         

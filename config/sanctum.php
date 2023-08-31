@@ -64,4 +64,7 @@ return [
         'encrypt_cookies' => App\Http\Middleware\EncryptCookies::class,
     ],
 
+
+    'token_name' => env('TOKEN_NAME', 'NOTARIAIV')
+
 ];

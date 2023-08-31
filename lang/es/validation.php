@@ -213,5 +213,10 @@ return [
         'updated_at'               => 'actualizado el',
         'username'                 => 'usuario',
         'year'                     => 'año',
+        'identification_type'      => 'Tipo de identificación',
+        'identification_num'       => 'Número de identificación',
+        'midle_name'               => 'segundo nombre',
+        'first_last_name'          => 'Primer Apellido',
+        'second_last_name'         => 'Segundo Apellido',
     ],
 ];
