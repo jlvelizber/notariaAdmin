@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\JsonResponse;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -49,5 +50,18 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+
+     /**
+     * Handle an incoming authentication request.
+     */
+    public function storeApi(LoginRequest $request): JsonResponse
+    {
+        $tokenName = config('sanctum.token_name');
+
+        $request->authenticate();
+
+        return response()->json(['token' => $request->user()->createToken($tokenName)]);
     }
 }
