@@ -22,3 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('guest')->post('/register', [ RegisteredUserController::class, 'registerApi' ] )->name('api.register');
 Route::middleware('guest')->post('/login', [ AuthenticatedSessionController::class, 'storeApi' ] )->name('api.login');
+
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::get('mis-solicitudes', [UserFormRequestController::class, 'getMyRequests'] )->name('api.myRequests');
+
+
+});
