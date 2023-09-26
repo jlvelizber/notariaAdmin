@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\BelongsToManyRelationship;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -30,6 +31,7 @@ class User extends Authenticatable
         'second_last_name',
         'email',
         'password',
+        'country_id',
     ];
 
     /**
@@ -61,5 +63,10 @@ class User extends Authenticatable
     function getMainRole(): Model | null
     {
         return $this->roles()->first();
+    }
+
+
+    public function country(): BelongsTo {
+        return $this->belongsTo(Country::class, 'country_id');
     }
 }

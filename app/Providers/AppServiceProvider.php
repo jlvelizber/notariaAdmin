@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Resources\CountryResource;
+use App\Http\Resources\FormDocResource;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,5 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+        FormDocResource::withoutWrapping();
+        CountryResource::withoutWrapping();
     }
 }

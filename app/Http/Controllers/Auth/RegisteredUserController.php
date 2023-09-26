@@ -52,6 +52,7 @@ class RegisteredUserController extends Controller
             'second_last_name' => $request->second_last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'country_id' => $request->country_id
         ]);
     }
 

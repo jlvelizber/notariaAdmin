@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\FormDocController;
+use App\Http\Resources\UserLogggedResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,16 +20,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return new UserLogggedResource($request->user());
 });
 
 Route::middleware('guest')->post('/register', [ RegisteredUserController::class, 'registerApi' ] )->name('api.register');
 Route::middleware('guest')->post('/login', [ AuthenticatedSessionController::class, 'storeApi' ] )->name('api.login');
 
+Route::get('paises', [CountryController::class, 'listCountries'] )->name('api.paises');
+Route::get('tipos-documentos/{formType}', [FormDocController::class, 'getFormsByCategory'] )->name('api.permisosSalida');
+
+
 
 Route::middleware('auth:sanctum')->group(function () {
-
+    
     Route::get('mis-solicitudes', [UserFormRequestController::class, 'getMyRequests'] )->name('api.myRequests');
+    Route::get('get-documento/{formCode}', [FormDocController::class, 'getFormByCode'] )->name('api.permisosSalida');
 
 
 });
