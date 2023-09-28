@@ -35,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('mis-solicitudes', [UserFormRequestController::class, 'getMyRequests'] )->name('api.myRequests');
     Route::get('get-documento/{formCode}', [FormDocController::class, 'getFormByCode'] )->name('api.permisosSalida');
+    Route::post('save-request', [FormDocController::class, 'postSaveRequestClient'] )->name('api.saveRequestClient');
 
 
 });

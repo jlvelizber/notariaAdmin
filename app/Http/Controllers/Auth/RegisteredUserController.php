@@ -30,6 +30,7 @@ class RegisteredUserController extends Controller
     private function validateRequest(Request $request)
     {
         $request->validate([
+            'identification_type' => 'required',
             'identification_num' => 'required|string|unique:' . User::class,
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:' . User::class,
