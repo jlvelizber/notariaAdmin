@@ -26,7 +26,7 @@ class UserFormRequest extends Model
 
     public function doc() : Relation 
     {
-        return $this->belongsTo(FormDoc::class);    
+        return $this->belongsTo(FormDoc::class, 'form_doc_id');    
     }
     
     

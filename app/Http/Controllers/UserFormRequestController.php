@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserFormRequestResource;
 use App\Models\UserFormRequest;
 use Illuminate\Http\Request;
 
@@ -51,7 +52,12 @@ class UserFormRequestController extends Controller
      * API
      */
 
-     public function getMyRequests(Request $request) {
-        
-     }
+    public function getMyRequests(Request $request)
+    {
+        $userId = $request->user()->id;
+
+        $userRequests = UserFormRequest::where('user_id', $userId)->orderBy('id','desc')->get();
+
+        return UserFormRequestResource::collection($userRequests);
+    }
 }

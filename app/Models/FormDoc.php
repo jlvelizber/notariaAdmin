@@ -29,5 +29,11 @@ class FormDoc extends Model
     }
 
 
+    public function category() 
+    {
+        return $this->belongsTo(FormDocType::class, 'fom_type_id');
+    } 
+
+
 
 }

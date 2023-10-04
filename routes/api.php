@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\FormDocController;
+use App\Http\Controllers\UserFormRequestController;
 use App\Http\Resources\UserLogggedResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
