@@ -10,7 +10,7 @@ const UsersDataTable: FC<{ users: User[]; onDelete: (user: User) => void }> = ({
     onDelete,
 }) => {
     // Con esto optienes el usuario en linea
-    const { auth }  = usePage<PageProps>().props
+    const { auth } = usePage<PageProps>().props;
 
     const onEditRole = (user: User) => {
         router.get(`users/${user}/edit`);
@@ -32,6 +32,13 @@ const UsersDataTable: FC<{ users: User[]; onDelete: (user: User) => void }> = ({
             field: "email",
             headerName: "Correo electrónico",
             width: 300,
+        },
+        {
+            field: "role",
+            headerName: "Rol",
+            width: 180,
+            valueGetter: ({ row }: GridValueGetterParams) =>
+                row.role_name ? `${row.role_name}` : "Sin Rol",
         },
         {
             field: "created_at",

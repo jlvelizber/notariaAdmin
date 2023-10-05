@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserFormRequestResource;
 use App\Models\UserFormRequest;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserFormRequestController extends Controller
 {
@@ -13,7 +14,9 @@ class UserFormRequestController extends Controller
      */
     public function index()
     {
-        //
+        $requests = UserFormRequest::all();
+
+        return Inertia::render('Requests/index', ['requests' => $requests]);
     }
 
     /**

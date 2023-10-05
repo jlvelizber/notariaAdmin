@@ -7,7 +7,7 @@ export interface User {
     first_last_name: string;
     second_last_name: string;
     password: string;
-    role?: Role
+    role_name?: string;
 }
 
 export interface Role {
@@ -15,7 +15,12 @@ export interface Role {
     name: string;
     display_name: string;
     description: string;
-    is_deletetable: boolean
+    is_deletetable: boolean;
+}
+
+export interface UserFormRequest {
+    user: User;
+    form_quests_page: [key: string, value: string];
 }
 
 export type PageProps<
@@ -24,7 +29,7 @@ export type PageProps<
     auth: {
         user: User;
     };
-    errorHandlerMessage: string
+    errorHandlerMessage: string;
 };
 
 export type RolePageProps<
@@ -45,7 +50,6 @@ export type NewRolePageProps<
     role?: Role;
 };
 
-
 export type IndexUserPageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
@@ -55,7 +59,6 @@ export type IndexUserPageProps<
     users: User[];
 };
 
-
 export type NewEditUserPageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
@@ -64,4 +67,10 @@ export type NewEditUserPageProps<
     };
     user?: User;
     roles: Role[];
+};
+
+export type ListIndexRequestPageProps<
+    T extends Record<string, unknown> = Record<string, unknown>
+> = T & {
+    requests: UserFormRequest[];
 };

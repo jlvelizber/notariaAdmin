@@ -60,13 +60,26 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    /**
+     * Funciones
+     */
     function getMainRole(): Model | null
     {
         return $this->roles()->first();
     }
 
-
-    public function country(): BelongsTo {
-        return $this->belongsTo(Country::class, 'country_id');
+    /**
+     * scopes
+     */
+    public function scopeMainRole($query)
+    {
+        return $query->leftJoin('role_user', 'role_user.user_id', 'users.id')->leftJoin('roles', 'roles.id', 'role_user.role_id')->selectRaw('users.*, roles.name as role_name');
     }
 }

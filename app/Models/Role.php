@@ -9,6 +9,8 @@ class Role extends Model
 {
     use HasFactory;
 
+    const DEFAULT_ROLE = 'customer';
+
     protected $fillable = [
         'name',
         'display_name',

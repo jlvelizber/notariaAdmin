@@ -21,9 +21,8 @@ class UserController extends Controller
      */
     public function index(): Response
     {
-        $users = User::all();
-      
-
+        // Llama a la lista de usuarios con su rol principal o primer rol
+        $users = User::mainRole()->get();
         return Inertia::render('Users/index', ['users' => $users]);
     }
 
