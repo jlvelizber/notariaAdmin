@@ -5,9 +5,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 const ActionDataTableButtons: FC<{
     id: number;
-    isEdit: boolean;
+    isEdit?: boolean;
     onEditHandler?: () => void;
-    isDelete: boolean;
+    isDelete?: boolean;
     onDeleteHandler?: () => void;
     isShow?: Boolean | false;
     onShowHandler?: () => void;

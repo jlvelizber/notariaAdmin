@@ -14,7 +14,13 @@ class UserFormRequestController extends Controller
      */
     public function index()
     {
-        $requests = UserFormRequest::all();
+        $requests = UserFormRequest::with(
+            [
+                'customer',
+                'doc',
+                'status'
+            ]
+        )->get();
 
         return Inertia::render('Requests/index', ['requests' => $requests]);
     }
@@ -59,7 +65,7 @@ class UserFormRequestController extends Controller
     {
         $userId = $request->user()->id;
 
-        $userRequests = UserFormRequest::where('user_id', $userId)->orderBy('id','desc')->get();
+        $userRequests = UserFormRequest::where('user_id', $userId)->orderBy('id', 'desc')->get();
 
         return UserFormRequestResource::collection($userRequests);
     }

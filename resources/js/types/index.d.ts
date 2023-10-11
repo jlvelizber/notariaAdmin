@@ -10,6 +10,13 @@ export interface User {
     role_name?: string;
 }
 
+export interface StatusForm {
+    id?: number;
+    name: string;
+}
+
+export interface Customer extends User {}
+
 export interface Role {
     id: number;
     name: string;
@@ -18,8 +25,15 @@ export interface Role {
     is_deletetable: boolean;
 }
 
+export interface FormDocInrteface {
+    id?: number;
+    name: string;
+}
+
 export interface UserFormRequest {
-    user: User;
+    customer: Customer;
+    status: StatusForm;
+    doc: FormDocInrteface;
     form_quests_page: [key: string, value: string];
 }
 

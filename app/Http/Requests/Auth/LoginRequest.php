@@ -39,12 +39,12 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticate(): void
+    public function authenticate($inWebPage = false): void
     {
         $this->ensureIsNotRateLimited();
 
 
-        $canLogin = $this->validateIfUserCanAuthenticate($this->get('email'));
+        $canLogin = $this->validateIfUserCanAuthenticate($this->get('email'), $inWebPage);
 
         if (!$canLogin) {
             RateLimiter::hit($this->throttleKey());
@@ -96,7 +96,7 @@ class LoginRequest extends FormRequest
     }
 
 
-    public function validateIfUserCanAuthenticate($email): bool
+    public function validateIfUserCanAuthenticate($email, $inWebPage = false): bool
     {
         $user = User::where('email', $email)->first();
         if (!$user) return false;
@@ -104,11 +104,14 @@ class LoginRequest extends FormRequest
         // user has not role
         if (!$user->getMainRole()) return false;
 
-        // dd($user->getMainRole());
         $mainRole = $user->getMainRole();
 
-        if ($mainRole->name !== Role::DEFAULT_ROLE) return true;
-
-        return false;
+        if ($inWebPage) {
+            if ($mainRole->name === Role::DEFAULT_ROLE) return true;
+            return false;
+        } else {
+            if ($mainRole->name !== Role::DEFAULT_ROLE) return true;
+            return false;
+        }
     }
 }

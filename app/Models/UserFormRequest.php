@@ -18,9 +18,9 @@ class UserFormRequest extends Model
     ];
 
 
-    public function user(): Relation
+    public function customer(): Relation
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 

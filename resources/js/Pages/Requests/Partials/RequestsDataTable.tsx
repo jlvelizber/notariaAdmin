@@ -20,31 +20,29 @@ const RequestsDataTable: FC<{ requests: UserFormRequest[] }> = ({
         {
             field: "form_type",
             headerName: "Formulario",
-            width: 150,
+            width: 350,
+            renderCell: (params) => params.row.doc.name,
         },
         {
             field: "customer",
             headerName: "Cliente",
-            width: 280,
+            width: 350,
+            renderCell: (params) =>
+                `${params.row.customer.name} ${params.row.customer.first_last_name} ${params.row.customer.second_last_name}`,
         },
 
         {
             field: "status",
             headerName: "Estado",
             width: 300,
+            renderCell: (params) => params.row.status.name,
         },
         {
             field: "actions",
             headerName: "Acciones",
             width: 300,
             renderCell: (params) => (
-                <ActionDataTableButtons
-                    id={params.row.id}
-                    isDelete={params.row.is_deletetable}
-                    isEdit={true}
-                    onEditHandler={() => onEditRole(params.row.id)}
-                    onDeleteHandler={() => onDeleteRole(params.row)}
-                />
+                <ActionDataTableButtons id={params.row.id} isShow={true} />
             ),
         },
     ];

@@ -20,6 +20,12 @@ export default function AuthenticatedNavigation() {
                     Dashboard
                 </NavLink>
                 <NavLink
+                    href={route("requests.index")}
+                    active={route().current("requests.*")}
+                >
+                    Solicitudes
+                </NavLink>
+                <NavLink
                     href={route("roles.index")}
                     active={route().current("roles.*")}
                 >

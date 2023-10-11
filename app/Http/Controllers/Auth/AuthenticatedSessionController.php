@@ -53,14 +53,16 @@ class AuthenticatedSessionController extends Controller
     }
 
 
-     /**
+    /**
      * Handle an incoming authentication request.
      */
     public function storeApi(LoginRequest $request): JsonResponse
     {
         $tokenName = config('sanctum.token_name');
 
-        $request->authenticate();
+        $inWebPage = true;
+
+        $request->authenticate($inWebPage);
 
         return response()->json(['token' => $request->user()->createToken($tokenName)]);
     }
