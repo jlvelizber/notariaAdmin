@@ -8,6 +8,7 @@ export interface User {
     second_last_name: string;
     password: string;
     role_name?: string;
+    role?:Role 
 }
 
 export interface StatusForm {
