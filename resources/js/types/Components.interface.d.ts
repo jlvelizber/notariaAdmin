@@ -17,4 +17,5 @@ export interface FormBarActionsInterface {
     saveAction? : () => void;
     deleteAction? : () => void;
     routeBack: string;
+    children?: ReactNode
 }

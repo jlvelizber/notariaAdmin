@@ -17,6 +17,18 @@ class UserFormRequest extends Model
         'status_id',
     ];
 
+    /**
+     * Casting
+     */
+
+    // protected $casts = [
+    //     'form_request_body' => 'array',
+    // ];
+
+
+    /**
+     * Relations
+     */
 
     public function customer(): Relation
     {
@@ -24,15 +36,34 @@ class UserFormRequest extends Model
     }
 
 
-    public function doc() : Relation 
+    public function doc(): Relation
     {
-        return $this->belongsTo(FormDoc::class, 'form_doc_id');    
+        return $this->belongsTo(FormDoc::class, 'form_doc_id');
     }
-    
-    
-    
-    public function status() : Relation 
+
+
+
+    public function status(): Relation
     {
-        return $this->belongsTo(UserFormStatus::class);    
+        return $this->belongsTo(UserFormStatus::class);
+    }
+
+
+    /**
+     * Helper method that remove keys are empty 
+     */
+
+    public function sanitizeValues()
+    {
+        $requestBodyForm = json_decode($this->form_request_body, true);
+        if (is_array($requestBodyForm)) {
+            $filtered =  array_filter($requestBodyForm, function ($value) {
+                return $value !== '';
+            });
+
+           return $filtered;
+        }
+
+        return [];
     }
 }

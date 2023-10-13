@@ -9,10 +9,11 @@ export const FormBarActions = ({
     saveAction,
     routeBack,
     deleteAction,
+    children,
 }: FormBarActionsInterface) => {
     return (
-        <Grid container classes={{ root: "flex justify-between" }}>
-            <Grid item>
+        <Grid container classes={{ root: "flex justify-between" }} >
+            <Grid item rowSpacing={4} gap={2} columnSpacing={2} justifyItems={"flex-start"}>
                 {saveAction ? (
                     <PrimaryButton
                         type="submit"
@@ -23,11 +24,16 @@ export const FormBarActions = ({
                     </PrimaryButton>
                 ) : null}
 
+                {children}
                 <SecondaryButton href={route(routeBack)}>
                     Regresar
                 </SecondaryButton>
+                {deleteAction ? (
+                    <Grid item>
+                        <DangerButton onClick={deleteAction}>Borrar</DangerButton>
+                    </Grid>
+                ) : null}
             </Grid>
-            {deleteAction ? <Grid item><DangerButton onClick={deleteAction}>Borrar</DangerButton></Grid> : null}
         </Grid>
     );
 };

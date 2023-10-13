@@ -8,7 +8,9 @@ export interface User {
     second_last_name: string;
     password: string;
     role_name?: string;
-    role?:Role 
+    role?: Role;
+    country_id?: number;
+    identification_num?: string;
 }
 
 export interface StatusForm {
@@ -26,16 +28,42 @@ export interface Role {
     is_deletetable: boolean;
 }
 
+export interface DocFormFieldOptions {
+    value: string;
+    label: string;
+}
+export interface DocFormFieldValidator {
+    required?: boolean;
+}
+
+export interface DocFormField {
+    label: string;
+    type: string;
+    name: string;
+    value?: string;
+    options?: DocFormFieldOptions[];
+    validations?: DocFormFieldValidator;
+}
+
+export interface SectionDocFormField {
+    name?: string;
+    fields: DocFormField[];
+}
+
 export interface FormDocInrteface {
     id?: number;
     name: string;
+    code_name: string;
+    field_requests: SectionDocFormField[];
+    body: string;
 }
 
 export interface UserFormRequest {
+    id: number;
     customer: Customer;
     status: StatusForm;
     doc: FormDocInrteface;
-    form_quests_page: [key: string, value: string];
+    form_request_body: { key: string; value: string };
 }
 
 export type PageProps<
@@ -88,4 +116,10 @@ export type ListIndexRequestPageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
     requests: UserFormRequest[];
+};
+
+export type ListEditShowRequestPageProps<
+    T extends Record<string, unknown> = Record<string, unknown>
+> = T & {
+    request: UserFormRequest;
 };

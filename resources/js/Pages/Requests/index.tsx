@@ -8,7 +8,6 @@ export default function Index() {
     const { auth } = usePage<PageProps>().props;
     const { requests } = usePage<ListIndexRequestPageProps>().props;
 
-    console.log(requests)
     return (
         <AuthenticatedLayout
             user={auth.user}
