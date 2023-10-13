@@ -4,15 +4,12 @@ import { ListEditShowRequestPageProps, PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { DocRequestForm } from "./Partials/DocRequestForm";
 
-
 export default function Edit() {
     const { request } = usePage<ListEditShowRequestPageProps>().props;
-    
+
     const {
         auth: { user },
     } = usePage<PageProps>().props;
-
-
 
     return (
         <AuthenticatedLayout
@@ -28,12 +25,7 @@ export default function Edit() {
             <Head title="Solicitudes" />
             <div className="p-3">
                 <div className="w-full">
-                    <DocRequestForm
-                        sections={request.doc.field_requests}
-                        customer={request.customer}
-                        requestId={request.id}
-                        formData={request.form_request_body}
-                    />
+                    <DocRequestForm request={request} />
                 </div>
             </div>
         </AuthenticatedLayout>

@@ -1,14 +1,14 @@
 import React, { FC, FormEventHandler, Key, useState } from "react";
 import { FormDataUserApplicant } from "@/Components/FormDataUserApplicant";
 import {
-    Customer,
     DocFormField,
     DocFormFieldOptions,
     SectionDocFormField,
+    UserFormRequest,
 } from "@/types";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import { Grid } from "@mui/material";
+import { Button, Grid, Link } from "@mui/material";
 import { Inertia } from "@inertiajs/inertia";
 import { useDispatch } from "react-redux";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
@@ -17,16 +17,19 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import { useFormRequests } from "@/Hooks/useFormRequests";
 
 export const DocRequestForm: FC<{
-    sections: SectionDocFormField[] | undefined;
-    customer: Customer;
-    requestId: number;
-    formData: any;
+    request: UserFormRequest;
     isEditable?: boolean;
-}> = ({ sections, customer, requestId, formData, isEditable = true }) => {
+}> = ({ request, isEditable = true }) => {
     const dispatch = useDispatch();
-    const { processForm: hookProcessForm } = useFormRequests();
 
-    const [valuesForm, setValuesForm] = useState(formData);
+    const { processForm: hookProcessForm } = useFormRequests();
+    const {
+        doc: { field_requests: sections },
+        form_request_body: formData,
+        customer,
+    } = request;
+
+    const [valuesForm, setValuesForm] = useState<any>(formData);
 
     /**
      * Manda a guardar el muchacho
@@ -35,7 +38,7 @@ export const DocRequestForm: FC<{
     const submit: FormEventHandler = async (e) => {
         e.preventDefault();
         await Inertia.put(
-            route("requests.update", { id: requestId }),
+            route("requests.update", { id: request.id }),
             valuesForm
         );
 
@@ -58,7 +61,11 @@ export const DocRequestForm: FC<{
     };
 
     const processForm = async () => {
-        await hookProcessForm(requestId);
+        await hookProcessForm(request.id);
+    };
+
+    const finalizeRequest = async () => {
+        await hookProcessForm(request.id, "finalizado");
     };
 
     return (
@@ -155,8 +162,8 @@ export const DocRequestForm: FC<{
                 
                     Solo si va a editar
                 */}
-                {isEditable && (
-                    <Grid item rowSpacing={2} sx={{ paddingY: 5 }}>
+                <Grid item rowSpacing={2} sx={{ paddingY: 5 }}>
+                    {isEditable && (
                         <FormBarActions
                             routeBack="requests.index"
                             saveAction={() => {}}
@@ -169,8 +176,53 @@ export const DocRequestForm: FC<{
                                 Procesar
                             </SecondaryButton>
                         </FormBarActions>
-                    </Grid>
-                )}
+                    )}
+
+                    {!isEditable && (
+                        <FormBarActions routeBack="requests.index">
+                            {request.status.code === "requerido" && (
+                                <>
+                                    <Button variant="contained" color="primary">
+                                        <Link
+                                            href={route("requests.edit", {
+                                                id: request.id,
+                                            })}
+                                        >
+                                            Editar
+                                        </Link>
+                                    </Button>
+
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={processForm}
+                                    >
+                                        Procesar
+                                    </Button>
+                                </>
+                            )}
+
+                            {request.status.code === "proceso" && (
+                                <>
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={finalizeRequest}
+                                    >
+                                        Finalizar
+                                    </Button>
+                                </>
+                            )}
+                            {request.status.code === "finalizado" && (
+                                <>
+                                    <Button variant="contained" color="success">
+                                        Generar/Imprimir
+                                    </Button>
+                                </>
+                            )}
+                        </FormBarActions>
+                    )}
+                </Grid>
             </form>
         </div>
     );
