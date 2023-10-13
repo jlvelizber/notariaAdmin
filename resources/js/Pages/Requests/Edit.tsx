@@ -2,15 +2,18 @@ import React from "react";
 import { Head, usePage } from "@inertiajs/react";
 import { ListEditShowRequestPageProps, PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { FormDataUserApplicant } from "@/Components/FormDataUserApplicant";
 import { DocRequestForm } from "./Partials/DocRequestForm";
+
 
 export default function Edit() {
     const { request } = usePage<ListEditShowRequestPageProps>().props;
+    
     const {
         auth: { user },
     } = usePage<PageProps>().props;
-    
+
+
+
     return (
         <AuthenticatedLayout
             user={user}

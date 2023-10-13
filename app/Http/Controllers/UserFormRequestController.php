@@ -41,13 +41,20 @@ class UserFormRequestController extends Controller
      */
     public function show(UserFormRequest $userFormRequest)
     {
-        $userForm = $userFormRequest->load(['customer', 'doc', 'status']);
+        $userForm =  $userFormRequest->with(['customer', 'doc', 'status'])->where('id', $userFormRequest->id)->first();
 
-       
-        return Inertia::render('Requests/edit', ['request' => $userForm]);
+        /**
+         * sanitiza los valores nulos que de acuerdo a una anomalia va con datos que no son del formulario
+         */
+        $userForm->form_request_body = $userForm->sanitizeValues();
+
+        // genera values del form
+        $userForm->doc->setValuesToRequests($userForm->form_request_body);
+
+        return Inertia::render('Requests/Show', ['request' => $userForm]);
     }
-    
-    
+
+
     /**
      * Display the specified resource.
      */
@@ -63,7 +70,7 @@ class UserFormRequestController extends Controller
         // genera values del form
         $userForm->doc->setValuesToRequests($userForm->form_request_body);
 
-      
+
 
         return Inertia::render('Requests/Edit', ['request' => $userForm]);
     }
@@ -73,7 +80,20 @@ class UserFormRequestController extends Controller
      */
     public function update(Request $request, UserFormRequest $userFormRequest)
     {
-        $userFormRequest->form_request_body =  json_encode( $request->all());
+        /** verifica si va a 0 o cambiar de estado o simplementa a ctualizar campos */
+        if ($request->has('status')) {
+            $formStatus = UserFormStatus::where('code', $request->get('status'))->first();
+            if ($formStatus) {
+                $userFormRequest->status_id = $formStatus->id;
+            }
+        } else {
+            /**
+             * Va a actualizar los campos del formulario
+             */
+            $userFormRequest->form_request_body =  json_encode($request->all());
+        }
+
+
         $userFormRequest->save();
         return redirect()->route('requests.index');
     }
@@ -101,7 +121,7 @@ class UserFormRequestController extends Controller
 
 
 
-    
+
     /**
      * 
      */
@@ -135,7 +155,7 @@ class UserFormRequestController extends Controller
             }
 
             return response()->json([
-                'message' => $validator->errors()->first(), 
+                'message' => $validator->errors()->first(),
                 'errors' => $validator->errors()
             ], 422);
         }

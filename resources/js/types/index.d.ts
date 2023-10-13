@@ -16,6 +16,7 @@ export interface User {
 export interface StatusForm {
     id?: number;
     name: string;
+    code: string;
 }
 
 export interface Customer extends User {}

@@ -1,10 +1,4 @@
-import React, {
-    FC,
-    FormEventHandler,
-    Key,
-    SyntheticEvent,
-    useState,
-} from "react";
+import React, { FC, FormEventHandler, Key, useState } from "react";
 import { FormDataUserApplicant } from "@/Components/FormDataUserApplicant";
 import {
     Customer,
@@ -15,19 +9,22 @@ import {
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import { Grid } from "@mui/material";
-import { FormBarActions } from "@/Components/FormBarActions";
-import SecondaryButton from "@/Components/SecondaryButton";
 import { Inertia } from "@inertiajs/inertia";
 import { useDispatch } from "react-redux";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
+import { FormBarActions } from "@/Components/FormBarActions";
+import SecondaryButton from "@/Components/SecondaryButton";
+import { useFormRequests } from "@/Hooks/useFormRequests";
 
 export const DocRequestForm: FC<{
     sections: SectionDocFormField[] | undefined;
     customer: Customer;
     requestId: number;
     formData: any;
-}> = ({ sections, customer, requestId, formData }) => {
+    isEditable?: boolean;
+}> = ({ sections, customer, requestId, formData, isEditable = true }) => {
     const dispatch = useDispatch();
+    const { processForm: hookProcessForm } = useFormRequests();
 
     const [valuesForm, setValuesForm] = useState(formData);
 
@@ -35,18 +32,20 @@ export const DocRequestForm: FC<{
      * Manda a guardar el muchacho
      * @param data
      */
-    const submit: FormEventHandler = (e) => {
+    const submit: FormEventHandler = async (e) => {
         e.preventDefault();
-        Inertia.put(route("requests.update", { id: requestId }), valuesForm, {
-            onSuccess: () => {
-                dispatch(
-                    onOpenSnack({
-                        message: "Solicitud Actualizada correctamente",
-                        severity: "success",
-                    })
-                );
-            },
-        });
+        await Inertia.put(
+            route("requests.update", { id: requestId }),
+            valuesForm
+        );
+
+        // TODO: VERIFICAR QUE TODO ESTE BIEN
+        dispatch(
+            onOpenSnack({
+                message: "Solicitud Actualizada correctamente",
+                severity: "success",
+            })
+        );
     };
 
     const handleChange = (e: any) => {
@@ -56,6 +55,10 @@ export const DocRequestForm: FC<{
             ...valuesForm,
             [key]: value,
         }));
+    };
+
+    const processForm = async () => {
+        await hookProcessForm(requestId);
     };
 
     return (
@@ -96,7 +99,7 @@ export const DocRequestForm: FC<{
                                             />
                                             {fieldForm.type === "select" ? (
                                                 <select
-                                                    className="mt-1 block w-full 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm "
+                                                    className="mt-1 block w-full 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm disabled:bg-gray-100 read-only:bg-gray-100"
                                                     value={
                                                         valuesForm[
                                                             fieldForm.name
@@ -105,6 +108,7 @@ export const DocRequestForm: FC<{
                                                     onChange={handleChange}
                                                     name={fieldForm.name}
                                                     id={fieldForm.name}
+                                                    disabled={!isEditable}
                                                 >
                                                     <option>Seleccione</option>
                                                     {fieldForm.options?.map(
@@ -135,6 +139,8 @@ export const DocRequestForm: FC<{
                                                     className="mt-1 block w-full"
                                                     onChange={handleChange}
                                                     id={fieldForm.name}
+                                                    readOnly={!isEditable}
+                                                    disabled={!isEditable}
                                                 />
                                             )}
                                         </Grid>
@@ -144,16 +150,27 @@ export const DocRequestForm: FC<{
                         </Grid>
                     );
                 })}
-                <Grid item rowSpacing={2} sx={{ paddingY: 5 }}>
-                    <FormBarActions
-                        saveAction={() => {}}
-                        routeBack="requests.index"
-                    >
-                        <SecondaryButton variant="contained" color="secondary">
-                            Procesar
-                        </SecondaryButton>
-                    </FormBarActions>
-                </Grid>
+
+                {/* 
+                
+                    Solo si va a editar
+                */}
+                {isEditable && (
+                    <Grid item rowSpacing={2} sx={{ paddingY: 5 }}>
+                        <FormBarActions
+                            routeBack="requests.index"
+                            saveAction={() => {}}
+                        >
+                            <SecondaryButton
+                                variant="contained"
+                                color="secondary"
+                                onClick={processForm}
+                            >
+                                Procesar
+                            </SecondaryButton>
+                        </FormBarActions>
+                    </Grid>
+                )}
             </form>
         </div>
     );

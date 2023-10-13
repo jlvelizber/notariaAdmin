@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
 
     // Solicitudes
     Route::get('requests', [UserFormRequestController::class, 'index'])->name('requests.index');
+    Route::get('requests/{userFormRequest}', [UserFormRequestController::class, 'show'])->name('requests.show');
     Route::get('requests/{userFormRequest}/edit', [UserFormRequestController::class, 'edit'])->name('requests.edit');
     Route::put('requests/{userFormRequest}', [UserFormRequestController::class, 'update'])->name('requests.update');
 
