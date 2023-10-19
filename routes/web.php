@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFormRequestController;
@@ -47,6 +48,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('roles', RoleController::class)->except('show');
     Route::resource('users', UserController::class)->except('show');
+
+    Route::get('requests/generate/{userFormRequest}', [ReportController::class,'generateRequestDoc'])->name('requests.generate');
 });
 
 require __DIR__.'/auth.php';

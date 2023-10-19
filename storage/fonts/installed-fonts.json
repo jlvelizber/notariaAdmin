@@ -1,0 +1,10 @@
+{
+    "bookman old style": {
+        "normal": "C:\\laragon\\www\\notariaAdmin\\storage\\fonts\/bookman_old_style_normal_ffed87cb3eaa5f7830c71d423d84a3c9",
+        "bold": "bookman_old_style_bold_5c519248643de6d66a29952704e4196b"
+    },
+    "calibri": {
+        "normal": "C:\\laragon\\www\\notariaAdmin\\storage\\fonts\/calibri_normal_11d91114d70bcdf4984a40445218952f",
+        "bold": "calibri_bold_c05dfc03374552035d90309c0a0255b4"
+    }
+}

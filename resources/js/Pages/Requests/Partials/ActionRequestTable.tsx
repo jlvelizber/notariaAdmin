@@ -2,8 +2,9 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import React, { FC } from "react";
 import { useFormRequests } from "@/Hooks/useFormRequests";
 import { UserFormRequest } from "@/types";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { Button, ButtonGroup } from "@mui/material";
+import axios from "axios";
 
 export const ActionRequestTable: FC<{
     status: "requerido" | "proceso" | "finalizado";
@@ -17,6 +18,23 @@ export const ActionRequestTable: FC<{
 
     const finalizeRequest = async () => {
         await hookProcessForm(requestObject.id, "finalizado");
+    };
+
+    const printReport = async () => {
+        axios
+            .get(`/requests/generate/${requestObject.id}`, {
+                responseType: "blob",
+            })
+            .then((response) => {
+                const url = window.URL.createObjectURL(
+                    new Blob([response.data])
+                );
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "report.pdf");
+                document.body.appendChild(link);
+                link.click();
+            });
     };
 
     return (
@@ -65,9 +83,15 @@ export const ActionRequestTable: FC<{
                 )}
                 {status === "finalizado" && (
                     <>
-                        <Button variant="contained" color="success">
+                        {/* <Link href={`requests/generate/${requestObject.id}`} target="_blank" formTarget="_blank" as="a"> */}
+                        <Button
+                            variant="contained"
+                            color="success"
+                            onClick={printReport}
+                        >
                             Generar/Imprimir
                         </Button>
+                        {/* </Link> */}
                     </>
                 )}
             </ButtonGroup>

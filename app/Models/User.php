@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\BelongsToManyRelationship;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -81,5 +82,18 @@ class User extends Authenticatable
     public function scopeMainRole($query)
     {
         return $query->leftJoin('role_user', 'role_user.user_id', 'users.id')->leftJoin('roles', 'roles.id', 'role_user.role_id')->selectRaw('users.*, roles.name as role_name');
+    }
+
+
+    /**
+     * Mutators
+     */
+
+    /**
+     * Get the user's first name.
+     */
+    public function getFullName()
+    {
+        return $this->name . ' ' . $this->midle_name . ' ' . $this->first_last_name . ' ' . $this->second_last_name;
     }
 }
