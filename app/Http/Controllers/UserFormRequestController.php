@@ -7,6 +7,7 @@ use App\Models\FormDoc;
 use App\Models\UserFormRequest;
 use App\Models\UserFormStatus;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -128,22 +129,42 @@ class UserFormRequestController extends Controller
     public function postSaveRequestClient(Request $request)
     {
         $docForm = FormDoc::where('code_name', $request->get('codeForm'))->select('id', 'field_requests')->first();
+
         if ($docForm) {
 
-            $rules = $this->generateRulesValidations($docForm->field_requests);
+            $requestsForm = $request->except('codeForm');
 
-            // dd($request->get('dataForm'));
+            // dd($requestsForm);
 
-            $dataFormArray = json_decode($request->get('dataForm'), true);
+            // Vlidamos
+            $rules = $this->generateRulesValidations(json_decode($docForm->field_requests, true));
 
-            $validator = Validator::make($dataFormArray, $rules);
+            $validator = Validator::make($requestsForm, $rules);
 
-
+            
+            
+            
+            
+            
             if ($validator->passes()) {
+                // validamos si viene algun FILE
+                foreach ($requestsForm as $key => $requestForm) {
+                    
+                    $isAFile = $request->hasFile($key);
+                    if($isAFile)
+                    {
+                       $urlFile = $this->uploadAttachmentFile($requestForm, $request->get('codeForm'));
+                       // actualiza request con la path
+                       $requestsForm[$key] = $urlFile;
+                    }
+                }
+                
+                // dd($requestsForm);
+                
                 $params = [
                     'form_doc_id' => $docForm->id,
                     'user_id' => $request->user()->id,
-                    'form_request_body' => $request->get('dataForm'),
+                    'form_request_body' => json_encode($requestsForm),
                     'status_id' => UserFormStatus::where('code', 'requerido')->first()->id,
 
                 ];
@@ -182,5 +203,14 @@ class UserFormRequestController extends Controller
         }
 
         return [];
+    }
+
+    /**
+     * Upload a file and return their name in storage
+     */
+    private function uploadAttachmentFile(UploadedFile $requestFile, $path): string
+    {
+        $fileName = $requestFile->store($path);
+        return $fileName;
     }
 }

@@ -19,7 +19,7 @@ class FormDocResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'code_name' => $this->code_name,
-            'field_requests' => $this->field_requests ,
+            'field_requests' => json_decode($this->field_requests) ,
         ];
     }
 }

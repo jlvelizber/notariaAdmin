@@ -44,7 +44,7 @@ class FormDoc extends Model
 
     public function setValuesToRequests(array $valuesForm)
     {
-        $fieldRequestsCopy = $this->field_requests;
+        $fieldRequestsCopy = json_decode($this->field_requests, true);
 
         foreach ($valuesForm as $keyForm => $valueForm) {
             for ($i = 0; $i < count($fieldRequestsCopy); $i++) {
