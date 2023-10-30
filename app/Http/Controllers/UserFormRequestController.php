@@ -29,6 +29,12 @@ class UserFormRequestController extends Controller
         return Inertia::render('Requests/index', ['requests' => $requests]);
     }
 
+
+    public function showFilter()
+    {
+        dd("hola: ");
+    }
+
     /**
      * Store a newly created resource in storage.
      */

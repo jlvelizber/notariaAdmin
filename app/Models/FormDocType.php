@@ -13,7 +13,9 @@ class FormDocType extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name'
+        'name',
+        'display_name',
+        'route_name'
     ];
 
 

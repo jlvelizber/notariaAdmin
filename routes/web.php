@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\FormDocTypeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFormRequestController;
+use App\Models\FormDocType;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -41,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
     // Solicitudes
     Route::get('requests', [UserFormRequestController::class, 'index'])->name('requests.index');
+    Route::get('requests/{formDocType}', [UserFormRequestController::class, 'showFilter'])->name('requests.formDocType.index');
     Route::get('requests/{userFormRequest}', [UserFormRequestController::class, 'show'])->name('requests.show');
     Route::get('requests/{userFormRequest}/edit', [UserFormRequestController::class, 'edit'])->name('requests.edit');
     Route::put('requests/{userFormRequest}', [UserFormRequestController::class, 'update'])->name('requests.update');

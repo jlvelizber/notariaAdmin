@@ -51,6 +51,12 @@ export interface SectionDocFormField {
     fields: DocFormField[];
 }
 
+export interface DocFormType {
+    name: string;
+    display_name: string;
+    route_name: string;
+}
+
 export interface FormDocInrteface {
     id?: number;
     name: string;
@@ -67,12 +73,16 @@ export interface UserFormRequest {
     form_request_body: { key: string; value: string };
 }
 
+/**
+ * Esto es lo que viene desde el Share
+ */
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
     auth: {
         user: User;
     };
+    form_types: DocFormType[]
     errorHandlerMessage: string;
 };
 

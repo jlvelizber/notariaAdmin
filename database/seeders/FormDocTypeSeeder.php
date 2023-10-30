@@ -16,18 +16,26 @@ class FormDocTypeSeeder extends Seeder
         $forms = [
             [
                 'name' => 'permiso_salida',
+                'display_name' => 'Permiso de Salida',
+                'route_name' => 'permiso-salida',
 
             ],
             [
                 'name' => 'delcaracion_juramentada',
+                'display_name' => 'Declaración Juramentada',
+                'route_name' => 'declaracion-juramentada'
 
             ],
             [
                 'name' => 'copia_certificada',
+                'display_name' => 'Copia Certificada',
+                'route_name' => 'copia-certificada'
 
             ],
             [
                 'name' => 'poderes_generales',
+                'display_name' => 'Poderes generales',
+                'route_name' => 'poderes-generales'
 
             ],
 

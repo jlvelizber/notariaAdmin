@@ -521,7 +521,7 @@ class FormDocSeeder extends Seeder
                 ],
                 [
                   "name" => "file_copia_cert_votacion", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
-                  "label" => "Certofificado de votación del Solicitante",
+                  "label" => "Certificado de votación del Solicitante",
                   "type" => "file",
                   "rules" => [
                     "required",
@@ -543,6 +543,25 @@ class FormDocSeeder extends Seeder
     ];
 
     foreach ($copiaCertificada as $formDoc) {
+
+      FormDoc::create($formDoc);
+    }
+    /**
+     * Declaracion juramentada
+     */
+    $decJuramentadaTypeForm = FormDocType::where('name', 'delcaracion_juramentada')->first();
+    
+    $declaracionJuramentada = [
+      [
+        'name' => 'Declaración Juramentada',
+        'code_name' => 'declaracion-juramentada',
+        'field_requests' => $copiaCertificada[0]['field_requests'],
+        'body' => '',
+        'form_type_id' => $decJuramentadaTypeForm->id
+      ]
+    ];
+
+    foreach ($declaracionJuramentada as $formDoc) {
 
       FormDoc::create($formDoc);
     }
