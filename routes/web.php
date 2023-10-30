@@ -43,7 +43,8 @@ Route::middleware('auth')->group(function () {
 
     // Solicitudes
     Route::get('requests', [UserFormRequestController::class, 'index'])->name('requests.index');
-    Route::get('requests/{formDocType}', [UserFormRequestController::class, 'showFilter'])->name('requests.formDocType.index');
+    Route::get('requests/download-file/{path}/{url}', [UserFormRequestController::class, 'downloadFile'])->name('requests.downloadFile');
+    Route::get('requests/{formDocType}', [UserFormRequestController::class, 'listRequestsByFormType'])->name('requests.formDocType.index');
     Route::get('requests/{userFormRequest}', [UserFormRequestController::class, 'show'])->name('requests.show');
     Route::get('requests/{userFormRequest}/edit', [UserFormRequestController::class, 'edit'])->name('requests.edit');
     Route::put('requests/{userFormRequest}', [UserFormRequestController::class, 'update'])->name('requests.update');

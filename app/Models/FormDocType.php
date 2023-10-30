@@ -21,6 +21,6 @@ class FormDocType extends Model
 
     public function docs(): Relation
     {
-        return $this->hasMany(FormDoc::class);
+        return $this->hasMany(FormDoc::class,'form_type_id','id');
     }
 }

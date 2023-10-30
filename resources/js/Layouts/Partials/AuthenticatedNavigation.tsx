@@ -1,13 +1,23 @@
-import React, { Key, useEffect } from "react";
+import React, { Key, useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import NavLink from "@/Components/NavLink";
 import { Link, usePage } from "@inertiajs/react";
-import { useProps } from "@mui/x-data-grid/internals";
 import { DocFormType, PageProps } from "@/types";
 import Dropdown from "@/Components/Dropdown";
+import { Button, Menu, MenuItem } from "@mui/material";
 
 export default function AuthenticatedNavigation() {
     const { form_types } = usePage<PageProps>().props;
+
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+        console.log(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     console.log(form_types);
     return (
@@ -25,49 +35,47 @@ export default function AuthenticatedNavigation() {
                 >
                     Dashboard
                 </NavLink>
-                <NavLink href={"#"} active={route().current("requests.*")}>
-                    <Dropdown>
-                        <Dropdown.Trigger>
-                            <span className="inline-flex rounded-md">
-                                <button
-                                    type="button"
-                                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                {/* <NavLink href={""} active={route().current("requests.*")}> */}
+                <Button
+                    id="basic-button"
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                    classes={{
+                        root: "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none !capitalize",
+                    }}
+                >
+                    Solicitudes
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            "aria-labelledby": "basic-button",
+                        }}
+                    >
+                        {form_types.map((menuItem: DocFormType, key: Key) => (
+                            <MenuItem key={key}>
+                                <NavLink
+                                    href={route("requests.formDocType.index", {
+                                        id: menuItem.route_name,
+                                    })}
+                                    active={route().current(
+                                        "requests.formDocType.index",
+                                        {
+                                            id: menuItem.route_name,
+                                        }
+                                    )}
                                 >
-                                    Solicitudes
-                                    <svg
-                                        className="ml-2 -mr-0.5 h-4 w-4"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clipRule="evenodd"
-                                        />
-                                    </svg>
-                                </button>
-                            </span>
-                        </Dropdown.Trigger>
-                        <Dropdown.Content align="right">
-                            {form_types.map(
-                                (formType: DocFormType, key: Key) => {
-                                    return (
-                                        <Dropdown.Link
-                                            key={key}
-                                            href={route(
-                                                `requests.formDocType.index`,
-                                                { id: formType.route_name }
-                                            )}
-                                        >
-                                            {formType.display_name}
-                                        </Dropdown.Link>
-                                    );
-                                }
-                            )}
-                        </Dropdown.Content>
-                    </Dropdown>
-                </NavLink>
+                                    {menuItem.display_name}
+                                </NavLink>
+                            </MenuItem>
+                        ))}
+                    </Menu>
+                </Button>
+                {/* </NavLink> */}
                 <NavLink
                     href={route("roles.index")}
                     active={route().current("roles.*")}

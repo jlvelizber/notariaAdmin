@@ -14,8 +14,8 @@ export interface DeleteModalProps {
 }
 
 export interface FormBarActionsInterface {
-    saveAction? : () => void;
-    deleteAction? : () => void;
-    routeBack: string;
-    children?: ReactNode
+    saveAction?: () => void;
+    deleteAction?: () => void;
+    routeBack: string | void;
+    children?: ReactNode;
 }

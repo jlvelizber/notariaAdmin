@@ -68,6 +68,11 @@ const RequestsDataTable: FC<{ requests: UserFormRequest[] }> = ({
             disableRowSelectionOnClick
             columns={columns}
             rows={requests}
+            autoHeight={true}
+            localeText={{
+                noRowsLabel: 'Sin resultados'
+            }}
+
         />
     );
 };

@@ -550,7 +550,7 @@ class FormDocSeeder extends Seeder
      * Declaracion juramentada
      */
     $decJuramentadaTypeForm = FormDocType::where('name', 'delcaracion_juramentada')->first();
-    
+
     $declaracionJuramentada = [
       [
         'name' => 'Declaración Juramentada',
@@ -565,5 +565,144 @@ class FormDocSeeder extends Seeder
 
       FormDoc::create($formDoc);
     }
+
+    /**
+     * Poderes generales
+     */
+
+    $poderGeneralTypeForm = FormDocType::where('name', 'poderes_generales')->first();
+
+    $declaracionJuramentada = [
+      'name' => 'Poderes generales',
+      'code_name' => 'poderes-generales',
+      'field_requests' => json_encode([
+        [
+          "fields" => [
+            [
+              "name" => "direccion_solicitante",
+              "label" => "Dirección del solicitante",
+              "type" => "text",
+              "rules" => [
+                "required"
+              ],
+            ],
+            [
+              "name" => "telefono_solicitante",
+              "label" => "Teléfono del solicitante",
+              "type" => "tel",
+              "rules" => [
+                "required",
+                "max:10"
+              ],
+            ],
+            [
+              "name" => "file_copia_cedula_solicitante", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+              "label" => "Copia de Cédula",
+              "type" => "file",
+              "rules" => [
+                "required",
+                "mimetypes:application/pdf",
+                "min:2",
+                "max:4000",
+              ],
+
+            ],
+            [
+              "name" => "file_copia_cert_votacion_solicitante", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+              "label" => "Copia Certificado de votación",
+              "type" => "file",
+              "rules" => [
+                "required",
+                "mimetypes:application/pdf",
+                "min:2",
+                "max:4000",
+              ],
+
+            ]
+          ],
+        ],
+        [
+          'name' => "Quién recibe los poderes",
+          'fields' => [
+            [
+              "name" => "nombres_quien_recibe",
+              "label" => "Nombres",
+              "type" => "text",
+              "rules" => [
+                "required"
+              ]
+            ],
+            [
+              "name" => "apellidos_quien_recibe",
+              "label" => "Apellidos",
+              "type" => "text",
+              "rules" => [
+                "required"
+              ]
+            ],
+            [
+              "name" => "cedula_quien_recibe",
+              "label" => "Cédula",
+              "type" => "text",
+              "rules" => [
+                "required"
+              ]
+            ],
+            [
+              "name" => "direccion_quien_recibe",
+              "label" => "Dirección",
+              "type" => "text",
+              "rules" => [
+                "required"
+              ]
+            ],
+            [
+              "name" => "email_quien_recibe",
+              "label" => "Correo electrónico",
+              "type" => "email",
+              "rules" => [
+                "required"
+              ]
+            ],
+            [
+              "name" => "telefono_quien_recibe",
+              "label" => "Teléfono",
+              "type" => "tel",
+              "rules" => [
+                "required"
+              ]
+            ],
+            [
+              "name" => "file_copia_cedula_recibe", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+              "label" => "Copia de Cédula",
+              "type" => "file",
+              "rules" => [
+                "required",
+                "mimetypes:application/pdf",
+                "min:2",
+                "max:4000",
+              ],
+
+            ],
+            [
+              "name" => "file_copia_certificado_votacion_recibe", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+              "label" => "Copia de Certificado de votación",
+              "type" => "file",
+              "rules" => [
+                "required",
+                "mimetypes:application/pdf",
+                "min:2",
+                "max:4000",
+              ],
+
+            ]
+          ],
+        ]
+      ], true),
+      'body' => '',
+      'form_type_id' => $poderGeneralTypeForm->id
+    ];
+
+    FormDoc::create($declaracionJuramentada);
   }
 }

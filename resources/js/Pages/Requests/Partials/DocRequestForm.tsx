@@ -15,6 +15,7 @@ import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 import { FormBarActions } from "@/Components/FormBarActions";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { useFormRequests } from "@/Hooks/useFormRequests";
+import { router } from "@inertiajs/react";
 
 export const DocRequestForm: FC<{
     request: UserFormRequest;
@@ -24,10 +25,12 @@ export const DocRequestForm: FC<{
 
     const { processForm: hookProcessForm } = useFormRequests();
     const {
-        doc: { field_requests: sections },
+        doc: { field_requests: sections, category },
         form_request_body: formData,
         customer,
     } = request;
+
+    console.log(request);
 
     const [valuesForm, setValuesForm] = useState<any>(formData);
 
@@ -68,6 +71,58 @@ export const DocRequestForm: FC<{
         await hookProcessForm(request.id, "finalizado");
     };
 
+    const downloadFile = async (url: string) => {
+        Inertia.visit(`/requests/download-file/${url}`);
+    };
+
+    const generateField = (fieldForm: DocFormField, valuesForm: any) => {
+        switch (fieldForm.type) {
+            case "select":
+                return (
+                    <select
+                        className="mt-1 block w-full 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm disabled:bg-gray-100 read-only:bg-gray-100"
+                        value={valuesForm[fieldForm.name]}
+                        onChange={handleChange}
+                        name={fieldForm.name}
+                        id={fieldForm.name}
+                        disabled={!isEditable}
+                    >
+                        <option>Seleccione</option>
+                        {fieldForm.options?.map(
+                            (option: DocFormFieldOptions, key: Key) => (
+                                <option value={option.value} key={key}>
+                                    {option.label}
+                                </option>
+                            )
+                        )}
+                    </select>
+                );
+            case "file": {
+                return (
+                    <Button
+                        onClick={() => downloadFile(valuesForm[fieldForm.name])}
+                    >
+                        {" "}
+                        Descargar{" "}
+                    </Button>
+                );
+            }
+            default:
+                return (
+                    <TextInput
+                        type={fieldForm.type}
+                        name={fieldForm.name}
+                        value={valuesForm[fieldForm.name]}
+                        className="mt-1 block w-full"
+                        onChange={handleChange}
+                        id={fieldForm.name}
+                        readOnly={!isEditable}
+                        disabled={!isEditable}
+                    />
+                );
+        }
+    };
+
     return (
         <div className="contact-form">
             {/* {errors.message && (
@@ -104,51 +159,10 @@ export const DocRequestForm: FC<{
                                                 value={fieldForm.label}
                                                 htmlFor={fieldForm.name}
                                             />
-                                            {fieldForm.type === "select" ? (
-                                                <select
-                                                    className="mt-1 block w-full 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm disabled:bg-gray-100 read-only:bg-gray-100"
-                                                    value={
-                                                        valuesForm[
-                                                            fieldForm.name
-                                                        ]
-                                                    }
-                                                    onChange={handleChange}
-                                                    name={fieldForm.name}
-                                                    id={fieldForm.name}
-                                                    disabled={!isEditable}
-                                                >
-                                                    <option>Seleccione</option>
-                                                    {fieldForm.options?.map(
-                                                        (
-                                                            option: DocFormFieldOptions,
-                                                            key: Key
-                                                        ) => (
-                                                            <option
-                                                                value={
-                                                                    option.value
-                                                                }
-                                                                key={key}
-                                                            >
-                                                                {option.label}
-                                                            </option>
-                                                        )
-                                                    )}
-                                                </select>
-                                            ) : (
-                                                <TextInput
-                                                    type={fieldForm.type}
-                                                    name={fieldForm.name}
-                                                    value={
-                                                        valuesForm[
-                                                            fieldForm.name
-                                                        ]
-                                                    }
-                                                    className="mt-1 block w-full"
-                                                    onChange={handleChange}
-                                                    id={fieldForm.name}
-                                                    readOnly={!isEditable}
-                                                    disabled={!isEditable}
-                                                />
+
+                                            {generateField(
+                                                fieldForm,
+                                                valuesForm
                                             )}
                                         </Grid>
                                     );
@@ -165,7 +179,9 @@ export const DocRequestForm: FC<{
                 <Grid item rowSpacing={2} sx={{ paddingY: 5 }}>
                     {isEditable && (
                         <FormBarActions
-                            routeBack="requests.index"
+                            routeBack={route("requests.formDocType.index", {
+                                id: category.route_name,
+                            })}
                             saveAction={() => {}}
                         >
                             <SecondaryButton
@@ -179,7 +195,7 @@ export const DocRequestForm: FC<{
                     )}
 
                     {!isEditable && (
-                        <FormBarActions routeBack="requests.index">
+                        <FormBarActions routeBack="back">
                             {request.status.code === "requerido" && (
                                 <>
                                     <Button variant="contained" color="primary">

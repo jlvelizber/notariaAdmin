@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class FormDoc extends Model
 {
@@ -32,9 +33,9 @@ class FormDoc extends Model
     }
 
 
-    public function category()
+    public function category(): Relation
     {
-        return $this->belongsTo(FormDocType::class, 'fom_type_id');
+        return $this->belongsTo(FormDocType::class,'form_type_id','id');
     }
 
 

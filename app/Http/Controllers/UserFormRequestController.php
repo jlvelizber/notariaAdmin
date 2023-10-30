@@ -4,35 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\UserFormRequestResource;
 use App\Models\FormDoc;
+use App\Models\FormDocType;
 use App\Models\UserFormRequest;
 use App\Models\UserFormStatus;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class UserFormRequestController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * List kinds of user's requests
      */
-    public function index()
+    public function listRequestsByFormType(string $docFormRoute)
     {
-        $requests = UserFormRequest::with(
+        $docType = FormDocType::where('route_name', $docFormRoute)->select('id')->first();
+        if (!$docType) return abort(404);
+
+        // escoge escoge los ids de la definicion de los documentos
+        $docFormsId = $docType->docs()->select('id')->get();
+
+
+        $queryInIds = [];
+        foreach ($docFormsId as $form) {
+            $queryInIds[] = $form->id;
+        }
+
+
+        $requests = UserFormRequest::whereIn('form_doc_id', $queryInIds)->with(
             [
                 'customer',
                 'doc',
+               
                 'status'
             ]
         )->orderby('created_at', 'desc')->get();
 
         return Inertia::render('Requests/index', ['requests' => $requests]);
-    }
-
-
-    public function showFilter()
-    {
-        dd("hola: ");
     }
 
     /**
@@ -48,8 +58,8 @@ class UserFormRequestController extends Controller
      */
     public function show(UserFormRequest $userFormRequest)
     {
-        $userForm =  $userFormRequest->with(['customer', 'doc', 'status'])->where('id', $userFormRequest->id)->first();
-
+        $userForm =  $userFormRequest->with(['customer', 'doc',  'doc.category', 'status'])->where('id', $userFormRequest->id)->first();
+        
         /**
          * sanitiza los valores nulos que de acuerdo a una anomalia va con datos que no son del formulario
          */
@@ -67,8 +77,8 @@ class UserFormRequestController extends Controller
      */
     public function edit(UserFormRequest $userFormRequest)
     {
-        $userForm = $userFormRequest->with(['customer', 'doc', 'status'])->where('id', $userFormRequest->id)->first();
-
+        $userForm = $userFormRequest->with(['customer', 'doc','doc.category', 'status'])->where('id', $userFormRequest->id)->first();
+        // dd($userForm);
         /**
          * sanitiza los valores nulos que de acuerdo a una anomalia va con datos que no son del formulario
          */
@@ -147,26 +157,25 @@ class UserFormRequestController extends Controller
 
             $validator = Validator::make($requestsForm, $rules);
 
-            
-            
-            
-            
-            
+
+
+
+
+
             if ($validator->passes()) {
                 // validamos si viene algun FILE
                 foreach ($requestsForm as $key => $requestForm) {
-                    
+
                     $isAFile = $request->hasFile($key);
-                    if($isAFile)
-                    {
-                       $urlFile = $this->uploadAttachmentFile($requestForm, $request->get('codeForm'));
-                       // actualiza request con la path
-                       $requestsForm[$key] = $urlFile;
+                    if ($isAFile) {
+                        $urlFile = $this->uploadAttachmentFile($requestForm, $request->get('codeForm'));
+                        // actualiza request con la path
+                        $requestsForm[$key] = $urlFile;
                     }
                 }
-                
+
                 // dd($requestsForm);
-                
+
                 $params = [
                     'form_doc_id' => $docForm->id,
                     'user_id' => $request->user()->id,
@@ -218,5 +227,14 @@ class UserFormRequestController extends Controller
     {
         $fileName = $requestFile->store($path);
         return $fileName;
+    }
+
+    /**
+     * Download a file and return its name in storage
+     */
+    public function downloadFile(string $path, string $url) 
+    {
+        $fullUrl = storage_path('app/' . $path.'/'.$url);
+        return response()->download($fullUrl, $url);
     }
 }

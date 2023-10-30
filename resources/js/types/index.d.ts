@@ -63,6 +63,8 @@ export interface FormDocInrteface {
     code_name: string;
     field_requests: SectionDocFormField[];
     body: string;
+    form_type_id: number;
+    category: DocFormType
 }
 
 export interface UserFormRequest {

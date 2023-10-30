@@ -1,19 +1,25 @@
-import React from "react";
+import React, { FC } from "react";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import { Grid } from "@mui/material";
 import { FormBarActionsInterface } from "@/types/Components.interface";
 import DangerButton from "./DangerButton";
 
-export const FormBarActions = ({
+export const FormBarActions: FC<FormBarActionsInterface> = ({
     saveAction,
-    routeBack,
+    routeBack = "",
     deleteAction,
     children,
-}: FormBarActionsInterface) => {
+}) => {
     return (
-        <Grid container classes={{ root: "flex justify-between" }} >
-            <Grid item rowSpacing={4} gap={2} columnSpacing={2} justifyItems={"flex-start"}>
+        <Grid container classes={{ root: "flex justify-between" }}>
+            <Grid
+                item
+                rowSpacing={4}
+                gap={2}
+                columnSpacing={2}
+                justifyItems={"flex-start"}
+            >
                 {saveAction ? (
                     <PrimaryButton
                         type="submit"
@@ -25,12 +31,20 @@ export const FormBarActions = ({
                 ) : null}
 
                 {children}
-                <SecondaryButton href={route(routeBack)}>
+                <SecondaryButton
+                    href={
+                        typeof routeBack === "string"
+                            ? routeBack
+                            : routeBack
+                    }
+                >
                     Regresar
                 </SecondaryButton>
                 {deleteAction ? (
                     <Grid item>
-                        <DangerButton onClick={deleteAction}>Borrar</DangerButton>
+                        <DangerButton onClick={deleteAction}>
+                            Borrar
+                        </DangerButton>
                     </Grid>
                 ) : null}
             </Grid>
