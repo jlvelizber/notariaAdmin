@@ -112,7 +112,7 @@ class UserFormRequestController extends Controller
 
 
         $userFormRequest->save();
-        return redirect()->route('requests.index');
+        return redirect()->route('requests.formDocType.index',['formDocType' => $userFormRequest->doc->category->route_name]);
     }
 
     /**

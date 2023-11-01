@@ -11,7 +11,7 @@ class ReportController extends Controller
     {
         $docConfigTemplate = $userFormRequest->doc()->select('body', 'id')->first()->body;
         $customer = $userFormRequest->customer;
-        $countryName = $userFormRequest->customer->country->name;
+        $countryName = $userFormRequest->customer->country? $userFormRequest->customer->country?->name:  'Ecuatoriano';
         $requestName = $customer->getFullName();
 
         $dataUserInserted = $userFormRequest->sanitizeValues();

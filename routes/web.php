@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Solicitudes
-    Route::get('requests', [UserFormRequestController::class, 'index'])->name('requests.index');
+    // Route::get('requests', [UserFormRequestController::class, 'index'])->name('requests.index');
     Route::get('requests/download-file/{path}/{url}', [UserFormRequestController::class, 'downloadFile'])->name('requests.downloadFile');
     Route::get('requests/{formDocType}', [UserFormRequestController::class, 'listRequestsByFormType'])->name('requests.formDocType.index');
     Route::get('requests/{userFormRequest}', [UserFormRequestController::class, 'show'])->name('requests.show');

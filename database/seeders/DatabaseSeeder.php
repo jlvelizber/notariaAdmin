@@ -19,6 +19,6 @@ class DatabaseSeeder extends Seeder
        $this->call(UserFormStatusSeeder::class);
        $this->call(FormDocTypeSeeder::class);
        $this->call(FormDocSeeder::class);
-       $this->call(UserFormRequestSeeder::class);
+    //    $this->call(UserFormRequestSeeder::class);
     }
 }

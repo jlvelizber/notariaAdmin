@@ -15,7 +15,7 @@ import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 import { FormBarActions } from "@/Components/FormBarActions";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { useFormRequests } from "@/Hooks/useFormRequests";
-import { router } from "@inertiajs/react";
+
 
 export const DocRequestForm: FC<{
     request: UserFormRequest;
@@ -30,7 +30,7 @@ export const DocRequestForm: FC<{
         customer,
     } = request;
 
-    console.log(request);
+    
 
     const [valuesForm, setValuesForm] = useState<any>(formData);
 
