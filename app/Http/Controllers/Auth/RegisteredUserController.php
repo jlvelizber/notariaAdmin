@@ -69,7 +69,7 @@ class RegisteredUserController extends Controller
 
         $user = $this->createUser($request);
 
-      
+
         event(new Registered($user));
 
         Auth::login($user);
@@ -90,14 +90,12 @@ class RegisteredUserController extends Controller
 
         $user = $this->createUser($request);
 
-          // Le da el rol d clinte 
-          $user->roles()->sync([getDefaultRole()]);
+        // Le da el rol d clinte 
+        $user->roles()->sync([getDefaultRole()]);
 
 
         event(new Registered($user));
 
-        Auth::login($user);
-
-        return response()->json(['token' => $user->createToken($tokenName)]);
+        return response()->json(['successMessage' => 'Registro exitoso, se ha enviado a su email registrado un correo de confirmación']);
     }
 }

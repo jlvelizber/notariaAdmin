@@ -43,6 +43,11 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        // Si viene desde la pagina web verifica si tiene cuenta verificada
+        if($inWebPage)
+        {
+            $this->validateUserVerified();
+        }
 
         $canLogin = $this->validateIfUserCanAuthenticate($this->get('email'), $inWebPage);
 
@@ -112,6 +117,20 @@ class LoginRequest extends FormRequest
         } else {
             if ($mainRole->name !== Role::DEFAULT_ROLE) return true;
             return false;
+        }
+    }
+
+    /**
+     * Permite validar si el usuario ha sido verificado
+     *
+     * @return void
+     */
+    public function validateUserVerified()
+    {
+        $user = User::where('email', $this->get('email'))->first();
+        if (!$user || !$user->hasVerifiedEmail()) {
+            // return response()->json(["message" => 'Antes de iniciar sesión debe confirmar su cuenta'], 422);
+            throw  ValidationException::withMessages(["Antes de iniciar sesión debe confirmar su cuenta"]);
         }
     }
 }
