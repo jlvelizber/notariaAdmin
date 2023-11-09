@@ -39,6 +39,18 @@ class UserSeeder extends Seeder
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
                 'remember_token' => Str::random(10),
                 'country_id' => '12'
+            ],
+            [
+                'name' => 'Lorena',
+                'midle_name'=> 'Lorena',
+                'first_last_name'=>'Touma',
+                'second_last_name'=>'Toums',
+                'email' => 'loretouma1@gmail.com',
+                'identification_num' => '0996781030',
+                'email_verified_at' => now(),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+                'country_id' => '12'
             ]
         ];
 
@@ -49,9 +61,11 @@ class UserSeeder extends Seeder
         $user = User::where('email','jorgeconsalvacion@gmail.com')->first();
         $role = Role::where('name','administrator')->first();
         $userLorena = User::where('email','loretouma@gmail.com')->first();
+        $userLorenaAdmin = User::where('email','loretouma1@gmail.com')->first();
         $roleLore = Role::where('name','customer')->first();
         
         $userLorena->roles()->sync($roleLore->id);
+        $userLorenaAdmin->roles()->sync($role->id);
         $user->roles()->sync($role->id);
     }
 }

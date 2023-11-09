@@ -23,7 +23,8 @@ class UserLogggedResource extends JsonResource
             'first_last_name' => $this->first_last_name,
             'second_last_name' => $this->second_last_name,
             'email' => $this->email,
-            'country_id' => $this->when($this->country_id,  $this->country?->name),
+            'country_id' => $this->country_id,
+            'country' => $this->when($this->country_id,  $this->country?->name),
         ];
     }
 }

@@ -66,4 +66,19 @@ class AuthenticatedSessionController extends Controller
 
         return response()->json(['token' => $request->user()->createToken($tokenName)]);
     }
+
+
+
+    public function updateUserApi(Request $request)
+    {
+        $dataUpdate = $request->except(['password','email']);
+        $userInSession = $request->user();
+
+        $userInSession->fill($dataUpdate);
+        $userInSession->update();
+
+        $tokenName = config('sanctum.token_name');
+
+        return response()->json(['token' => $request->user()->createToken($tokenName)]);
+    }
 }

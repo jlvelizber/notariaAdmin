@@ -24,6 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return new UserLogggedResource($request->user());
 });
 
+Route::middleware('auth:sanctum')->put('/user', [ AuthenticatedSessionController::class, 'updateUserApi' ] )->name('api.updateUser');
+
 Route::middleware('guest')->post('/register', [ RegisteredUserController::class, 'registerApi' ] )->name('api.register');
 Route::middleware('guest')->post('/login', [ AuthenticatedSessionController::class, 'storeApi' ] )->name('api.login');
 
