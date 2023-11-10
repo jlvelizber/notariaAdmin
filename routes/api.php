@@ -28,6 +28,7 @@ Route::middleware('auth:sanctum')->put('/user', [ AuthenticatedSessionController
 
 Route::middleware('guest')->post('/register', [ RegisteredUserController::class, 'registerApi' ] )->name('api.register');
 Route::middleware('guest')->post('/login', [ AuthenticatedSessionController::class, 'storeApi' ] )->name('api.login');
+Route::middleware(['throttle:6,1'])->get('/email/verify/{id}/{hash}', [ AuthenticatedSessionController::class, 'verifyApiAccount' ] )->name('api.account.verify');
 
 Route::get('paises', [CountryController::class, 'listCountries'] )->name('api.paises');
 Route::get('tipos-documentos/{formType}', [FormDocController::class, 'getFormsByCategory'] )->name('api.permisosSalida');

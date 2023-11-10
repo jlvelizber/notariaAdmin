@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Notifications\EmailVerificationNotification;
+use App\Notifications\WelcomeUserNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\BelongsToManyRelationship;
@@ -110,5 +111,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         // We override the default notification and will use our own
         $this->notify(new EmailVerificationNotification());
+    }
+    
+    
+    // Method to send email welcome
+    public function sendEmailWelCome()
+    {
+        $this->notify(new WelcomeUserNotification());
     }
 }
