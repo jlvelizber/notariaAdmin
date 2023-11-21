@@ -37,7 +37,7 @@ class UserFormRequestController extends Controller
             [
                 'customer',
                 'doc',
-               
+                'doc.category',
                 'status'
             ]
         )->orderby('created_at', 'desc')->get();

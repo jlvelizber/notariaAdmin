@@ -13,18 +13,16 @@ export default function AuthenticatedNavigation() {
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
-        console.log(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
 
-    console.log(form_types);
     return (
         <div className="flex">
             <div className="shrink-0 flex items-center">
                 <Link href="/">
-                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                    <ApplicationLogo className="block h-16 w-auto fill-current text-gray-800" />
                 </Link>
             </div>
 
@@ -33,7 +31,7 @@ export default function AuthenticatedNavigation() {
                     href={route("dashboard")}
                     active={route().current("dashboard")}
                 >
-                    Dashboard
+                    Inicio
                 </NavLink>
                 {/* <NavLink href={""} active={route().current("requests.*")}> */}
                 <Button
@@ -43,7 +41,7 @@ export default function AuthenticatedNavigation() {
                     aria-expanded={open ? "true" : undefined}
                     onClick={handleClick}
                     classes={{
-                        root: "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none !capitalize",
+                        root: "inline-flex items-center px-1 pt-1 !text-gray-500 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none !capitalize",
                     }}
                 >
                     Solicitudes
@@ -76,17 +74,18 @@ export default function AuthenticatedNavigation() {
                     </Menu>
                 </Button>
                 {/* </NavLink> */}
-                <NavLink
-                    href={route("roles.index")}
-                    active={route().current("roles.*")}
-                >
-                    Roles
-                </NavLink>
+
                 <NavLink
                     href={route("users.index")}
                     active={route().current("users.*")}
                 >
                     Usuarios
+                </NavLink>
+                <NavLink
+                    href={route("roles.index")}
+                    active={route().current("roles.*")}
+                >
+                    Roles
                 </NavLink>
             </div>
         </div>

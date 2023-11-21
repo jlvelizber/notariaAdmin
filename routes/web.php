@@ -1,15 +1,11 @@
 <?php
 
-use App\Http\Controllers\FormDocTypeController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFormRequestController;
-use App\Models\FormDocType;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,17 +28,10 @@ Route::middleware('guest')->get('/', function () {
     return redirect()->to('/login');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',[DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     // Solicitudes
-    // Route::get('requests', [UserFormRequestController::class, 'index'])->name('requests.index');
     Route::get('requests/download-file/{path}/{url}', [UserFormRequestController::class, 'downloadFile'])->name('requests.downloadFile');
     Route::get('requests/{formDocType}', [UserFormRequestController::class, 'listRequestsByFormType'])->name('requests.formDocType.index');
     Route::get('requests/{userFormRequest}', [UserFormRequestController::class, 'show'])->name('requests.show');

@@ -81,19 +81,18 @@ export const ActionRequestTable: FC<{
                         </Button>
                     </>
                 )}
-                {status === "finalizado" && (
-                    <>
-                        {/* <Link href={`requests/generate/${requestObject.id}`} target="_blank" formTarget="_blank" as="a"> */}
-                        <Button
-                            variant="contained"
-                            color="success"
-                            onClick={printReport}
-                        >
-                            Generar/Imprimir
-                        </Button>
-                        {/* </Link> */}
-                    </>
-                )}
+                {status === "finalizado" &&
+                    requestObject.doc.category.name === "permiso_salida" && (
+                        <>
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={printReport}
+                            >
+                                Generar/Imprimir
+                            </Button>
+                        </>
+                    )}
             </ButtonGroup>
         </div>
     );

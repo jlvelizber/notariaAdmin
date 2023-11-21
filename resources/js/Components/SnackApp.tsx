@@ -1,6 +1,4 @@
-import React from "react";
-import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
-import { SackAppInterface } from "@/types/Components.interface";
+import Snackbar from "@mui/material/Snackbar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { onCloseSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
