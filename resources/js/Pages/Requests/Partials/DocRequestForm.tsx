@@ -16,7 +16,6 @@ import { FormBarActions } from "@/Components/FormBarActions";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { useFormRequests } from "@/Hooks/useFormRequests";
 
-
 export const DocRequestForm: FC<{
     request: UserFormRequest;
     isEditable?: boolean;
@@ -29,8 +28,6 @@ export const DocRequestForm: FC<{
         form_request_body: formData,
         customer,
     } = request;
-
-    
 
     const [valuesForm, setValuesForm] = useState<any>(formData);
 
@@ -195,7 +192,11 @@ export const DocRequestForm: FC<{
                     )}
 
                     {!isEditable && (
-                        <FormBarActions routeBack="back">
+                        <FormBarActions
+                            routeBack={route("requests.formDocType.index", {
+                                id: category.route_name,
+                            })}
+                        >
                             {request.status.code === "requerido" && (
                                 <>
                                     <Button variant="contained" color="primary">
