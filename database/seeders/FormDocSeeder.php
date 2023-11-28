@@ -19,7 +19,7 @@ class FormDocSeeder extends Seeder
     $permisoSalidaTypeForm = FormDocType::where('name', 'permiso_salida')->first();
     $countries = Country::selectRaw('name as value, name as label')->get()->toArray();
 
-   
+
     $formsDocs = [
       [
         'name' => 'Permiso de Salida - Autorizando Contraparte',
@@ -45,6 +45,30 @@ class FormDocSeeder extends Seeder
                       "label" => "Madre"
                     ]
                   ]
+                ],
+                [
+                  "name" => "file_copia_cedula_solicitante", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                  "label" => "Cédula del Solicitante",
+                  "type" => "file",
+                  "rules" => [
+                    "required",
+                    "mimetypes:application/pdf",
+                    "min:2",
+                    "max:4000",
+                  ],
+
+                ],
+                [
+                  "name" => "file_copia_cert_votacion_solicitante", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                  "label" => "Certificado de votación del Solicitante",
+                  "type" => "file",
+                  "rules" => [
+                    "required",
+                    "mimetypes:application/pdf",
+                    "min:2",
+                    "max:4000",
+                  ],
+
                 ]
               ]
             ],
@@ -74,6 +98,18 @@ class FormDocSeeder extends Seeder
                   "rules" => [
                     "required"
                   ]
+                ],
+                [
+                  "name" => "file_copia_cedula_menor", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                  "label" => "Copia de cédula del Menor",
+                  "type" => "file",
+                  "rules" => [
+                    "required",
+                    "mimetypes:application/pdf",
+                    "min:2",
+                    "max:4000",
+                  ],
+
                 ]
               ]
             ],
@@ -121,6 +157,30 @@ class FormDocSeeder extends Seeder
                       "label" => "Madre"
                     ]
                   ]
+                ],
+                [
+                  "name" => "file_copia_cedula_contraparte", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                  "label" => "Cédula de la contraparte",
+                  "type" => "file",
+                  "rules" => [
+                    "required",
+                    "mimetypes:application/pdf",
+                    "min:2",
+                    "max:4000",
+                  ],
+
+                ],
+                [
+                  "name" => "file_copia_cert_votacion_contraparte", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                  "label" => "Certificado de votación de la Contraparte",
+                  "type" => "file",
+                  "rules" => [
+                    "required",
+                    "mimetypes:application/pdf",
+                    "min:2",
+                    "max:4000",
+                  ],
+
                 ]
               ]
             ],
@@ -223,6 +283,30 @@ class FormDocSeeder extends Seeder
                   "rules" => [
                     "required"
                   ]
+                ],
+                [
+                  "name" => "file_copia_cedula_padres_madre", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                  "label" => "Copia de cédula del Representante",
+                  "type" => "file",
+                  "rules" => [
+                    "required",
+                    "mimetypes:application/pdf",
+                    "min:2",
+                    "max:4000",
+                  ],
+
+                ],
+                [
+                  "name" => "file_copia_cert_votacion_padres_madre", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                  "label" => "Certificado de votación del Representante",
+                  "type" => "file",
+                  "rules" => [
+                    "required",
+                    "mimetypes:application/pdf",
+                    "min:2",
+                    "max:4000",
+                  ],
+
                 ]
               ]
             ],
@@ -270,6 +354,18 @@ class FormDocSeeder extends Seeder
                       "label" => "Masculino"
                     ]
                   ]
+                ],
+                [
+                  "name" => "file_copia_cedula_menor", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                  "label" => "Copia de cédula del Menor",
+                  "type" => "file",
+                  "rules" => [
+                    "required",
+                    "mimetypes:application/pdf",
+                    "min:2",
+                    "max:4000",
+                  ],
+
                 ]
               ]
             ],
@@ -347,37 +443,23 @@ class FormDocSeeder extends Seeder
           [
             "fields" => [
               [
-                "name" => "nombres_padres_madre",
-                "label" => "Nombres del Representante",
-                "type" => "text",
+                "name" => "contraparte_padre_madre",
+                "label" => "Parentezco con el menor",
+                "type" => "select",
                 "rules" => [
                   "required"
+                ],
+                "options" => [
+                  [
+                    "value" => "Padre",
+                    "label" => "Padre"
+                  ],
+                  [
+                    "value" => "Madre",
+                    "label" => "Madre"
+                  ]
                 ]
               ],
-              [
-                "name" => "apellido_padres_madre",
-                "label" => "Apellidos del Representante",
-                "type" => "text",
-                "rules" => [
-                  "required"
-                ]
-              ],
-              [
-                "name" => "nacionalidad_padres_madre",
-                "label" => "Nacionalidad del Representante",
-                "type" => "text",
-                "rules" => [
-                  "required"
-                ]
-              ],
-              [
-                "name" => "identificacion_padres_madre",
-                "label" => "Identificación del Representante",
-                "type" => "text",
-                "rules" => [
-                  "required"
-                ]
-              ]
             ]
           ],
           [
@@ -406,6 +488,30 @@ class FormDocSeeder extends Seeder
                 "rules" => [
                   "required"
                 ]
+              ],
+              [
+                "name" => "file_copia_cedula_padres_madre", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                "label" => "Copia de cédula del Representante",
+                "type" => "file",
+                "rules" => [
+                  "required",
+                  "mimetypes:application/pdf",
+                  "min:2",
+                  "max:4000",
+                ],
+
+              ],
+              [
+                "name" => "file_copia_cert_votacion_padres_madre", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                "label" => "Certificado de votación del Representante",
+                "type" => "file",
+                "rules" => [
+                  "required",
+                  "mimetypes:application/pdf",
+                  "min:2",
+                  "max:4000",
+                ],
+
               ]
             ]
           ],
@@ -435,6 +541,18 @@ class FormDocSeeder extends Seeder
                 "rules" => [
                   "required"
                 ]
+              ],
+              [
+                "name" => "file_copia_cedula_menor", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                "label" => "Copia de cédula del Menor",
+                "type" => "file",
+                "rules" => [
+                  "required",
+                  "mimetypes:application/pdf",
+                  "min:2",
+                  "max:4000",
+                ],
+
               ]
             ]
           ],
@@ -464,6 +582,30 @@ class FormDocSeeder extends Seeder
                 "rules" => [
                   "required"
                 ]
+              ],
+              [
+                "name" => "file_copia_cedula_acompaniante", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                "label" => "Copia de cédula del Acompañante",
+                "type" => "file",
+                "rules" => [
+                  "required",
+                  "mimetypes:application/pdf",
+                  "min:2",
+                  "max:4000",
+                ],
+
+              ],
+              [
+                "name" => "file_copia_cert_votacion_acompaniante", // Debemos poner un prefijo de file_* para que el front sepa que es un input file
+                "label" => "Certificado de votación del Acompañante",
+                "type" => "file",
+                "rules" => [
+                  "required",
+                  "mimetypes:application/pdf",
+                  "min:2",
+                  "max:4000",
+                ],
+
               ]
             ]
           ],
