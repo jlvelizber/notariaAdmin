@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PermisoSalidaSuccesfull;
 use App\Http\Resources\UserFormRequestResource;
 use App\Models\FormDoc;
 use App\Models\FormDocType;
@@ -112,6 +113,19 @@ class UserFormRequestController extends Controller
 
 
         $userFormRequest->save();
+
+
+        // Una vez guardado vamos a validar que tipo de formulario es 
+        // si es permiso de salida y el estado que va a guardar es 'finalizado' va a enviar notificacion
+        
+        if ($request->has('status')) {
+            $formStatus = UserFormStatus::where('code', $request->get('status'))->first();
+            $formTypeName = $userFormRequest->doc->category->name;
+            if ($formStatus->code === 'finalizado' && $formTypeName === 'permiso_salida') {
+                event(new PermisoSalidaSuccesfull($userFormRequest));
+            }
+        }
+
         return redirect()->route('requests.formDocType.index',['formDocType' => $userFormRequest->doc->category->route_name]);
     }
 

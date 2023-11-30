@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\PermisoSalidaSuccesfull;
+use App\Listeners\SendEmailCustomerPermisoSalidaSuccess;
 use App\Listeners\SendEmailWelcomeUserVerified;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
@@ -21,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         Verified::class => [
             SendEmailWelcomeUserVerified::class,
+        ],
+        PermisoSalidaSuccesfull::class => [
+            SendEmailCustomerPermisoSalidaSuccess::class
         ]
     ];
 

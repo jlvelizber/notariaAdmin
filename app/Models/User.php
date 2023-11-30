@@ -4,11 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Notifications\EmailPermisoSalidaSucessNotification;
 use App\Notifications\EmailVerificationNotification;
 use App\Notifications\WelcomeUserNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\BelongsToManyRelationship;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -118,5 +117,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailWelCome()
     {
         $this->notify(new WelcomeUserNotification());
+    }
+
+    public function sendEmailPermisoSalidaSuccess(string $attachFileRoute)
+    {
+        $this->notify(new EmailPermisoSalidaSucessNotification($attachFileRoute));
+        
     }
 }
