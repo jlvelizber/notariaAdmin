@@ -16,6 +16,7 @@ class FormDoc extends Model
         'code_name',
         'field_requests',
         'body',
+        'affidavit'
     ];
 
     protected $casts = [

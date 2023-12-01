@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Notifications\EmailMinuteNotification;
 use App\Notifications\EmailPermisoSalidaSucessNotification;
 use App\Notifications\EmailVerificationNotification;
 use App\Notifications\WelcomeUserNotification;
@@ -123,5 +124,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new EmailPermisoSalidaSucessNotification($attachFileRoute));
         
+    }
+
+    public function sendEmailMinute(string $attachFileRoute)
+    {
+        $this->notify(new EmailMinuteNotification($attachFileRoute));
     }
 }
