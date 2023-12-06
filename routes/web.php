@@ -42,7 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('roles', RoleController::class)->except('show');
     Route::resource('users', UserController::class)->except('show');
 
-    Route::get('requests/generate/{userFormRequest}', [ReportController::class,'generateRequestDoc'])->name('requests.generate');
+    Route::get('requests/generate-report/{userFormRequest}', [ReportController::class,'generateRequestDoc'])->name('requests.generate-report');
+    Route::get('requests/generate-minute/{userFormRequest}', [ReportController::class,'generateMinuteDoc'])->name('requests.generate-minute');
 });
 
 require __DIR__.'/auth.php';

@@ -4,13 +4,13 @@ import { useFormRequests } from "@/Hooks/useFormRequests";
 import { UserFormRequest } from "@/types";
 import { Link, router } from "@inertiajs/react";
 import { Button, ButtonGroup } from "@mui/material";
-import axios from "axios";
 
 export const ActionRequestTable: FC<{
     status: "requerido" | "proceso" | "finalizado";
     requestObject: UserFormRequest;
 }> = ({ status, requestObject }) => {
-    const { processForm: hookProcessForm } = useFormRequests();
+    const { processForm: hookProcessForm, printReport: printReportPdf, printMinute: printMinutePdf } =
+        useFormRequests();
 
     const processForm = async () => {
         await hookProcessForm(requestObject.id);
@@ -21,21 +21,12 @@ export const ActionRequestTable: FC<{
     };
 
     const printReport = async () => {
-        axios
-            .get(`/requests/generate/${requestObject.id}`, {
-                responseType: "blob",
-            })
-            .then((response) => {
-                const url = window.URL.createObjectURL(
-                    new Blob([response.data])
-                );
-                const link = document.createElement("a");
-                link.href = url;
-                link.setAttribute("download", "report.pdf");
-                document.body.appendChild(link);
-                link.click();
-            });
+        await printReportPdf(requestObject.id);
     };
+
+    const printMinute = async () => {
+        await printMinutePdf(requestObject.id);
+    }
 
     return (
         <div>
@@ -89,7 +80,14 @@ export const ActionRequestTable: FC<{
                                 color="success"
                                 onClick={printReport}
                             >
-                                Generar/Imprimir
+                                Documento
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={printMinute}
+                            >
+                                Acta
                             </Button>
                         </>
                     )}

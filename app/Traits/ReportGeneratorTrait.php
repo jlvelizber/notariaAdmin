@@ -55,7 +55,10 @@ trait ReportGeneratorTrait
         $docConfigTemplate = str_replace('$identification_num', $customer->identification_num, $docConfigTemplate);
         $docConfigTemplate = str_replace('$requestName', strtoupper($requestName), $docConfigTemplate);
         $docConfigTemplate = str_replace('$countryName', strtoupper($countryName), $docConfigTemplate);
-
+        // fecha de solicitud del documento
+        $fecha_solicitud = castDateStringForMinutes($userFormRequest->updated_at);
+        $docConfigTemplate = str_replace('$fecha_solicitud', $fecha_solicitud, $docConfigTemplate);
+        
         return $docConfigTemplate;
     }
 
