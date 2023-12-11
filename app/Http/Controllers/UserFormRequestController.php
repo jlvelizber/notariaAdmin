@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\PermisoSalidaSuccesfull;
+use App\Events\UserFormRequestSaved;
 use App\Http\Resources\UserFormRequestResource;
 use App\Models\FormDoc;
 use App\Models\FormDocType;
@@ -164,17 +165,10 @@ class UserFormRequestController extends Controller
 
             $requestsForm = $request->except('codeForm');
 
-            // dd($requestsForm);
-
             // Vlidamos
             $rules = $this->generateRulesValidations(json_decode($docForm->field_requests, true));
 
             $validator = Validator::make($requestsForm, $rules);
-
-
-
-
-
 
             if ($validator->passes()) {
                 // validamos si viene algun FILE
@@ -188,8 +182,6 @@ class UserFormRequestController extends Controller
                     }
                 }
 
-                // dd($requestsForm);
-
                 $params = [
                     'form_doc_id' => $docForm->id,
                     'user_id' => $request->user()->id,
@@ -200,6 +192,8 @@ class UserFormRequestController extends Controller
                 $userFormRequest = new  UserFormRequest();
                 $userFormRequest->fill($params);
                 $userFormRequest->save();
+
+                event(new UserFormRequestSaved($userFormRequest));
 
                 return response()->json(['message' => 'Solicitud ingresada correctamente']);
             }

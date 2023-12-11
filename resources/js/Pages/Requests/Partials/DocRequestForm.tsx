@@ -232,7 +232,7 @@ export const DocRequestForm: FC<{
                             )}
                             {request.status.code === "finalizado" && (
                                 <>
-                                    <Button variant="contained" color="success">
+                                    <Button variant="contained" color="info">
                                         Generar/Imprimir
                                     </Button>
                                 </>

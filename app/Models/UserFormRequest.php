@@ -47,6 +47,12 @@ class UserFormRequest extends Model
     {
         return $this->belongsTo(UserFormStatus::class);
     }
+    
+
+    public function logs(): Relation
+    {
+        return $this->hasMany(UserFormRequestLog::class, 'form_request_id');
+    }
 
 
     /**

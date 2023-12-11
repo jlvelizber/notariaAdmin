@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\PermisoSalidaSuccesfull;
+use App\Events\UserFormRequestSaved;
+use App\Listeners\SaveLogUserFormRequest;
 use App\Listeners\SendEmailCustomerPermisoSalidaSuccess;
 use App\Listeners\SendEMailUserPermisoSalidaSuccess;
 use App\Listeners\SendEmailWelcomeUserVerified;
@@ -28,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         PermisoSalidaSuccesfull::class => [
             SendEmailCustomerPermisoSalidaSuccess::class,
             SendEMailUserPermisoSalidaSuccess::class
+        ],
+        UserFormRequestSaved::class => [
+            SaveLogUserFormRequest::class
         ]
     ];
 
