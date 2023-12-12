@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('form_request_id');
             $table->unsignedInteger('user_id');
-            $table->enum('action',['create', 'update', 'delete'], );
+            $table->enum('action',['create', 'update', 'delete','change_state'] );
             $table->string('description',150)->nullable();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Enums\UserFormRequestLogActionsEnum;
 use App\Models\UserFormRequest;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -16,13 +17,15 @@ class UserFormRequestSaved
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $userFormRequest;
+    public UserFormRequestLogActionsEnum $action;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(UserFormRequest $userFormRequest)
+    public function __construct(UserFormRequest $userFormRequest, UserFormRequestLogActionsEnum $action = UserFormRequestLogActionsEnum::CREATE)
     {
         $this->userFormRequest = $userFormRequest;
+        $this->action = $action;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserFormRequestLogActionsEnum;
 use App\Events\PermisoSalidaSuccesfull;
 use App\Events\UserFormRequestSaved;
 use App\Http\Resources\UserFormRequestResource;
@@ -122,9 +123,13 @@ class UserFormRequestController extends Controller
         if ($request->has('status')) {
             $formStatus = UserFormStatus::where('code', $request->get('status'))->first();
             $formTypeName = $userFormRequest->doc->category->name;
+            // Se ha actualizado el estado del formulario
+            event(new UserFormRequestSaved($userFormRequest, UserFormRequestLogActionsEnum::CHANGE_STATE));
             if ($formStatus->code === 'finalizado' && $formTypeName === 'permiso_salida') {
                 event(new PermisoSalidaSuccesfull($userFormRequest));
             }
+        } else {
+            event(new UserFormRequestSaved($userFormRequest, UserFormRequestLogActionsEnum::UPDATE));
         }
 
         return redirect()->route('requests.formDocType.index',['formDocType' => $userFormRequest->doc->category->route_name]);
@@ -135,7 +140,7 @@ class UserFormRequestController extends Controller
      */
     public function destroy(UserFormRequest $userFormRequest)
     {
-        //
+        // event(new UserFormRequestSaved($userFormRequest, UserFormRequestLogActionsEnum::DESTROY));
     }
 
     /**
