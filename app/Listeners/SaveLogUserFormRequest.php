@@ -29,15 +29,15 @@ class SaveLogUserFormRequest
     {
         switch ($this->action->value) {
             case 'create':
-                return 'Se ha creado una solicitud';
+                return 'Se ha creado la solicitud';
             case 'update':
-                return 'Se ha actualizado la solicitud';
+                return 'ha actualizado la solicitud';
                 break;
             case 'delete':
-                return 'Se ha eliminado';
+                return 'ha eliminado la solicitud';
                 break;
             default:
-                return 'Se ha actualizado de estado';
+                return 'ha actualizado de estado';
                 break;
         }
     }

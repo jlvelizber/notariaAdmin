@@ -19,3 +19,9 @@ export interface FormBarActionsInterface {
     routeBack: string | void;
     children?: ReactNode;
 }
+
+export interface HistoryModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    children?: ReactNode;
+}

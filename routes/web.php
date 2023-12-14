@@ -5,6 +5,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFormRequestController;
+use App\Http\Controllers\UserFormRequestLogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('requests/show/{userFormRequest}', [UserFormRequestController::class, 'show'])->name('requests.show');
     Route::get('requests/{userFormRequest}/edit', [UserFormRequestController::class, 'edit'])->name('requests.edit');
     Route::put('requests/{userFormRequest}', [UserFormRequestController::class, 'update'])->name('requests.update');
+    Route::get('requests/{userFormRequest}/history', [UserFormRequestLogController::class, 'index'])->name('requests.logs');
 
 
     Route::resource('roles', RoleController::class)->except('show');

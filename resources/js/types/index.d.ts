@@ -136,3 +136,11 @@ export type ListEditShowRequestPageProps<
 > = T & {
     request: UserFormRequest;
 };
+
+export interface HistoryLogInterface {
+    form_request_id : number;
+    user_id : number;
+    action: string;
+    description: string;
+    user? : User
+}

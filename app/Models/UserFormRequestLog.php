@@ -35,4 +35,13 @@ class UserFormRequestLog extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+
+    /**
+     * Funcion formatting
+     */
+
+     public function formatForFrontend(): array {
+        return [];
+     }
 }

@@ -1,23 +1,13 @@
 import React, { FC } from "react";
 import { Role, UserFormRequest } from "@/types";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import ActionDataTableButtons from "@/Components/ActionDataTableButtons";
-import { Link, router } from "@inertiajs/react";
-import { get } from "http";
 import { ActionRequestTable } from "./ActionRequestTable";
 import { humanizeDate } from "@/Helpers/dates";
 
-const RequestsDataTable: FC<{ requests: UserFormRequest[] }> = ({
+const RequestsDataTable: FC<{ requests: UserFormRequest[], onShowHistory(request: UserFormRequest) : void }> = ({
     requests,
+    onShowHistory
 }) => {
-    const onEditRole = (role: Role) => {
-        // router.get(`roles/${role}/edit`);
-    };
-
-    const onDeleteRole = (role: Role) => {
-        // onDelete(role)
-    };
-
     const columns: GridColDef[] = [
         {
             field: "customer",
@@ -52,11 +42,12 @@ const RequestsDataTable: FC<{ requests: UserFormRequest[] }> = ({
         {
             field: "actions",
             headerName: "Acciones",
-            width: 300,
+            width: 350,
             renderCell: (params) => (
                 <ActionRequestTable
                     status={params.row.status.code}
                     requestObject={params.row}
+                    onShowHistory={(request: UserFormRequest) => onShowHistory(request)}
                 />
             ),
         },
