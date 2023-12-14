@@ -29,69 +29,70 @@ export const ActionRequestTable: FC<{
     }
 
     return (
-        <div>
-            <ButtonGroup size="small">
-                {status === "requerido" && (
-                    <>
-                        <Button variant="contained" color="primary">
-                            <Link
-                                href={route("requests.edit", {
-                                    id: requestObject.id,
-                                })}
-                            >
-                                Editar
-                            </Link>
-                        </Button>
-
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={processForm}
-                        >
-                            Procesar
-                        </Button>
-                    </>
-                )}
-                {status === "proceso" && (
-                    <>
-                        <Button
-                            variant="contained"
-                            color="info"
-                            href={route("requests.show", {
-                                id: requestObject.id,
-                            })}
-                        >
-                            Ver
-                        </Button>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={finalizeRequest}
-                        >
-                            Finalizar
-                        </Button>
-                    </>
-                )}
-                {status === "finalizado" &&
-                    requestObject.doc.category.name === "permiso_salida" && (
+        <div className="flex w-full flex-row">
+            <div className="flex w-full  justify-around ">
+                    {status === "requerido" && (
                         <>
-                            <Button
-                                variant="contained"
-                                color="success"
-                                onClick={printReport}
-                            >
-                                Documento
+                            <Button variant="contained" color="primary">
+                                <Link
+                                    href={route("requests.edit", {
+                                        id: requestObject.id,
+                                    })}
+                                >
+                                    Editar
+                                </Link>
                             </Button>
+
                             <Button
                                 variant="contained"
-                                color="success"
-                                onClick={printMinute}
+                                color="secondary"
+                                onClick={processForm}
                             >
-                                Acta
+                                Procesar
                             </Button>
                         </>
                     )}
-            </ButtonGroup>
+                    {status === "proceso" && (
+                        <>
+                            <Button
+                                variant="contained"
+                                color="info"
+                                href={route("requests.show", {
+                                    id: requestObject.id,
+                                })}
+                            >
+                                Ver
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={finalizeRequest}
+                            >
+                                Finalizar
+                            </Button>
+                        </>
+                    )}
+                    {status === "finalizado" &&
+                        requestObject.doc.category.name === "permiso_salida" && (
+                            <>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    onClick={printReport}
+                                >
+                                    Documento
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    onClick={printMinute}
+                                >
+                                    Acta
+                                </Button>
+                            </>
+                        )}
+                
+            </div>
         </div>
     );
 };

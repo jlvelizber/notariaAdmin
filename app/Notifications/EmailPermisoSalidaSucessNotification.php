@@ -47,7 +47,7 @@ class EmailPermisoSalidaSucessNotification extends Notification
             ->line(new HtmlString("Si requieres asistencia, no dudes en ponerte en contacto con nuestro equipo de soporte a <a href='mailto:info@notaria4daule.com'>info@notaria4daule.com</a> o a través de WhatsApp al <a href='tel:+593989818094'>+593 98 981 8094</a>"))
             ->line("Gracias por elegir a la " . config('app.name'))
             ->line("Saludos cordiales,")
-            ->salutation(config('app.name'))
+            ->line(config('app.name'))
             ->line(
                 new HtmlString("<a href='tel:+593989818094'>+593 98 981 8094</a><br/><a href='mailto:info@notaria4daule.com'>info@notaria4daule.com</a><br/> <span>Dirección Avenida León Febres Cordero Ribadeneyra, Edificio Platinium II, Daule 091910</span>"),
             )
