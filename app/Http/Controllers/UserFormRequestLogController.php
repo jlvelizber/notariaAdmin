@@ -18,7 +18,7 @@ class UserFormRequestLogController extends Controller
     {
 
 
-        $history = $userFormRequest->logs()->with('user')->get();
+        $history = $userFormRequest->logs()->with('user')->orderBy('created_at','desc')->get();
         return Inertia::render('Requests/HistoryLog', ['history' => $history, 'docName' => $userFormRequest->doc->name, 'routeName' => $userFormRequest->doc->category->route_name]);
     }
 }
