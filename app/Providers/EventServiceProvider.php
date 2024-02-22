@@ -27,9 +27,9 @@ class EventServiceProvider extends ServiceProvider
         Verified::class => [
             SendEmailWelcomeUserVerified::class,
         ],
-        PermisoSalidaSuccesfull::class => [
-            SendEmailCustomerPermisoSalidaSuccess::class,
-            SendEMailUserPermisoSalidaSuccess::class
+        PermisoSalidaSuccesfull::class => [ // Event handle when Permiso Salida SUccessfully
+            SendEmailCustomerPermisoSalidaSuccess::class, // Send email Copy Customer
+            SendEMailUserPermisoSalidaSuccess::class // Send email for user
         ],
         UserFormRequestSaved::class => [
             SaveLogUserFormRequest::class
