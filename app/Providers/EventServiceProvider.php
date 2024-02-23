@@ -6,6 +6,7 @@ use App\Events\PermisoSalidaSuccesfull;
 use App\Events\UserFormRequestSaved;
 use App\Listeners\SaveLogUserFormRequest;
 use App\Listeners\SendEmailCustomerPermisoSalidaSuccess;
+use App\Listeners\SendEmailForFormRequestSaved;
 use App\Listeners\SendEMailUserPermisoSalidaSuccess;
 use App\Listeners\SendEmailWelcomeUserVerified;
 use Illuminate\Auth\Events\Registered;
@@ -32,7 +33,9 @@ class EventServiceProvider extends ServiceProvider
             SendEMailUserPermisoSalidaSuccess::class // Send email for user
         ],
         UserFormRequestSaved::class => [
-            SaveLogUserFormRequest::class
+            SaveLogUserFormRequest::class,
+            SendEmailForFormRequestSaved::class  // Used by custom users when create and ONLY create a new Request
+
         ]
     ];
 

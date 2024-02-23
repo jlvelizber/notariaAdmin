@@ -198,7 +198,7 @@ class UserFormRequestController extends Controller
                 $userFormRequest->fill($params);
                 $userFormRequest->save();
 
-                event(new UserFormRequestSaved($userFormRequest));
+                event(new UserFormRequestSaved($userFormRequest)); // 
 
                 return response()->json(['message' => 'Solicitud ingresada correctamente']);
             }

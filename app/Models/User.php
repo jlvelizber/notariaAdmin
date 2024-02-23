@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -79,6 +81,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->roles()->first();
     }
 
+
+
+
     /**
      * scopes
      */
@@ -86,6 +91,27 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $query->leftJoin('role_user', 'role_user.user_id', 'users.id')->leftJoin('roles', 'roles.id', 'role_user.role_id')->selectRaw('users.*, roles.name as role_name');
     }
+
+    /**
+     * Extract users with roles names
+     *
+     * @param Builder $query
+     * @param array $roleNames
+     * @param string $selectField
+     * @return void
+     */
+    public function scopeRolesWithRoleNames(Builder $query, array $roleNames, $selectField = '*'): void
+    {
+        $query->select($selectField)
+            ->whereRelation('roles', function (Builder  $query) use ($roleNames) {
+                $query->whereIn('name', $roleNames);
+            });
+    }
+
+
+    /**
+     *  END SCOPES
+     */
 
 
     /**
@@ -106,14 +132,14 @@ class User extends Authenticatable implements MustVerifyEmail
      * Notifications
      */
 
-      // Method to send email verification
+    // Method to send email verification
     public function sendEmailVerificationNotification()
     {
         // We override the default notification and will use our own
         $this->notify(new EmailVerificationNotification());
     }
-    
-    
+
+
     // Method to send email welcome
     public function sendEmailWelCome()
     {
@@ -123,7 +149,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailPermisoSalidaSuccess(string $attachFileRoute)
     {
         $this->notify(new EmailPermisoSalidaSucessNotification($attachFileRoute));
-        
     }
 
     public function sendEmailMinute(string $attachFileRoute)
