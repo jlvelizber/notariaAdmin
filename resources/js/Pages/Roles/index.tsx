@@ -3,10 +3,10 @@ import { Head, router } from "@inertiajs/react";
 import { Role, RolePageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import RolesDataTable from "./Partials/RolesDataTable";
-import PrimaryButton from "@/Components/PrimaryButton";
-import Modal from "@/Components/Modal";
+import PrimaryButton from "@/Components/Common/PrimaryButton";
+import Modal from "@/Components/Common/Modal";
 import { useState } from "react";
-import DeleteModal from "@/Components/DeleteModal";
+import DeleteModal from "@/Components/Common/DeleteModal";
 import { useDispatch } from "react-redux";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 

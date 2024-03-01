@@ -3,7 +3,7 @@ import { Button, ButtonGroup } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-const ActionDataTableButtons: FC<{
+export const ActionDataTableButtons: FC<{
     id: number;
     isEdit?: boolean;
     onEditHandler?: () => void;
@@ -40,5 +40,3 @@ const ActionDataTableButtons: FC<{
         </ButtonGroup>
     );
 };
-
-export default ActionDataTableButtons;

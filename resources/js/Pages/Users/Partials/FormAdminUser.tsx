@@ -1,7 +1,7 @@
 import { FormBarActions } from "@/Components/FormBarActions";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/Common/InputError";
+import InputLabel from "@/Components/Common/InputLabel";
+import TextInput from "@/Components/Common/TextInput";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 import { Role, User } from "@/types";
 import { useForm } from "@inertiajs/react";

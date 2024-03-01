@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import PrimaryButton from "./PrimaryButton";
+import PrimaryButton from "./Common/PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
 import { Grid } from "@mui/material";
 import { FormBarActionsInterface } from "@/types/Components.interface";
-import DangerButton from "./DangerButton";
+import DangerButton from "./Common/DangerButton";
 
 export const FormBarActions: FC<FormBarActionsInterface> = ({
     saveAction,

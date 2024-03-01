@@ -1,10 +1,10 @@
 import { Head, router } from "@inertiajs/react";
 import { IndexUserPageProps, User } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import UsersDataTable from "./Partials/UsersDataTable";
-import PrimaryButton from "@/Components/PrimaryButton";
+import {UsersDataTable} from "./Partials";
+import PrimaryButton from "@/Components/Common/PrimaryButton";
 import { useState } from "react";
-import DeleteModal from "@/Components/DeleteModal";
+import DeleteModal from "@/Components/Common/DeleteModal";
 import { useDispatch } from "react-redux";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 

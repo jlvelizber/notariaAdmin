@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import { PageProps, User } from "@/types";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import ActionDataTableButtons from "@/Components/ActionDataTableButtons";
+import {ActionDataTableButtons} from "@/Components";
 import { router, usePage } from "@inertiajs/react";
 import { humanizeDate } from "@/Helpers/dates";
 
-const UsersDataTable: FC<{ users: User[]; onDelete: (user: User) => void }> = ({
+export const UsersDataTable: FC<{ users: User[]; onDelete: (user: User) => void }> = ({
     users,
     onDelete,
 }) => {
@@ -80,5 +80,3 @@ const UsersDataTable: FC<{ users: User[]; onDelete: (user: User) => void }> = ({
         />
     );
 };
-
-export default UsersDataTable;

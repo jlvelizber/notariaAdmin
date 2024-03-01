@@ -1,25 +1,25 @@
-import React, { FC, FormEventHandler } from "react";
-import { Role } from "@/types";
-import InputLabel from "@/Components/InputLabel";
-import TextInput from "@/Components/TextInput";
-import { useForm } from "@inertiajs/react";
-import InputError from "@/Components/InputError";
+import { FormEventHandler } from "react";
 import { useDispatch } from "react-redux";
+import { Role } from "@/types";
+import InputLabel from "@/Components/Common/InputLabel";
+import TextInput from "@/Components/Common/TextInput";
+import { useForm } from "@inertiajs/react";
+import InputError from "@/Components/Common/InputError";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 import { FormBarActions } from "@/Components/FormBarActions";
 
 export default function FormAdminRole({ role }: { role: Role | null }) {
-    const { data, setData, post, put, errors, processing, recentlySuccessful } =
-        useForm({
-            name: role?.name || "",
-            display_name: role?.display_name || "",
-            description: role?.description || "",
-        });
+    const { data, setData, post, put, errors } = useForm({
+        name: role?.name || "",
+        display_name: role?.display_name || "",
+        description: role?.description || "",
+    });
 
     const dispatch = useDispatch();
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+        
 
         if (!role) {
             post(route("roles.store"), {
@@ -96,7 +96,7 @@ export default function FormAdminRole({ role }: { role: Role | null }) {
                 <InputError className="mt-2" message={errors.description} />
             </div>
             {/* Actions save or back */}
-            <FormBarActions routeBack="roles.index" saveAction={() => submit}/>
+            <FormBarActions routeBack="roles.index" saveAction={() => submit} />
         </form>
     );
 }

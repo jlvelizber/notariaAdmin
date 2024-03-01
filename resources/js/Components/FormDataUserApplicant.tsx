@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { Customer } from "@/types";
 import { Grid } from "@mui/material";
-import InputLabel from "./InputLabel";
-import TextInput from "./TextInput";
+import InputLabel from "./Common/InputLabel";
+import TextInput from "./Common/TextInput";
 
 export const FormDataUserApplicant: FC<{ customer: Customer }> = ({
     customer,

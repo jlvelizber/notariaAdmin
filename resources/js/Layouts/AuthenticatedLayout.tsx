@@ -1,7 +1,7 @@
 import { useState, PropsWithChildren, ReactNode, useEffect } from "react";
 import { User } from "@/types";
 import AuthenticatedNavigation from "./Partials/AuthenticatedNavigation";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
+import ResponsiveNavLink from "@/Components/Common/ResponsiveNavLink";
 import AuthenticatedProfileNavigation from "./Partials/AuthenticatedProfileNavigation";
 import SnackApp from "@/Components/SnackApp";
 
