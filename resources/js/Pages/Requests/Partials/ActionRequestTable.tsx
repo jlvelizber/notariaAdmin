@@ -4,6 +4,12 @@ import { useFormRequests } from "@/Hooks/useFormRequests";
 import { UserFormRequest } from "@/types";
 import { Link, router } from "@inertiajs/react";
 import { Button, ButtonGroup } from "@mui/material";
+import HistoryIcon from "@mui/icons-material/History";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DescriptionIcon from "@mui/icons-material/Description";
+import CachedIcon from "@mui/icons-material/Cached";
+import CheckIcon from "@mui/icons-material/Check";
 
 export const ActionRequestTable: FC<{
     status: "requerido" | "proceso" | "finalizado";
@@ -37,72 +43,93 @@ export const ActionRequestTable: FC<{
     };
 
     return (
-        <div className="flex w-full flex-row">
-            <div className="flex w-full  justify-around ">
-                {status === "requerido" && (
-                    <>
-                        <Button variant="contained" color="primary">
-                            <Link
-                                href={route("requests.edit", {
-                                    id: requestObject.id,
-                                })}
-                            >
-                                Editar
-                            </Link>
-                        </Button>
-
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={processForm}
-                        >
-                            Procesar
-                        </Button>
-                    </>
-                )}
-                {status === "proceso" && (
-                    <>
-                        <Button
-                            variant="contained"
-                            color="info"
-                            href={route("requests.show", {
-                                id: requestObject.id,
-                            })}
-                        >
-                            Ver
-                        </Button>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={finalizeRequest}
-                        >
-                            Finalizar
-                        </Button>
-                    </>
-                )}
-                {status === "finalizado" &&
-                    requestObject.doc.category.name === "permiso_salida" && (
+        <div className="flex w-full">
+            <div className="self-center">
+                <ButtonGroup>
+                    {status === "requerido" && (
                         <>
                             <Button
                                 variant="contained"
-                                color="success"
-                                onClick={printReport}
+                                color="primary"
+                                title="Editar Solicitud"
                             >
-                                Documento
+                                <Link
+                                    href={route("requests.edit", {
+                                        id: requestObject.id,
+                                    })}
+                                >
+                                    <EditIcon />
+                                </Link>
                             </Button>
+
                             <Button
                                 variant="contained"
-                                color="success"
-                                onClick={printMinute}
+                                color="secondary"
+                                onClick={processForm}
+                                title="Procesar"
                             >
-                                Acta
+                                <CachedIcon />
                             </Button>
                         </>
                     )}
+                    {status === "proceso" && (
+                        <>
+                            <Button
+                                variant="contained"
+                                color="info"
+                                title="Ver"
+                            >
+                                <Link
+                                    href={route("requests.show", {
+                                        id: requestObject.id,
+                                    })}
+                                >
+                                    <VisibilityIcon />
+                                </Link>
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={finalizeRequest}
+                                title="Finalizar"
+                            >
+                                <CheckIcon />
+                            </Button>
+                        </>
+                    )}
+                    {status === "finalizado" &&
+                        requestObject.doc.category.name ===
+                            "permiso_salida" && (
+                            <>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    onClick={printReport}
+                                    title="Documento"
+                                >
+                                    <DescriptionIcon />
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    onClick={printMinute}
+                                    title="Acta"
+                                >
+                                    <DescriptionIcon />
+                                </Button>
+                            </>
+                        )}
 
-                <Button variant="contained" color="info" onClick={showHistory}>
-                    Historial
-                </Button>
+                    <Button
+                        variant="contained"
+                        color="inherit"
+                        onClick={showHistory}
+                        title="Historial"
+                        size="small"
+                    >
+                        <HistoryIcon />
+                    </Button>
+                </ButtonGroup>
             </div>
         </div>
     );
