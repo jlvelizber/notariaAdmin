@@ -1,6 +1,6 @@
 import Button, { ButtonProps} from "@mui/material/Button";
 
-export default function PrimaryButton({ className = '', disabled, children, ...props }: ButtonProps) {
+export const PrimaryButton  = ({ className = '', disabled, children, ...props }: ButtonProps) => {
     return (
         <Button
             {...props}

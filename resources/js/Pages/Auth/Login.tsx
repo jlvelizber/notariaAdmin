@@ -1,36 +1,48 @@
-import { useEffect, FormEventHandler } from 'react';
-import Checkbox from '@/Components/Common/Checkbox';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/Common/InputError';
-import InputLabel from '@/Components/Common/InputLabel';
-import PrimaryButton from '@/Components/Common/PrimaryButton';
-import TextInput from '@/Components/Common/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { useEffect, FormEventHandler } from "react";
+import { Head, useForm } from "@inertiajs/react";
+import GuestLayout from "@/Layouts/GuestLayout";
+import {
+    PrimaryButton,
+    InputError,
+    Checkbox,
+    InputLabel,
+} from "@/Components/Common";
+import TextInput from "@/Components/Common/TextInput";
 
-export default function Login({ status, canResetPassword }: { status?: string, canResetPassword: boolean }) {
+export default function Login({
+    status,
+    canResetPassword,
+}: {
+    status?: string;
+    canResetPassword: boolean;
+}) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
         remember: false,
     });
 
     useEffect(() => {
         return () => {
-            reset('password');
+            reset("password");
         };
     }, []);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('login'));
+        post(route("login"));
     };
 
     return (
         <GuestLayout>
             <Head title="Log in" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {status && (
+                <div className="mb-4 font-medium text-sm text-green-600">
+                    {status}
+                </div>
+            )}
 
             <form onSubmit={submit}>
                 <div>
@@ -44,7 +56,7 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                         className="mt-1 block w-full"
                         autoComplete="username"
                         isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
+                        onChange={(e) => setData("email", e.target.value)}
                     />
 
                     <InputError message={errors.email} className="mt-2" />
@@ -60,7 +72,7 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                         value={data.password}
                         className="mt-1 block w-full"
                         autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
+                        onChange={(e) => setData("password", e.target.value)}
                     />
 
                     <InputError message={errors.password} className="mt-2" />
@@ -71,14 +83,22 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                         <Checkbox
                             name="remember"
                             checked={data.remember}
-                            onChange={(e) => setData('remember', e.target.checked)}
+                            onChange={(e) =>
+                                setData("remember", e.target.checked)
+                            }
                         />
-                        <span className="ml-2 text-sm text-gray-600">Recordarme</span>
+                        <span className="ml-2 text-sm text-gray-600">
+                            Recordarme
+                        </span>
                     </label>
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ml-4" disabled={processing} type='submit'>
+                    <PrimaryButton
+                        className="ml-4"
+                        disabled={processing}
+                        type="submit"
+                    >
                         Ingresar
                     </PrimaryButton>
                 </div>

@@ -1,8 +1,6 @@
 import { useEffect, FormEventHandler } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/Common/InputError';
-import InputLabel from '@/Components/Common/InputLabel';
-import PrimaryButton from '@/Components/Common/PrimaryButton';
+import {InputError, InputLabel, PrimaryButton} from '@/Components/Common';
 import TextInput from '@/Components/Common/TextInput';
 import { Head, useForm } from '@inertiajs/react';
 

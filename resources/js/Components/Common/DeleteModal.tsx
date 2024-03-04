@@ -9,7 +9,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DeleteModalProps } from "@/types/Components.interface";
 
-const DeleteModal: React.FC<DeleteModalProps> = ({
+export const DeleteModal: React.FC<DeleteModalProps> = ({
     isOpen,
     onClose,
     onDelete,
@@ -35,5 +35,3 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
         </Dialog>
     );
 };
-
-export default DeleteModal;

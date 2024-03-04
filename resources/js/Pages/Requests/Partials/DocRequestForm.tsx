@@ -6,7 +6,7 @@ import {
     SectionDocFormField,
     UserFormRequest,
 } from "@/types";
-import InputLabel from "@/Components/Common/InputLabel";
+import {InputLabel} from "@/Components/Common";
 import TextInput from "@/Components/Common/TextInput";
 import { Button, Grid, Link } from "@mui/material";
 import { Inertia } from "@inertiajs/inertia";

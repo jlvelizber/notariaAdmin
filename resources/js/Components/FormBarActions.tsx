@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import PrimaryButton from "./Common/PrimaryButton";
+import {PrimaryButton} from "./Common";
 import SecondaryButton from "./SecondaryButton";
 import { Grid } from "@mui/material";
 import { FormBarActionsInterface } from "@/types/Components.interface";

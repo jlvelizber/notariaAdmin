@@ -23,18 +23,18 @@ export const ActionDataTableButtons: FC<{
     return (
         <ButtonGroup variant="contained" size="small">
             {isShow ? (
-                <Button onClick={onShowHandler}>
-                    <VisibilityIcon fontSize="small" /> Ver
+                <Button onClick={onShowHandler} title="Ver">
+                    <VisibilityIcon fontSize="small" /> 
                 </Button>
             ): null}
             {isEdit ? (
-                <Button onClick={onEditHandler}>
-                    <EditIcon fontSize="small" /> Editar
+                <Button onClick={onEditHandler} title="Editar">
+                    <EditIcon fontSize="small" /> 
                 </Button>
             ): null}
             {isDelete ? (
-                <Button onClick={onDeleteHandler}>
-                    <DeleteIcon fontSize="small" /> Eliminar
+                <Button onClick={onDeleteHandler} title="Eliminar" color="warning">
+                    <DeleteIcon fontSize="small" /> 
                 </Button>
             ) : null}
         </ButtonGroup>

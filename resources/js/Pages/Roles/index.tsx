@@ -1,13 +1,10 @@
-import Button from "@mui/material/Button";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Head, router } from "@inertiajs/react";
 import { Role, RolePageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import RolesDataTable from "./Partials/RolesDataTable";
-import PrimaryButton from "@/Components/Common/PrimaryButton";
-import Modal from "@/Components/Common/Modal";
-import { useState } from "react";
-import DeleteModal from "@/Components/Common/DeleteModal";
-import { useDispatch } from "react-redux";
+import {RolesDataTable} from "./Partials";
+import {PrimaryButton, DeleteModal} from "@/Components";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 
 export default function Index({ roles, auth }: RolePageProps) {

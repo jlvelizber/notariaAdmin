@@ -1,5 +1,5 @@
 import React, { Key, useState } from "react";
-import ApplicationLogo from "@/Components/Common/ApplicationLogo";
+import {ApplicationLogo} from "@/Components/Common";
 import NavLink from "@/Components/Common/NavLink";
 import { Link, usePage } from "@inertiajs/react";
 import { DocFormType, PageProps } from "@/types";

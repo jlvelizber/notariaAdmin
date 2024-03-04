@@ -1,12 +1,11 @@
-import { Head, router } from "@inertiajs/react";
-import { IndexUserPageProps, User } from "@/types";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import {UsersDataTable} from "./Partials";
-import PrimaryButton from "@/Components/Common/PrimaryButton";
 import { useState } from "react";
-import DeleteModal from "@/Components/Common/DeleteModal";
+import { Head, router } from "@inertiajs/react";
 import { useDispatch } from "react-redux";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
+import { IndexUserPageProps, User } from "@/types";
+import {UsersDataTable} from "./Partials";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import {DeleteModal, PrimaryButton} from "@/Components/Common";
 
 export default function Index({ users, auth }: IndexUserPageProps) {
     const [showModal, setshowModal] = useState<boolean>(false);
