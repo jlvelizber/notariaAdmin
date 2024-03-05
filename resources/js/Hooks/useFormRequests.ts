@@ -24,7 +24,7 @@ export const useFormRequests = () => {
         );
     };
 
-    const printReport = (id: number) => {
+    const printReport = async (id: number) => {
         axios
             .get(`/requests/generate-report/${id}`, {
                 responseType: "blob",
@@ -34,7 +34,7 @@ export const useFormRequests = () => {
             });
     };
 
-    const printMinute = (id: number) => {
+    const printMinute = async (id: number) => {
         axios
             .get(`/requests/generate-minute/${id}`, {
                 responseType: "blob",

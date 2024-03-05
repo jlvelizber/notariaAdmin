@@ -1,6 +1,6 @@
 import { InputHTMLAttributes } from 'react';
 
-export default function Checkbox({ className = '', ...props }: InputHTMLAttributes<HTMLInputElement>) {
+export const Checkbox = ({ className = '', ...props }: InputHTMLAttributes<HTMLInputElement>) => {
     return (
         <input
             {...props}

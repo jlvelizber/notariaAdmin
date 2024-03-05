@@ -6,8 +6,8 @@ import {
     SectionDocFormField,
     UserFormRequest,
 } from "@/types";
-import InputLabel from "@/Components/InputLabel";
-import TextInput from "@/Components/TextInput";
+import {InputLabel} from "@/Components/Common";
+import TextInput from "@/Components/Common/TextInput";
 import { Button, Grid, Link } from "@mui/material";
 import { Inertia } from "@inertiajs/inertia";
 import { useDispatch } from "react-redux";

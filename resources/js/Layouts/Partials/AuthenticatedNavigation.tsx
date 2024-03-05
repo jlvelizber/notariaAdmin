@@ -1,9 +1,9 @@
 import React, { Key, useState } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import NavLink from "@/Components/NavLink";
+import {ApplicationLogo} from "@/Components/Common";
+import NavLink from "@/Components/Common/NavLink";
 import { Link, usePage } from "@inertiajs/react";
 import { DocFormType, PageProps } from "@/types";
-import Dropdown from "@/Components/Dropdown";
+import Dropdown from "@/Components/Common/Dropdown";
 import { Button, Menu, MenuItem } from "@mui/material";
 
 export default function AuthenticatedNavigation() {

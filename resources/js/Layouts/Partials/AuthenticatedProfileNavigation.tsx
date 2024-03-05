@@ -1,4 +1,4 @@
-import Dropdown from "@/Components/Dropdown";
+import Dropdown from "@/Components/Common/Dropdown";
 import { User } from "@/types";
 import React, { PropsWithChildren, Dispatch, SetStateAction } from "react";
 
