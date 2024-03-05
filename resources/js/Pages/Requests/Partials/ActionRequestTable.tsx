@@ -96,6 +96,18 @@ export const ActionRequestTable: FC<{
                             </Button>
                         </>
                     )}
+
+                    {status === "finalizado" && (
+                        <Button variant="contained" color="info" title="Ver">
+                            <Link
+                                href={route("requests.show", {
+                                    id: requestObject.id,
+                                })}
+                            >
+                                <VisibilityIcon />
+                            </Link>
+                        </Button>
+                    )}
                     {status === "finalizado" &&
                         requestObject.doc.category.name ===
                             "permiso_salida" && (

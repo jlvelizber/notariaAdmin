@@ -1,13 +1,19 @@
-import React, { FC } from "react";
-import { Role, UserFormRequest } from "@/types";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import { ActionRequestTable } from "./ActionRequestTable";
+import { FC } from "react";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Chip } from "@mui/material";
+import { UserFormRequest } from "@/types";
+import { colorStatusRequestFile } from "@/Contants";
 import { humanizeDate } from "@/Helpers/dates";
+import { ActionRequestTable } from "./ActionRequestTable";
 
-const RequestsDataTable: FC<{ requests: UserFormRequest[], onShowHistory(request: UserFormRequest) : void }> = ({
-    requests,
-    onShowHistory
-}) => {
+const getColorChip = (statusCode: string) => {
+    return colorStatusRequestFile[statusCode] || "finalizado";
+};
+
+const RequestsDataTable: FC<{
+    requests: UserFormRequest[];
+    onShowHistory(request: UserFormRequest): void;
+}> = ({ requests, onShowHistory }) => {
     const columns: GridColDef[] = [
         {
             field: "customer",
@@ -37,7 +43,13 @@ const RequestsDataTable: FC<{ requests: UserFormRequest[], onShowHistory(request
             field: "status",
             headerName: "Estado",
             width: 230,
-            renderCell: (params) => params.row.status.name,
+            renderCell: (params) => (
+                <Chip
+                    label={params.row.status.name}
+                    color={getColorChip(params.row.status.code)}
+                    size="small"
+                />
+            ),
         },
         {
             field: "actions",
@@ -47,7 +59,9 @@ const RequestsDataTable: FC<{ requests: UserFormRequest[], onShowHistory(request
                 <ActionRequestTable
                     status={params.row.status.code}
                     requestObject={params.row}
-                    onShowHistory={(request: UserFormRequest) => onShowHistory(request)}
+                    onShowHistory={(request: UserFormRequest) =>
+                        onShowHistory(request)
+                    }
                 />
             ),
         },
@@ -61,9 +75,8 @@ const RequestsDataTable: FC<{ requests: UserFormRequest[], onShowHistory(request
             rows={requests}
             autoHeight={true}
             localeText={{
-                noRowsLabel: 'Sin resultados'
+                noRowsLabel: "Sin resultados",
             }}
-
         />
     );
 };
