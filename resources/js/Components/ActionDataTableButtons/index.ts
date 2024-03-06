@@ -1,1 +1,1 @@
-export {ActionDataTableButtons} from './ActionDataTableButtons'
+export {ActionDataTableButtons} from './ActionDataTableButtons';

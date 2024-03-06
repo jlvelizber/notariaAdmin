@@ -60,7 +60,6 @@ export const UsersDataTable: FC<{ users: User[]; onDelete: (user: User) => void 
             width: 300,
             renderCell: (params) => (
                 <ActionDataTableButtons
-                    id={params.row.id}
                     isDelete={auth.user.id !== params.row.id}
                     isEdit={true}
                     isShow={false}

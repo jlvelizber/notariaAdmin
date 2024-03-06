@@ -9,7 +9,7 @@ import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 
 export default function Index({ roles, auth }: RolePageProps) {
     const [showModal, setshowModal] = useState<boolean>(false);
-    const [roleName, setRoleName] = useState<String>("");
+    const [roleName, setRoleName] = useState<string>("");
     const [roleId, setRoleId] = useState<number | null>(null);
     const dispatch = useDispatch();
 

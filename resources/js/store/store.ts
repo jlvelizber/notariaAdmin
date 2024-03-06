@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { SnackSBarSlice } from './slices/SnackBarSlice/SnackBarSlice'
+import { configureStore } from '@reduxjs/toolkit';
+import { SnackSBarSlice } from './slices/SnackBarSlice/SnackBarSlice';
 
 
 
@@ -7,7 +7,7 @@ export const store = configureStore({
   reducer: {
     SnackSBarSlice: SnackSBarSlice.reducer
   },
-})
+});
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>

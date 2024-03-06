@@ -1,16 +1,10 @@
-import { useState } from "react";
 import { Head, usePage, router } from "@inertiajs/react";
 import { ListIndexRequestPageProps, PageProps, UserFormRequest } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 import RequestsDataTable from "./Partials/RequestsDataTable";
-import { Inertia } from "@inertiajs/inertia";
 
 export default function Index() {
-    const [onShowModalHistory, setOnShowModalHistory] =
-        useState<boolean>(false);
-    const [requestLogs, setRequestLogs] =
-        useState<any[]>([]);
     const { auth } = usePage<PageProps>().props;
     const { requests } = usePage<ListIndexRequestPageProps>().props;
 

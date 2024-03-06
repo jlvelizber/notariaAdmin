@@ -45,7 +45,6 @@ export const RolesDataTable: FC<{ roles: Role[]; onDelete: (role: Role) => void 
             width: 300,
             renderCell: (params) => (
                 <ActionDataTableButtons
-                    id={params.row.id}
                     isDelete={params.row.is_deletetable}
                     isEdit={true}
                     onEditHandler={() => onEditRole(params.row.id)}

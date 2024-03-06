@@ -4,15 +4,13 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 export const ActionDataTableButtons: FC<{
-    id: number;
     isEdit?: boolean;
     onEditHandler?: () => void;
     isDelete?: boolean;
     onDeleteHandler?: () => void;
-    isShow?: Boolean | false;
+    isShow?: boolean | false;
     onShowHandler?: () => void;
 }> = ({
-    id,
     isShow,
     onShowHandler,
     isEdit,

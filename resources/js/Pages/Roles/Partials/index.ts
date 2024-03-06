@@ -1,1 +1,1 @@
-export * from './RolesDataTable'
+export * from './RolesDataTable';

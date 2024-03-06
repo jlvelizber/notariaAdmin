@@ -1,6 +1,5 @@
 import { FormBarActions } from "@/Components/FormBarActions";
-import InputError from "@/Components/Common/InputError";
-import InputLabel from "@/Components/Common/InputLabel";
+import {InputError, InputLabel} from "@/Components/Common";
 import TextInput from "@/Components/Common/TextInput";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 import { Role, User } from "@/types";
@@ -16,7 +15,7 @@ export default function FormAdminUser({
     user: User | null;
     roles: Role[];
 }) {
-    const { data, setData, post, put, errors, processing, recentlySuccessful } =
+    const { data, setData, post, put, errors } =
         useForm({
             id: user?.id,
             name: user?.name || "",
@@ -45,7 +44,7 @@ export default function FormAdminUser({
                     ),
             });
         } else {
-            put(route("users.update", { id: user!?.id }), {
+            put(route("users.update", { id: user?.id }), {
                 onSuccess: () =>
                     dispatch(
                         onOpenSnack({
@@ -179,8 +178,9 @@ export default function FormAdminUser({
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        // @ts-ignore
+                        // @ts-expect-error "Le pasamos default"
                         defaultValue={parseInt(data?.role)}
+                        // @ts-expect-error "Data invalid"
                         value={data?.role}
                         onChange={(e) => setData("role", e.target.value)}
                         fullWidth

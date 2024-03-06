@@ -6,4 +6,4 @@ export const InputError =  ({ message, className = '', ...props }: HTMLAttribute
             {message}
         </p>
     ) : null;
-}
+};

@@ -28,6 +28,8 @@ module.exports = {
     rules: {
         semi: "error",
         "prefer-const": "error",
-    },
-    files: ["resources/**/*.ts", "resources/**/*.tsx"],
+        "react/react-in-jsx-scope": "off",
+        "react/prop-types": "off",
+        "hoist-non-react-statics": "off",
+    }
 };

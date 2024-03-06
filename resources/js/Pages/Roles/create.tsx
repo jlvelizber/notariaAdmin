@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { NewRolePageProps, RolePageProps } from "@/types";
+import { NewRolePageProps } from "@/types";
 import { Head } from "@inertiajs/react";
 
 import FormAdminRole from "./Partials/FormAdminRole";

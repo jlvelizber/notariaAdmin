@@ -1,13 +1,15 @@
 import { FC } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Chip } from "@mui/material";
+import { Chip, ChipOwnProps } from "@mui/material";
 import { UserFormRequest } from "@/types";
-import { colorStatusRequestFile } from "@/Contants";
+import { ColorStatusRequestFile } from "@/Contants";
 import { humanizeDate } from "@/Helpers/dates";
 import { ActionRequestTable } from "./ActionRequestTable";
 
 const getColorChip = (statusCode: string) => {
-    return colorStatusRequestFile[statusCode] || "finalizado";
+    return (
+        ColorStatusRequestFile[statusCode] as ChipOwnProps || ColorStatusRequestFile.finalizado  as ChipOwnProps
+    );
 };
 
 const RequestsDataTable: FC<{
@@ -46,6 +48,7 @@ const RequestsDataTable: FC<{
             renderCell: (params) => (
                 <Chip
                     label={params.row.status.name}
+                    //@ts-ignore
                     color={getColorChip(params.row.status.code)}
                     size="small"
                 />

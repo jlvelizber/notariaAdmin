@@ -1,2 +1,2 @@
-export * from './AuthenticatedNavigation'
+export * from './AuthenticatedNavigation';
 export * from './AuthenticatedProfileNavigation';
