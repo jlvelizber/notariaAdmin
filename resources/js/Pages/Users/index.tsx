@@ -9,7 +9,7 @@ import {DeleteModal, PrimaryButton} from "@/Components/Common";
 
 export default function Index({ users, auth }: IndexUserPageProps) {
     const [showModal, setshowModal] = useState<boolean>(false);
-    const [userName, setUserName] = useState<String>("");
+    const [userName, setUserName] = useState<string>("");
     const [userId, setUserId] = useState<number | null>(null);
     const dispatch = useDispatch();
 

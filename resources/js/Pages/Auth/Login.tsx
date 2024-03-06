@@ -9,13 +9,7 @@ import {
 } from "@/Components/Common";
 import TextInput from "@/Components/Common/TextInput";
 
-export default function Login({
-    status,
-    canResetPassword,
-}: {
-    status?: string;
-    canResetPassword: boolean;
-}) {
+export default function Login({ status }: { status?: string }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",

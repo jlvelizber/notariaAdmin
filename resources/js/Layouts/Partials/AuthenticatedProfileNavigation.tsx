@@ -1,6 +1,5 @@
+import { PropsWithChildren } from "react";
 import Dropdown from "@/Components/Common/Dropdown";
-import { User } from "@/types";
-import React, { PropsWithChildren, Dispatch, SetStateAction } from "react";
 
 const AuthenticatedProfileNavigation = ({
     name,

@@ -3,7 +3,6 @@ import {ApplicationLogo} from "@/Components/Common";
 import NavLink from "@/Components/Common/NavLink";
 import { Link, usePage } from "@inertiajs/react";
 import { DocFormType, PageProps } from "@/types";
-import Dropdown from "@/Components/Common/Dropdown";
 import { Button, Menu, MenuItem } from "@mui/material";
 
 export default function AuthenticatedNavigation() {

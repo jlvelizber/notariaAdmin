@@ -1,5 +1,5 @@
-import { Head, usePage } from "@inertiajs/react";
-import { HistoryLogInterface, PageProps } from "@/types";
+import { Head} from "@inertiajs/react";
+import { PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { humanizeDate } from "@/Helpers";
@@ -49,7 +49,7 @@ export default function HistoryLog({
                 <div className="w-full">
                     <DataGrid
                         columns={columns}
-                        // @ts-ignore
+                        //@ts-expect-error "set history"
                         rows={history}
                         autoHeight={true}
                         localeText={{

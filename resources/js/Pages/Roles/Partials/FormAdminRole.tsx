@@ -1,10 +1,9 @@
 import { FormEventHandler } from "react";
 import { useDispatch } from "react-redux";
 import { Role } from "@/types";
-import InputLabel from "@/Components/Common/InputLabel";
+import {InputLabel, InputError} from "@/Components/Common";
 import TextInput from "@/Components/Common/TextInput";
 import { useForm } from "@inertiajs/react";
-import InputError from "@/Components/Common/InputError";
 import { onOpenSnack } from "@/store/slices/SnackBarSlice/SnackBarSlice";
 import { FormBarActions } from "@/Components/FormBarActions";
 
@@ -32,7 +31,7 @@ export default function FormAdminRole({ role }: { role: Role | null }) {
                     ),
             });
         } else {
-            put(route("roles.update", { id: role!?.id }), {
+            put(route("roles.update", { id: role?.id }), {
                 onSuccess: () =>
                     dispatch(
                         onOpenSnack({

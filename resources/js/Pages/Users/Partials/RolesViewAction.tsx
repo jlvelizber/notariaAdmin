@@ -1,5 +1,5 @@
 import React from "react";
-import PrimaryButton from "@/Components/Common/PrimaryButton";
+import {PrimaryButton} from "@/Components/Common";
 
 export const RolesViewAction = () => {
     return (

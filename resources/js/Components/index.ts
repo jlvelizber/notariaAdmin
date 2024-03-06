@@ -1,2 +1,2 @@
-export * from './ActionDataTableButtons'
-export * from './Common'
+export * from './ActionDataTableButtons';
+export * from './Common';

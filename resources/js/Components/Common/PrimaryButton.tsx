@@ -14,4 +14,4 @@ export const PrimaryButton  = ({ className = '', disabled, children, ...props }:
             {children}
         </Button>
     );
-}
+};

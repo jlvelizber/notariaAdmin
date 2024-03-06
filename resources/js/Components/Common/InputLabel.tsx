@@ -6,4 +6,4 @@ export const InputLabel = ({ value, className = '', children, ...props }: LabelH
             {value ? value : children}
         </label>
     );
-}
+};
