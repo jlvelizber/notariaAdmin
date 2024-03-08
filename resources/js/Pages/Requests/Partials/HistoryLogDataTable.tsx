@@ -2,7 +2,7 @@ import { FC } from "react";
 import { DataGrid, GridColDef, GridValidRowModel } from "@mui/x-data-grid";
 import { humanizeDate } from "@/Helpers";
 
-export const HistoryLogDataTable: FC<{ rows: GridValidRowModel[] }> = ({
+export const HistoryLogDataTable: FC<{ rows: GridValidRowModel[] | [] }> = ({
     rows,
 }) => {
     const columns: GridColDef[] = [

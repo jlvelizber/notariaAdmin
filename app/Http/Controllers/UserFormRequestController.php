@@ -61,8 +61,7 @@ class UserFormRequestController extends Controller
      */
     public function show(UserFormRequest $userFormRequest)
     {
-        $userForm =  $userFormRequest->with(['customer', 'doc',  'doc.category', 'status'])->where('id', $userFormRequest->id)->first();
-        
+        $userForm =  $userFormRequest->with(['customer', 'doc',  'doc.category', 'status', 'logs.user'])->where('id', $userFormRequest->id)->first();
         /**
          * sanitiza los valores nulos que de acuerdo a una anomalia va con datos que no son del formulario
          */
