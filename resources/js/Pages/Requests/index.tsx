@@ -1,17 +1,23 @@
-import { Head, usePage, router } from "@inertiajs/react";
-import { ListIndexRequestPageProps, PageProps, UserFormRequest } from "@/types";
+import { useState } from "react";
+import { Head, usePage } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-
-import RequestsDataTable from "./Partials/RequestsDataTable";
+import { ModalHistoryRequestLog, RequestsDataTable } from "./Partials";
+import { ListIndexRequestPageProps, PageProps, UserFormRequest } from "@/types";
 
 export default function Index() {
     const { auth } = usePage<PageProps>().props;
     const { requests } = usePage<ListIndexRequestPageProps>().props;
+    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+    const [requestHistoryId, setrequestHistoryId] = useState<number>(0);
 
     const onShowHistiryRequest = async (id: number) => {
-         router.get(route( 'requests.logs' , id));
+        setIsOpenModal(true);
+        setrequestHistoryId(id);
     };
-    
+
+    const onCloseModalHistory = () => {
+        setIsOpenModal(false);
+    };
 
     return (
         <AuthenticatedLayout
@@ -23,7 +29,11 @@ export default function Index() {
             }
         >
             <Head title="Solicitudes Realizadas en la web" />
-
+            <ModalHistoryRequestLog
+                isOpen={isOpenModal}
+                onClose={onCloseModalHistory}
+                requestId={requestHistoryId}
+            />
             <div className="p-3">
                 <RequestsDataTable
                     requests={requests}

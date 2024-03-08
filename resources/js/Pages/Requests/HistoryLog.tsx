@@ -6,12 +6,14 @@ import { humanizeDate } from "@/Helpers";
 import { Grid } from "@mui/material";
 import { FormBarActions } from "@/Components/FormBarActions";
 
+
 export default function HistoryLog({
     auth: { user },
     history,
     docName,
     routeName,
 }: PageProps) {
+
     const columns: GridColDef[] = [
         {
             field: "user",

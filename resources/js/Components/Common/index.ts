@@ -5,3 +5,4 @@ export * from './Checkbox';
 export * from './InputLabel';
 export * from './TextInput';
 export * from './ApplicationLogo';
+export * from './Modal';
