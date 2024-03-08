@@ -56,7 +56,6 @@ export const RolesDataTable: FC<{ roles: Role[]; onDelete: (role: Role) => void 
 
     return (
         <DataGrid
-            checkboxSelection
             disableRowSelectionOnClick
             columns={columns}
             rows={roles}

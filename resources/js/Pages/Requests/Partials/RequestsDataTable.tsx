@@ -12,7 +12,7 @@ const getColorChip = (statusCode: string) => {
     );
 };
 
-const RequestsDataTable: FC<{
+export const RequestsDataTable: FC<{
     requests: UserFormRequest[];
     onShowHistory(request: UserFormRequest): void;
 }> = ({ requests, onShowHistory }) => {
@@ -48,7 +48,7 @@ const RequestsDataTable: FC<{
             renderCell: (params) => (
                 <Chip
                     label={params.row.status.name}
-                    //@ts-ignore
+                    //@ts-expect-error "Default value"
                     color={getColorChip(params.row.status.code)}
                     size="small"
                 />
@@ -72,16 +72,11 @@ const RequestsDataTable: FC<{
 
     return (
         <DataGrid
-            checkboxSelection
             disableRowSelectionOnClick
             columns={columns}
             rows={requests}
             autoHeight={true}
-            localeText={{
-                noRowsLabel: "Sin resultados",
-            }}
+            
         />
     );
 };
-
-export default RequestsDataTable;

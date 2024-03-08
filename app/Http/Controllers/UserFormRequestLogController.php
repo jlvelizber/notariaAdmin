@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserFormRequestLogResource;
 use App\Models\UserFormRequest;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Inertia\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserFormRequestLogController extends Controller
 {
@@ -14,11 +13,11 @@ class UserFormRequestLogController extends Controller
      *
      * @return void
      */
-    public function index(UserFormRequest $userFormRequest): Response
+    public function index(UserFormRequest $userFormRequest): JsonResource
     {
 
 
         $history = $userFormRequest->logs()->with('user')->orderBy('created_at','desc')->get();
-        return Inertia::render('Requests/HistoryLog', ['history' => $history, 'docName' => $userFormRequest->doc->name, 'routeName' => $userFormRequest->doc->category->route_name]);
+        return UserFormRequestLogResource::collection($history);
     }
 }

@@ -72,7 +72,6 @@ export const UsersDataTable: FC<{ users: User[]; onDelete: (user: User) => void 
 
     return (
         <DataGrid
-            checkboxSelection
             disableRowSelectionOnClick
             columns={columns}
             rows={users}
