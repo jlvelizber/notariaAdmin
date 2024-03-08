@@ -54,7 +54,9 @@ export const DocRequestForm: FC<{
         );
     };
 
-    const handleChange = (e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (
+        e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>
+    ) => {
         const key = e.target.id;
         const value = e.target.value;
         setValuesForm((valuesForm: { key: string; value: string }) => ({
@@ -239,13 +241,6 @@ export const DocRequestForm: FC<{
                                         onClick={finalizeRequest}
                                     >
                                         Finalizar
-                                    </Button>
-                                </>
-                            )}
-                            {request.status.code === "finalizado" && (
-                                <>
-                                    <Button variant="contained" color="info">
-                                        Generar/Imprimir
                                     </Button>
                                 </>
                             )}

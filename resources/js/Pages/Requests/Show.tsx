@@ -1,8 +1,10 @@
-import React from "react";
+import { Fragment } from "react";
 import { Head, usePage } from "@inertiajs/react";
+import { Tab } from "@headlessui/react";
 import { ListEditShowRequestPageProps, PageProps } from "@/types";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { DocRequestForm } from "./Partials/DocRequestForm";
+import { DocsRequestsGenerated, HistoryLogDataTable } from "./Partials";
 
 export default function Show() {
     const { request } = usePage<ListEditShowRequestPageProps>().props;
@@ -21,8 +23,77 @@ export default function Show() {
         >
             <Head title="Solicitudes" />
             <div className="p-3">
-                <div className="w-full">
-                    <DocRequestForm request={request} isEditable={false} />
+                <div className="overflow-hidden">
+                    <Tab.Group>
+                        <Tab.List className="w-full flex">
+                            <Tab as={Fragment}>
+                                {({ selected }) => (
+                                    /* Use the `selected` state to conditionally style the selected tab. */
+                                    <button
+                                        className={`rounded-tl-md rounded-tr-md  cursor-pointer px-4 py-2  text-gray-600 hover:border-gray-300 hover:border-b-2 focus:outline-none  ${
+                                            selected
+                                                ? "bg-gray-200"
+                                                : "bg-white"
+                                        }`}
+                                    >
+                                        Solicitud
+                                    </button>
+                                )}
+                            </Tab>
+                            <Tab as={Fragment}>
+                                {({ selected }) => (
+                                    /* Use the `selected` state to conditionally style the selected tab. */
+                                    <button
+                                        className={`rounded-tl-md rounded-tr-md  cursor-pointer px-4 py-2  text-gray-600 hover:border-gray-300 hover:border-b-2 focus:outline-none  ${
+                                            selected
+                                                ? "bg-gray-200"
+                                                : "bg-white"
+                                        }`}
+                                    >
+                                        Historial
+                                    </button>
+                                )}
+                            </Tab>
+
+                            {request.doc.category.name === "permiso_salida" && (
+                                <Tab as={Fragment}>
+                                    {({ selected }) => (
+                                        /* Use the `selected` state to conditionally style the selected tab. */
+                                        <button
+                                            className={`rounded-tl-md rounded-tr-md  cursor-pointer px-4 py-2  text-gray-600 hover:border-gray-300 hover:border-b-2 focus:outline-none  ${
+                                                selected
+                                                    ? "bg-gray-200"
+                                                    : "bg-white"
+                                            }`}
+                                        >
+                                            Documentación
+                                        </button>
+                                    )}
+                                </Tab>
+                            )}
+                        </Tab.List>
+                        <Tab.Panels className="pt-3">
+                            <Tab.Panel>
+                                <DocRequestForm
+                                    request={request}
+                                    isEditable={false}
+                                />
+                            </Tab.Panel>
+                            <Tab.Panel>
+                                <HistoryLogDataTable
+                                    rows={request?.logs || []}
+                                />
+                            </Tab.Panel>
+
+                            {request.doc.category.name === "permiso_salida" && (
+                                <Tab.Panel>
+                                    <DocsRequestsGenerated
+                                        requestId={request.id}
+                                    />
+                                </Tab.Panel>
+                            )}
+                        </Tab.Panels>
+                    </Tab.Group>
                 </div>
             </div>
         </AuthenticatedLayout>

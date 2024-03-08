@@ -73,6 +73,7 @@ export interface UserFormRequest {
     status: StatusForm;
     doc: FormDocInrteface;
     form_request_body: { key: string; value: string };
+    logs?: HistoryLogInterface[];
 }
 
 /**
