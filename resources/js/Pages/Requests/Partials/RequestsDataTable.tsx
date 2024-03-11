@@ -8,14 +8,16 @@ import { ActionRequestTable } from "./ActionRequestTable";
 
 const getColorChip = (statusCode: string) => {
     return (
-        ColorStatusRequestFile[statusCode] as ChipOwnProps || ColorStatusRequestFile.finalizado  as ChipOwnProps
+        (ColorStatusRequestFile[statusCode] as ChipOwnProps) ||
+        (ColorStatusRequestFile.finalizado as ChipOwnProps)
     );
 };
 
 export const RequestsDataTable: FC<{
     requests: UserFormRequest[];
     onShowHistory(request: UserFormRequest): void;
-}> = ({ requests, onShowHistory }) => {
+    onShowDoc(requestId: UserFormRequest, typeDoc: "report" | "minute"): void;
+}> = ({ requests, onShowHistory, onShowDoc }) => {
     const columns: GridColDef[] = [
         {
             field: "customer",
@@ -65,6 +67,12 @@ export const RequestsDataTable: FC<{
                     onShowHistory={(request: UserFormRequest) =>
                         onShowHistory(request)
                     }
+                    onShowMinute={(request: UserFormRequest) =>
+                        onShowDoc(request, "minute")
+                    }
+                    onShowReport={(request: UserFormRequest) =>
+                        onShowDoc(request, "report")
+                    }
                 />
             ),
         },
@@ -76,7 +84,6 @@ export const RequestsDataTable: FC<{
             columns={columns}
             rows={requests}
             autoHeight={true}
-            
         />
     );
 };
