@@ -36,3 +36,7 @@ export interface CustomModalProps extends ModalProps {
     children: ReactElement;
     onClose: () => void; //
 }
+
+export interface PDFViewerInterface {
+    url: string
+}
