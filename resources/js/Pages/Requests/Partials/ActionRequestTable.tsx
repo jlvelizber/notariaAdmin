@@ -14,12 +14,10 @@ export const ActionRequestTable: FC<{
     status: "requerido" | "proceso" | "finalizado";
     requestObject: UserFormRequest;
     onShowHistory: (requestObject: UserFormRequest) => void;
-}> = ({ status, requestObject, onShowHistory }) => {
-    const {
-        processForm: hookProcessForm,
-        printReport: printReportPdf,
-        printMinute: printMinutePdf,
-    } = useFormRequests();
+    onShowReport: (requestId: UserFormRequest) => void;
+    onShowMinute: (requestId: UserFormRequest) => void;
+}> = ({ status, requestObject, onShowHistory, onShowMinute, onShowReport }) => {
+    const { processForm: hookProcessForm } = useFormRequests();
 
     const processForm = async () => {
         await hookProcessForm(requestObject.id);
@@ -29,12 +27,12 @@ export const ActionRequestTable: FC<{
         await hookProcessForm(requestObject.id, "finalizado");
     };
 
-    const printReport = async () => {
-        await printReportPdf(requestObject.id);
+    const showReport = async () => {
+        onShowReport(requestObject);
     };
 
-    const printMinute = async () => {
-        await printMinutePdf(requestObject.id);
+    const showMinute = async () => {
+        onShowMinute(requestObject);
     };
 
     const showHistory = async () => {
@@ -115,7 +113,7 @@ export const ActionRequestTable: FC<{
                                 <Button
                                     variant="contained"
                                     color="success"
-                                    onClick={printReport}
+                                    onClick={showReport}
                                     title="Documento"
                                 >
                                     <DescriptionIcon />
@@ -123,7 +121,7 @@ export const ActionRequestTable: FC<{
                                 <Button
                                     variant="contained"
                                     color="success"
-                                    onClick={printMinute}
+                                    onClick={showMinute}
                                     title="Acta"
                                 >
                                     <DescriptionIcon />

@@ -1,22 +1,51 @@
 import { useState } from "react";
 import { Head, usePage } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { ModalHistoryRequestLog, RequestsDataTable } from "./Partials";
+import {
+    ModalDocViewer,
+    ModalHistoryRequestLog,
+    RequestsDataTable,
+} from "./Partials";
 import { ListIndexRequestPageProps, PageProps, UserFormRequest } from "@/types";
 
 export default function Index() {
     const { auth } = usePage<PageProps>().props;
     const { requests } = usePage<ListIndexRequestPageProps>().props;
-    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+    const [isOpenModal, setIsOpenModalHistory] = useState<boolean>(false);
+    const [isOpenDocModal, setIsOpenDocModal] = useState<boolean>(false);
+    const [dataDocModal, setDataDocModal] = useState<{
+        url: string;
+        title: string;
+    }>({ url: "", title: "" });
     const [requestHistoryId, setrequestHistoryId] = useState<number>(0);
 
-    const onShowHistiryRequest = async (id: number) => {
-        setIsOpenModal(true);
+    const onShowHistoryRequest = async (id: number) => {
+        setIsOpenModalHistory(true);
         setrequestHistoryId(id);
     };
 
     const onCloseModalHistory = () => {
-        setIsOpenModal(false);
+        setIsOpenModalHistory(false);
+    };
+
+    const onShowDocRequest = async (
+        id: number,
+        typeDoc: "report" | "minute"
+    ) => {
+        const routeName =
+            typeDoc === "report"
+                ? `requests.generate-report`
+                : "requests.generate-minute";
+        setDataDocModal({
+            url: route(routeName, { id }),
+            title: typeDoc === "report" ? "Reporte" : "Minuta",
+        });
+
+        setIsOpenDocModal(true);
+    };
+
+    const onCloseModalDocViewer = () => {
+        setIsOpenDocModal(false);
     };
 
     return (
@@ -29,17 +58,31 @@ export default function Index() {
             }
         >
             <Head title="Solicitudes Realizadas en la web" />
+            {/* Modal History */}
             <ModalHistoryRequestLog
                 isOpen={isOpenModal}
                 onClose={onCloseModalHistory}
                 requestId={requestHistoryId}
             />
+
+            {/* Modal Doc */}
+            <ModalDocViewer
+                isOpen={isOpenDocModal}
+                url={dataDocModal.url}
+                title={dataDocModal.title}
+                onClose={onCloseModalDocViewer}
+            />
+
             <div className="p-3">
                 <RequestsDataTable
                     requests={requests}
                     onShowHistory={(request: UserFormRequest) =>
-                        onShowHistiryRequest(request.id)
+                        onShowHistoryRequest(request.id)
                     }
+                    onShowDoc={(
+                        request: UserFormRequest,
+                        typeDoc: "report" | "minute"
+                    ) => onShowDocRequest(request.id, typeDoc)}
                 />
             </div>
         </AuthenticatedLayout>
