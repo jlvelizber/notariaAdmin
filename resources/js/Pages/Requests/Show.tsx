@@ -85,7 +85,7 @@ export default function Show() {
                                 />
                             </Tab.Panel>
 
-                            {request.doc.category.name === "permiso_salida" && (
+                            {request.doc.category.name === "permiso_salida" && request.status.code === "finalizado" && (
                                 <Tab.Panel>
                                     <DocsRequestsGenerated
                                         requestId={request.id}
