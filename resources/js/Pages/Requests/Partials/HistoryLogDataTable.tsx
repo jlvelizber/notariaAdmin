@@ -9,7 +9,7 @@ export const HistoryLogDataTable: FC<{ rows: GridValidRowModel[] | [] }> = ({
         {
             field: "user",
             headerName: "Usuario",
-            width: 320,
+            width: 270,
             sortable: false,
             disableColumnMenu: true,
             renderCell: (params) =>
@@ -19,7 +19,7 @@ export const HistoryLogDataTable: FC<{ rows: GridValidRowModel[] | [] }> = ({
         {
             field: "action",
             headerName: "Acción",
-            width: 250,
+            width: 200,
             sortable: false,
             disableColumnMenu: true,
             renderCell: (params) => params.row.description,
@@ -28,7 +28,7 @@ export const HistoryLogDataTable: FC<{ rows: GridValidRowModel[] | [] }> = ({
         {
             field: "created_at",
             headerName: "Fecha",
-            width: 180,
+            width: 300,
             filterable: false,
             renderCell: (params) => `${humanizeDate(params.row.created_at)}`,
         },

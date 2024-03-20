@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -36,12 +38,14 @@ class UserFormRequestLog extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-
     /**
-     * Funcion formatting
+     * Casting
      */
 
-     public function formatForFrontend(): array {
-        return [];
-     }
+    // protected function serializeDate(DateTimeInterface $date): string
+    // {
+    //     Carbon::setLocale(config('app.locale'));
+    //     setlocale(LC_ALL, 'es_MX', 'es', 'ES', 'es_MX.utf8');
+    //     return (new Carbon($date))->locale('ES')->toDayDateTimeString();
+    // }
 }

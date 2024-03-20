@@ -29,16 +29,16 @@ export const RequestsDataTable: FC<{
         {
             field: "form_type",
             headerName: "Formulario",
-            width: 350,
+            width: 250,
             renderCell: (params) => params.row.doc.name,
         },
 
         {
             field: "created_at",
             headerName: "Fecha de creación / Modificación",
-            width: 280,
+            width: 380,
             renderCell: (params) =>
-                `${humanizeDate(params.row.created_at)} - ${humanizeDate(
+                `${humanizeDate(params.row.created_at)} / ${humanizeDate(
                     params.row.updated_at
                 )}`,
         },
@@ -59,7 +59,7 @@ export const RequestsDataTable: FC<{
         {
             field: "actions",
             headerName: "Acciones",
-            width: 350,
+            width: 300,
             renderCell: (params) => (
                 <ActionRequestTable
                     status={params.row.status.code}
