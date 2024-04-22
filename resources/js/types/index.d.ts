@@ -19,7 +19,7 @@ export interface StatusForm {
     code: string;
 }
 
-export interface Customer extends User {}
+export interface Customer extends User { }
 
 export interface Role {
     id: number;
@@ -76,6 +76,14 @@ export interface UserFormRequest {
     logs?: HistoryLogInterface[];
 }
 
+export interface ConfigurationInterface {
+    id: number;
+    parent_id?: number;
+    key?: string;
+    label: string;
+    value: string;
+}
+
 /**
  * Esto es lo que viene desde el Share
  */
@@ -86,6 +94,7 @@ export type PageProps<
         user: User;
     };
     form_types: DocFormType[]
+    top_configurations: ConfigurationInterface[]
     errorHandlerMessage: string;
 };
 
@@ -138,10 +147,22 @@ export type ListEditShowRequestPageProps<
     request: UserFormRequest;
 };
 
+export type ListIndexConfigurationPageProps<
+    T extends Record<string, unknown> = Record<string, unknown>
+> = T & {
+    configurations: ConfigurationInterface[];
+};
+
 export interface HistoryLogInterface {
-    form_request_id : number;
-    user_id : number;
+    form_request_id: number;
+    user_id: number;
     action: string;
     description: string;
-    user? : User
+    user?: User
 }
+
+export type EditConfigurationPageProps<
+    T extends Record<string, unknown> = Record<string, unknown>
+> = T & {
+    configuration: ConfigurationInterface;
+};

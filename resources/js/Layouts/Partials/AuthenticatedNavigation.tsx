@@ -1,20 +1,35 @@
 import React, { Key, useState } from "react";
-import {ApplicationLogo} from "@/Components/Common";
+import { ApplicationLogo } from "@/Components/Common";
 import NavLink from "@/Components/Common/NavLink";
 import { Link, usePage } from "@inertiajs/react";
-import { DocFormType, PageProps } from "@/types";
+import { ConfigurationInterface, DocFormType, PageProps } from "@/types";
 import { Button, Menu, MenuItem } from "@mui/material";
 
 export default function AuthenticatedNavigation() {
-    const { form_types } = usePage<PageProps>().props;
+    const { form_types, top_configurations } = usePage<PageProps>().props;
 
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
+    const [anchorElMenuRequests, setanchorElMenuRequests] =
+        useState<null | HTMLElement>(null);
+    const openReq = Boolean(anchorElMenuRequests);
+    const handleClickRequests = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        setanchorElMenuRequests(event.currentTarget);
     };
-    const handleClose = () => {
-        setAnchorEl(null);
+    const handleCloseRequests = () => {
+        setanchorElMenuRequests(null);
+    };
+
+    const [anchorElMenuConfig, setanchorElMenuConfig] =
+        useState<null | HTMLElement>(null);
+    const openConfig = Boolean(anchorElMenuConfig);
+
+    const handleClickConfig = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setanchorElMenuConfig(event.currentTarget);
+    };
+
+    const handleCloseConfig = () => {
+        setanchorElMenuConfig(null);
     };
 
     return (
@@ -35,10 +50,10 @@ export default function AuthenticatedNavigation() {
                 {/* <NavLink href={""} active={route().current("requests.*")}> */}
                 <Button
                     id="basic-button"
-                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-controls={openReq ? "basic-menu" : undefined}
                     aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
+                    aria-expanded={openReq ? "true" : undefined}
+                    onClick={handleClickRequests}
                     classes={{
                         root: "inline-flex items-center px-1 pt-1 !text-gray-500 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none !capitalize",
                     }}
@@ -46,9 +61,9 @@ export default function AuthenticatedNavigation() {
                     Solicitudes
                     <Menu
                         id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
+                        anchorEl={anchorElMenuRequests}
+                        open={openReq}
+                        onClose={handleCloseRequests}
                         MenuListProps={{
                             "aria-labelledby": "basic-button",
                         }}
@@ -86,6 +101,52 @@ export default function AuthenticatedNavigation() {
                 >
                     Roles
                 </NavLink>
+                <Button
+                    id="basic-button"
+                    aria-controls={openConfig ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openConfig ? "true" : undefined}
+                    onClick={handleClickConfig}
+                    classes={{
+                        root: "inline-flex items-center px-1 pt-1 !text-gray-500 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none !capitalize",
+                    }}
+                >
+                    Configuración
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorElMenuConfig}
+                        open={openConfig}
+                        onClose={handleCloseConfig}
+                        MenuListProps={{
+                            "aria-labelledby": "basic-button",
+                        }}
+                    >
+                        {top_configurations.map(
+                            (config: ConfigurationInterface) => {
+                                return (
+                                    <MenuItem key={config.id}>
+                                        <NavLink
+                                            href={route(
+                                                "settings.types.index",
+                                                {
+                                                    id: config.key,
+                                                }
+                                            )}
+                                            active={route().current(
+                                                "settings.types.index",
+                                                {
+                                                    id: config.key,
+                                                }
+                                            )}
+                                        >
+                                            {config.label}
+                                        </NavLink>
+                                    </MenuItem>
+                                );
+                            }
+                        )}
+                    </Menu>
+                </Button>
             </div>
         </div>
     );

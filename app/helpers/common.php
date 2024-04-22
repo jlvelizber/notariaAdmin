@@ -119,8 +119,7 @@ if (!function_exists('castDateInLetters')) {
                 return DayInLettersEnum::TREINTA_UNO->value;
 
             default:
-                # code...
-                break;
+                return DayInLettersEnum::UNO->value;
         }
     }
 }

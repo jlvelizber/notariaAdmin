@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
@@ -46,6 +47,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('requests/generate-report/{userFormRequest}', [ReportController::class,'generateRequestDoc'])->name('requests.generate-report');
     Route::get('requests/generate-minute/{userFormRequest}', [ReportController::class,'generateMinuteDoc'])->name('requests.generate-minute');
+
+
+    //Configuraciones
+    Route::get('settings/{parentKey}',[ConfigurationController::class,'index'])->name('settings.types.index');
+    Route::put('settings/{configuration}/update',[ConfigurationController::class,'update'])->name('settings.types.update');
+    Route::get('settings/{configuration}/edit',[ConfigurationController::class,'edit'])->name('settings.types.edit');
+    
 });
 
 require __DIR__.'/auth.php';
