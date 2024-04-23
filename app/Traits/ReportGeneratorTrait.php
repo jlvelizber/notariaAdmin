@@ -2,10 +2,19 @@
 
 namespace App\Traits;
 
+use App\Enums\ConfigTypeEnum;
+use App\Models\Configuration;
 use App\Models\UserFormRequest;
 
 trait ReportGeneratorTrait
 {
+
+
+    private function getGeneralConfig()
+    {
+        $conf = Configuration::getGeneralConfig()->first();
+        return $conf->children()->select(['key', 'value'])->get();
+    }
     /**
      * Cambia las variables que se encuentran en el field body de la tabla formDocs, y las pone por las variables que ingreso el usuario en el formulario
      *
@@ -14,7 +23,9 @@ trait ReportGeneratorTrait
      */
     public function transcludeReport(UserFormRequest $userFormRequest): string
     {
+        $generalConfigItems = $this->getGeneralConfig();
         $docConfigTemplate = $userFormRequest->doc()->select('body', 'id')->first()->body;
+
         $customer = $userFormRequest->customer;
         $countryName = $userFormRequest->customer->country ? $userFormRequest->customer->country?->name :  'Ecuatoriana';
         $requestName = $customer->getFullName();
@@ -28,6 +39,12 @@ trait ReportGeneratorTrait
         $docConfigTemplate = str_replace('$identification_num', $customer->identification_num, $docConfigTemplate);
         $docConfigTemplate = str_replace('$requestName', strtoupper($requestName), $docConfigTemplate);
         $docConfigTemplate = str_replace('$countryName', strtoupper($countryName), $docConfigTemplate);
+
+        // convierte la configuración general
+        foreach ($generalConfigItems as $generalConfig) {
+            $docConfigTemplate = str_replace('$config_' . $generalConfig->key, strtoupper($generalConfig->value), $docConfigTemplate);
+        }
+        
         return $docConfigTemplate;
     }
 
@@ -58,7 +75,7 @@ trait ReportGeneratorTrait
         // fecha de solicitud del documento
         $fecha_solicitud = castDateStringForMinutes($userFormRequest->updated_at);
         $docConfigTemplate = str_replace('$fecha_solicitud', $fecha_solicitud, $docConfigTemplate);
-        
+
         return $docConfigTemplate;
     }
 

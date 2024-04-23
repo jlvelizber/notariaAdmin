@@ -15,6 +15,8 @@ class ConfigurationSeeder extends Seeder
     public function run(): void
     {
 
+        Configuration::truncate();
+
         $generalConfig = [
             'key' => ConfigTypeEnum::CONFIGURACION_GENERAL_KEY->value,
             'label' => 'General',
@@ -22,24 +24,33 @@ class ConfigurationSeeder extends Seeder
 
         Configuration::create($generalConfig);
 
-        $conf = Configuration::where('key', '=', ConfigTypeEnum::CONFIGURACION_GENERAL_KEY->value)->first();
+        $conf = Configuration::getGeneralConfig()->first();
 
 
         $children = [
             new Configuration([
                 'key' => 'title_notary',
                 'label' => 'Nombre de la notaría',
-                'value' => config('app.name')
+                'value' => config('app.name'),
+                'instuctions' => 'Nombre oficial de la notaría. Ejemplo: NOTARIA V DEL CANTÓN GUAYAQUIL'
             ]),
             new Configuration([
                 'key' => 'notary_name',
                 'label' => 'Nombre del notario',
-                'value' => 'Sr(a) Notario(a)'
+                'value' => 'Sr(a) Notario(a)',
+                'instuctions' => 'Nombre completo del notario firmante. Ejemplo: AB. MARIA DEL CARMEN CARVAJAL AYALA'
+            ]),
+            new Configuration([
+                'key' => 'designation_notary_name',
+                'label' => 'Designación del notario',
+                'value' => 'NOTARIA TITULAR CUARTA DEL CANTÓN DAULE',
+                'instuctions' => 'Cargo que ejerce en la notaría. Ejemplo: NOTARIA TITULAR, NOTARIA SUPLENTE QUINTA DEL CANTÓN GUAYAQUIL'
             ]),
             new Configuration([
                 'key' => 'address_notary',
                 'label' => 'Dirección de la notaría',
-                'value' => 'En algun lugar'
+                'value' => 'En algun lugar',
+                'instuctions' => 'lugar donde se encuentra la notaría. Ejemplo: Circunvalación Sur - GUAYAQUIL'
             ])
 
         ];

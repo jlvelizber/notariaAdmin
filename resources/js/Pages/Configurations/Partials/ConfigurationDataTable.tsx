@@ -18,7 +18,12 @@ export const ConfigurationDataTable: FC<{
         {
             field: "value",
             headerName: "Valor",
-            width: 600,
+            width: 400,
+        },
+        {
+            field: "instuctions",
+            headerName: "Instrucción",
+            width: 500,
         },
 
         {

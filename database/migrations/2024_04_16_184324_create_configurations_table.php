@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('key')->unique();
             $table->string('label')->nullable();
             $table->text('value')->nullable();
+            $table->string('instuctions', 200)->nullable();
             $table->timestamps();
         });
     }
