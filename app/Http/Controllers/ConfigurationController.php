@@ -11,11 +11,15 @@ use Inertia\Inertia;
 class ConfigurationController extends Controller
 {
     private $pathFolder ;
+
+   
+    
     /**
      * Display a listing of the resource.
      */
     public function index(string $key)
     {
+        $this->authorize('access.settings');
         // Llama a la lista de usuarios con su rol principal o primer rol
         $parent = Configuration::select('id', 'key')->with('children')->where('key', $key)->first();
 
@@ -66,6 +70,7 @@ class ConfigurationController extends Controller
      */
     public function edit(Configuration $configuration)
     {
+          $this->authorize('access.settings');
         return Inertia::render("Configurations/Edit", ['configuration' => $configuration]);
     }
 
@@ -75,6 +80,7 @@ class ConfigurationController extends Controller
     public function update(UpdateConfigurationRequest $request, Configuration $configuration)
     {
         
+          $this->authorize('access.settings');
         $request->validate([
             'value' => ['required','string','max:255'],
         ]);

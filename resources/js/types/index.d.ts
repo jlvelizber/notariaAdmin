@@ -92,6 +92,12 @@ export type PageProps<
 > = T & {
     auth: {
         user: User;
+        permissions: {
+            can_access_roles: true,
+            can_access_users: true,
+            can_access_requests: true,
+            can_access_settings: true,
+        }
     };
     form_types: DocFormType[]
     top_configurations: ConfigurationInterface[]

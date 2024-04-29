@@ -18,25 +18,23 @@ use Inertia\Inertia;
 
 class UserFormRequestController extends Controller
 {
+    
     /**
      * List kinds of user's requests
      */
     public function listRequestsByFormType(string $docFormRoute)
     {
+        $this->authorize('access.requests');
+
+
+        
         $docType = FormDocType::where('route_name', $docFormRoute)->select('id')->first();
         if (!$docType) return abort(404);
 
         // escoge escoge los ids de la definicion de los documentos
-        $docFormsId = $docType->docs()->select('id')->get();
-
-
-        $queryInIds = [];
-        foreach ($docFormsId as $form) {
-            $queryInIds[] = $form->id;
-        }
-
-
-        $requests = UserFormRequest::whereIn('form_doc_id', $queryInIds)->with(
+        $docFormsId = $docType->docs()->select('id')->pluck('id')->toArray();
+       
+        $requests = UserFormRequest::whereIn('form_doc_id', $docFormsId)->with(
             [
                 'customer',
                 'doc',
@@ -61,6 +59,10 @@ class UserFormRequestController extends Controller
      */
     public function show(UserFormRequest $userFormRequest)
     {
+        
+        $this->authorize('access.requests');
+
+
         $userForm =  $userFormRequest->with(['customer', 'doc',  'doc.category', 'status', 'logs.user'])->where('id', $userFormRequest->id)->first();
         /**
          * sanitiza los valores nulos que de acuerdo a una anomalia va con datos que no son del formulario
@@ -79,6 +81,8 @@ class UserFormRequestController extends Controller
      */
     public function edit(UserFormRequest $userFormRequest)
     {
+        $this->authorize('access.requests');
+
         $userForm = $userFormRequest->with(['customer', 'doc','doc.category', 'status'])->where('id', $userFormRequest->id)->first();
         // dd($userForm);
         /**
@@ -99,6 +103,8 @@ class UserFormRequestController extends Controller
      */
     public function update(Request $request, UserFormRequest $userFormRequest)
     {
+        $this->authorize('access.requests');
+
         /** verifica si va a 0 o cambiar de estado o simplementa a ctualizar campos */
         if ($request->has('status')) {
             $formStatus = UserFormStatus::where('code', $request->get('status'))->first();

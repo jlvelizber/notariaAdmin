@@ -16,11 +16,16 @@ use Inertia\Response;
 class UserController extends Controller
 {
 
+    function __construct()
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(): Response
     {
+        $this->authorize('access.users');
         // Llama a la lista de usuarios con su rol principal o primer rol
         $users = User::mainRole()->get();
         return Inertia::render('Users/index', ['users' => $users]);
@@ -32,6 +37,7 @@ class UserController extends Controller
      */
     public function create(): Response
     {
+        $this->authorize('access.users');
         $roles = Role::all();
         return Inertia::render('Users/create', ['roles' => $roles]);
     }
@@ -41,6 +47,7 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $this->authorize('access.users');
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:' . User::class,
@@ -48,7 +55,7 @@ class UserController extends Controller
             'first_last_name' => 'required|string|max:255',
             'second_last_name' => 'required|string|max:255',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role'=>['required','integer',Rule::exists('roles','id')],
+            'role' => ['required', 'integer', Rule::exists('roles', 'id')],
         ]);
 
         $user = User::create([
@@ -80,10 +87,12 @@ class UserController extends Controller
      */
     public function edit(User $user): Response
     {
+        $this->authorize('access.users');
+
         $roles = Role::all();
 
         $user->role = $user->getMainRole();
-       
+
         return Inertia::render('Users/create', ['user' => $user, 'roles' => $roles]);
     }
 
@@ -92,28 +101,27 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-    
+        $this->authorize('access.users');
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
             'midle_name' => 'string|max:255',
             'first_last_name' => 'required|string|max:255',
             'second_last_name' => 'required|string|max:255',
-            'password' => ['required_if:password,null','confirmed', Rules\Password::defaults()],
-            'role'=>['required','integer',Rule::exists('roles','id')],
+            'password' => ['required_if:password,null', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'integer', Rule::exists('roles', 'id')],
         ]);
 
-       
 
-            $user = User::find($id);
-            $user->fill($request->all());
-            $user->save();
-    
-            $user->roles()->sync([$request->role]);
-    
-            return redirect()->route('users.index');
-       
 
+        $user = User::find($id);
+        $user->fill($request->all());
+        $user->save();
+
+        $user->roles()->sync([$request->role]);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -121,6 +129,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('access.users');
+        
         $user = User::findOrFail($id);
         $user->delete();
     }

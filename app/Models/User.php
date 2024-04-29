@@ -81,9 +81,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->roles()->first();
     }
 
-
-
-
     /**
      * scopes
      */
@@ -124,6 +121,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getFullName()
     {
         return $this->name . ' ' . $this->midle_name . ' ' . $this->first_last_name . ' ' . $this->second_last_name;
+    }
+
+    
+    public function getRoleAttribute()
+    {
+        return $this->getMainRole()->name;
     }
 
 

@@ -15,6 +15,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $this->authorize('access.users');
+
         $roles = Role::all();
 
         return Inertia::render('Roles/index', ['roles' => $roles]);
@@ -25,6 +27,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('access.users');
         return Inertia::render('Roles/create');
     }
 
@@ -33,6 +36,7 @@ class RoleController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $this->authorize('access.users');
         $request->validate([
             'name' => 'required|string|max:255| unique:' . Role::class,
             'display_name' => 'required|string|max:255',
@@ -46,7 +50,6 @@ class RoleController extends Controller
         $role->save();
 
         return redirect()->route('roles.index');
-
     }
 
     /**
@@ -62,8 +65,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->authorize('access.users');
         $request->validate([
-            'name' => ['required','string','max:255', Rule::unique('roles')->ignore($id)],
+            'name' => ['required', 'string', 'max:255', Rule::unique('roles')->ignore($id)],
             'display_name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
         ]);
@@ -81,6 +85,7 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('access.users');
         $role = Role::findOrFail($id);
         $role->delete();
     }

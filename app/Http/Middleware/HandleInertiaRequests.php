@@ -35,14 +35,20 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
+                'permissions' => [
+                    'can_access_roles' => $request->user()?->can('access.roles'),
+                    'can_access_users' => $request->user()?->can('access.users'),
+                    'can_access_requests' => $request->user()?->can('access.requests'),
+                    'can_access_settings' => $request->user()?->can('access.settings'),
+                ],
             ],
-            'form_types' => FormDocType::select('display_name','route_name')->get(),
+            'form_types' => FormDocType::select('display_name', 'route_name')->get(),
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),
                 ]);
             },
-            'top_configurations' => Configuration::select('id','key','label')->whereNull('parent_id')->get(),
+            'top_configurations' => Configuration::select('id', 'key', 'label')->whereNull('parent_id')->get(),
         ]);
     }
 }
