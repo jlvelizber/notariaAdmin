@@ -57,6 +57,8 @@ trait ReportGeneratorTrait
      */
     public function transcludeMinute(UserFormRequest $userFormRequest): string
     {
+        $generalConfigItems = $this->getGeneralConfig();
+        
         $docConfigTemplate = $userFormRequest->doc()->select('affidavit', 'id')->first()->affidavit;
         $customer = $userFormRequest->customer;
         $countryName = $userFormRequest->customer->country ? $userFormRequest->customer->country?->name :  'Ecuatoriana';
@@ -75,6 +77,12 @@ trait ReportGeneratorTrait
         // fecha de solicitud del documento
         $fecha_solicitud = castDateStringForMinutes($userFormRequest->updated_at);
         $docConfigTemplate = str_replace('$fecha_solicitud', $fecha_solicitud, $docConfigTemplate);
+
+         // convierte la configuración general
+         foreach ($generalConfigItems as $generalConfig) {
+            $docConfigTemplate = str_replace('$config_' . $generalConfig->key, strtoupper($generalConfig->value), $docConfigTemplate);
+        }
+        
 
         return $docConfigTemplate;
     }

@@ -174,7 +174,6 @@ class UserFormRequestController extends Controller
         if ($docForm) {
 
             $requestsForm = $request->except('codeForm');
-
             // Vlidamos
             $rules = $this->generateRulesValidations(json_decode($docForm->field_requests, true));
 
@@ -231,7 +230,7 @@ class UserFormRequestController extends Controller
                     $fieldRules[$fields[$j]['name']] = $fields[$j]['rules'];
                 }
             }
-
+            dd($fieldRules);
             return $fieldRules;
         }
 
