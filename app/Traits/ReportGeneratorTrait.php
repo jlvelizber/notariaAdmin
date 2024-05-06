@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Enums\ConfigTypeEnum;
 use App\Models\Configuration;
 use App\Models\UserFormRequest;
 

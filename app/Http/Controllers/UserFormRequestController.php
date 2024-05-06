@@ -230,7 +230,6 @@ class UserFormRequestController extends Controller
                     $fieldRules[$fields[$j]['name']] = $fields[$j]['rules'];
                 }
             }
-            dd($fieldRules);
             return $fieldRules;
         }
 

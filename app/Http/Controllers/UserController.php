@@ -64,6 +64,7 @@ class UserController extends Controller
             'first_last_name' => $request->first_last_name,
             'second_last_name' => $request->second_last_name,
             'email' => $request->email,
+            'email_verified_at' => now(),
             'password' => Hash::make($request->password),
         ]);
 
