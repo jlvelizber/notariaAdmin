@@ -11,6 +11,12 @@ export interface User {
     role?: Role;
     country_id?: number;
     identification_num?: string;
+    country?: Country;
+}
+
+export interface Country {
+    id: number;
+    name: string;
 }
 
 export interface StatusForm {

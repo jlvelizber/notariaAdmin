@@ -18,7 +18,7 @@ use Inertia\Inertia;
 
 class UserFormRequestController extends Controller
 {
-    
+
     /**
      * List kinds of user's requests
      */
@@ -27,13 +27,13 @@ class UserFormRequestController extends Controller
         $this->authorize('access.requests');
 
 
-        
+
         $docType = FormDocType::where('route_name', $docFormRoute)->select('id')->first();
         if (!$docType) return abort(404);
 
         // escoge escoge los ids de la definicion de los documentos
         $docFormsId = $docType->docs()->select('id')->pluck('id')->toArray();
-       
+
         $requests = UserFormRequest::whereIn('form_doc_id', $docFormsId)->with(
             [
                 'customer',
@@ -59,11 +59,12 @@ class UserFormRequestController extends Controller
      */
     public function show(UserFormRequest $userFormRequest)
     {
-        
+
         $this->authorize('access.requests');
 
 
-        $userForm =  $userFormRequest->with(['customer', 'doc',  'doc.category', 'status', 'logs.user'])->where('id', $userFormRequest->id)->first();
+        $userForm =  $userFormRequest->with(['customer', 'customer.country', 'doc',  'doc.category', 'status', 'logs.user'])->where('id', $userFormRequest->id)->first();
+       
         /**
          * sanitiza los valores nulos que de acuerdo a una anomalia va con datos que no son del formulario
          */
@@ -83,7 +84,7 @@ class UserFormRequestController extends Controller
     {
         $this->authorize('access.requests');
 
-        $userForm = $userFormRequest->with(['customer', 'doc','doc.category', 'status'])->where('id', $userFormRequest->id)->first();
+        $userForm = $userFormRequest->with(['customer', 'doc', 'doc.category', 'status'])->where('id', $userFormRequest->id)->first();
         // dd($userForm);
         /**
          * sanitiza los valores nulos que de acuerdo a una anomalia va con datos que no son del formulario
@@ -124,7 +125,7 @@ class UserFormRequestController extends Controller
 
         // Una vez guardado vamos a validar que tipo de formulario es 
         // si es permiso de salida y el estado que va a guardar es 'finalizado' va a enviar notificacion
-        
+
         if ($request->has('status')) {
             $formStatus = UserFormStatus::where('code', $request->get('status'))->first();
             $formTypeName = $userFormRequest->doc->category->name;
@@ -137,7 +138,7 @@ class UserFormRequestController extends Controller
             event(new UserFormRequestSaved($userFormRequest, UserFormRequestLogActionsEnum::UPDATE));
         }
 
-        return redirect()->route('requests.formDocType.index',['formDocType' => $userFormRequest->doc->category->route_name]);
+        return redirect()->route('requests.formDocType.index', ['formDocType' => $userFormRequest->doc->category->route_name]);
     }
 
     /**
@@ -248,9 +249,9 @@ class UserFormRequestController extends Controller
     /**
      * Download a file and return its name in storage
      */
-    public function downloadFile(string $path, string $url) 
+    public function downloadFile(string $path, string $url)
     {
-        $fullUrl = storage_path('app/' . $path.'/'.$url);
+        $fullUrl = storage_path('app/' . $path . '/' . $url);
         return response()->download($fullUrl, $url);
     }
 }

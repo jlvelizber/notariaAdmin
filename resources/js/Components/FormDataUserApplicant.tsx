@@ -52,7 +52,7 @@ export const FormDataUserApplicant: FC<{ customer: Customer }> = ({
                     <TextInput
                         name="lastname"
                         value={`${
-                            customer.country_id ? customer.country_id : ""
+                            customer.country ? customer.country.name : ""
                         }`}
                         disabled={true}
                         className="mt-1 block w-full disabled:bg-gray-100"

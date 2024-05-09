@@ -41,9 +41,9 @@ if (!function_exists('castDateStringForMinutes')) {
         $carbon = Carbon::parse($date);
 
         $dayInLetters  = castDateInLetters($carbon->day);
-        $yearInLetters  = castYearInletters($carbon->year);
+      
 
-        return ucfirst($dayInLetters) . ' de ' . ucfirst($carbon->monthName) . ' del ' . ucfirst($yearInLetters);
+        return ucfirst($dayInLetters) . ' de ' . ucfirst($carbon->monthName) . ' del ' . $carbon->year;
     }
 }
 
