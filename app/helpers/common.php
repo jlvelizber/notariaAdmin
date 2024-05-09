@@ -26,7 +26,7 @@ if (!function_exists('castDateStringForRequestDocs')) {
     {
         $carbon = Carbon::parse($date);
 
-        return ucfirst($carbon->localeDayOfWeek) . ' ' .  $carbon->day . ' de ' . ucfirst($carbon->monthName)  . ' de ' . $carbon->year;
+        return ucfirst($carbon->localeDayOfWeek) . ' ' .  $carbon->day . ' de ' . ucfirst($carbon->monthName)  . ' del ' . $carbon->year;
     }
 }
 
