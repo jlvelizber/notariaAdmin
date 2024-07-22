@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -44,15 +46,21 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('roles', RoleController::class)->except('show');
     Route::resource('users', UserController::class)->except('show');
-
+    
     Route::get('requests/generate-report/{userFormRequest}', [ReportController::class,'generateRequestDoc'])->name('requests.generate-report');
     Route::get('requests/generate-minute/{userFormRequest}', [ReportController::class,'generateMinuteDoc'])->name('requests.generate-minute');
-
-
+    
+    
     //Configuraciones
     Route::get('settings/{parentKey}',[ConfigurationController::class,'index'])->name('settings.types.index');
     Route::put('settings/{configuration}/update',[ConfigurationController::class,'update'])->name('settings.types.update');
     Route::get('settings/{configuration}/edit',[ConfigurationController::class,'edit'])->name('settings.types.edit');
+    
+    //Posts
+    Route::resource('posts', PostController::class)->except('show');
+    //Categories
+    Route::resource('categories', CategoryController::class)->except('show');
+
     
 });
 

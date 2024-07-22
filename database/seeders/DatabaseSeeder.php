@@ -20,5 +20,7 @@ class DatabaseSeeder extends Seeder
        $this->call(FormDocTypeSeeder::class);
        $this->call(FormDocSeeder::class);
     //    $this->call(UserFormRequestSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(PostSeeder::class);
     }
 }
